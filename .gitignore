@@ -1,0 +1,7 @@
+db/
+.qsys_edit/
+incremental_db/
+*.sopcinfo
+output_files/
+ram_test_sys/*
+!**/*.qip
