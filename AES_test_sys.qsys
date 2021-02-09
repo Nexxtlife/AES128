@@ -33,6 +33,46 @@
          type = "int";
       }
    }
+   element display_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element display_1
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element display_2
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+   }
+   element display_3
+   {
+      datum _sortIndex
+      {
+         value = "8";
+         type = "int";
+      }
+   }
+   element divider_0
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
    element onchip_memory2_0
    {
       datum _sortIndex
@@ -72,10 +112,25 @@
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
  <interface
-   name="control_0_avalon_streaming_sink_1"
-   internal="control_0.avalon_streaming_sink_1"
+   name="display_0_avalon_streaming_source"
+   internal="display_0.avalon_streaming_source"
    type="avalon_streaming"
-   dir="end" />
+   dir="start" />
+ <interface
+   name="display_1_avalon_streaming_source"
+   internal="display_1.avalon_streaming_source"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
+   name="display_2_avalon_streaming_source"
+   internal="display_2.avalon_streaming_source"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
+   name="display_3_avalon_streaming_source"
+   internal="display_3.avalon_streaming_source"
+   type="avalon_streaming"
+   dir="start" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <module name="byteSub_0" kind="byteSub" version="1.0" enabled="1" />
  <module name="clk_0" kind="clock_source" version="18.0" enabled="1">
@@ -85,6 +140,11 @@
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
  <module name="control_0" kind="control" version="1.0" enabled="1" />
+ <module name="display_0" kind="display" version="1.0" enabled="1" />
+ <module name="display_1" kind="display" version="1.0" enabled="1" />
+ <module name="display_2" kind="display" version="1.0" enabled="1" />
+ <module name="display_3" kind="display" version="1.0" enabled="1" />
+ <module name="divider_0" kind="divider" version="1.0" enabled="1" />
  <module
    name="onchip_memory2_0"
    kind="altera_avalon_onchip_memory2"
@@ -118,31 +178,58 @@
   <parameter name="writable" value="false" />
  </module>
  <connection
-   kind="avalon"
+   kind="avalon_streaming"
    version="18.0"
-   start="control_0.avalon_master"
-   end="onchip_memory2_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
+   start="byteSub_0.avalon_streaming_source"
+   end="divider_0.avalon_streaming_sink" />
  <connection
    kind="avalon_streaming"
    version="18.0"
-   start="control_0.avalon_streaming_source"
-   end="byteSub_0.avalon_streaming_sink" />
+   start="divider_0.avalon_streaming_source"
+   end="display_0.avalon_streaming_sink" />
+ <connection
+   kind="avalon_streaming"
+   version="18.0"
+   start="divider_0.avalon_streaming_source_1"
+   end="display_1.avalon_streaming_sink" />
+ <connection
+   kind="avalon_streaming"
+   version="18.0"
+   start="divider_0.avalon_streaming_source_2"
+   end="display_2.avalon_streaming_sink" />
+ <connection
+   kind="avalon_streaming"
+   version="18.0"
+   start="divider_0.avalon_streaming_source_3"
+   end="display_3.avalon_streaming_sink" />
  <connection
    kind="clock"
    version="18.0"
    start="clk_0.clk"
    end="onchip_memory2_0.clk1" />
- <connection kind="clock" version="18.0" start="clk_0.clk" end="control_0.clock" />
  <connection kind="clock" version="18.0" start="clk_0.clk" end="byteSub_0.clock" />
+ <connection kind="clock" version="18.0" start="clk_0.clk" end="divider_0.clock" />
+ <connection kind="clock" version="18.0" start="clk_0.clk" end="control_0.clock" />
  <connection
-   kind="reset"
+   kind="clock"
    version="18.0"
-   start="clk_0.clk_reset"
-   end="control_0.reset" />
+   start="clk_0.clk"
+   end="display_0.clock_sink_1" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_0.clk"
+   end="display_1.clock_sink_1" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_0.clk"
+   end="display_2.clock_sink_1" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_0.clk"
+   end="display_3.clock_sink_1" />
  <connection
    kind="reset"
    version="18.0"
@@ -152,7 +239,37 @@
    kind="reset"
    version="18.0"
    start="clk_0.clk_reset"
+   end="divider_0.reset" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="control_0.reset" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
    end="onchip_memory2_0.reset1" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="display_0.reset_sink" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="display_1.reset_sink" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="display_2.reset_sink" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="display_3.reset_sink" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />

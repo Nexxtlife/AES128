@@ -6,13 +6,14 @@ port(
 	clk : in std_logic;
 	reset_n : in std_logic;
 	
-	address : out std_logic_vector(9 downto 0);
+	address : out std_logic_vector(5 downto 0);
 	clken : out std_logic;
 	chipselect : out std_logic;
 	write_n : out std_logic;
 	readdata : in std_logic_vector(127 downto 0);
 	writedata : out std_logic_vector(127 downto 0);
 	byteenable : out std_logic_vector(3 downto 0);
+	debugaccess : out std_logic;
 	
 	
 	
@@ -47,7 +48,7 @@ begin
 		if reset_n = '0' then
 				out_data <= (others=>'0');
 		else
-			out_data <= readdata;
+			out_data <= x"011A1411011A1411011A1411011A1411";
 		end if;
 	end if;
 	end process;
