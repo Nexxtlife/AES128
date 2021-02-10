@@ -49,67 +49,19 @@
          type = "String";
       }
    }
+   element byte_div_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
    element clk_0
    {
       datum _sortIndex
       {
          value = "0";
-         type = "int";
-      }
-   }
-   element display_0
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
-      }
-   }
-   element display_1
-   {
-      datum _sortIndex
-      {
-         value = "4";
-         type = "int";
-      }
-   }
-   element display_2
-   {
-      datum _sortIndex
-      {
-         value = "5";
-         type = "int";
-      }
-   }
-   element display_3
-   {
-      datum _sortIndex
-      {
-         value = "6";
-         type = "int";
-      }
-   }
-   element display_4
-   {
-      datum _sortIndex
-      {
-         value = "7";
-         type = "int";
-      }
-   }
-   element display_5
-   {
-      datum _sortIndex
-      {
-         value = "8";
-         type = "int";
-      }
-   }
-   element divider_0
-   {
-      datum _sortIndex
-      {
-         value = "2";
          type = "int";
       }
    }
@@ -135,99 +87,42 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
+   name="byte_div_0_data_out_0"
+   internal="byte_div_0.data_out_0"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
+   name="byte_div_0_data_out_1"
+   internal="byte_div_0.data_out_1"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
+   name="byte_div_0_data_out_2"
+   internal="byte_div_0.data_out_2"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
    name="bytesub_0_avalon_streaming_sink"
    internal="byteSub_0.avalon_streaming_sink"
    type="avalon_streaming"
    dir="end" />
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
- <interface name="display_0_display_out" internal="display_0.display_out" />
- <interface name="display_1_display_out" internal="display_1.display_out" />
- <interface name="display_2_display_out" internal="display_2.display_out" />
- <interface name="display_3_display_out" internal="display_3.display_out" />
- <interface name="display_4_display_out" internal="display_4.display_out" />
- <interface name="display_5_display_out" internal="display_5.display_out" />
- <interface
-   name="divider_0_data_out_1"
-   internal="divider_0.data_out_1"
-   type="avalon_streaming"
-   dir="start" />
- <interface
-   name="divider_0_data_out_2"
-   internal="divider_0.data_out_2"
-   type="avalon_streaming"
-   dir="start" />
- <interface
-   name="divider_0_data_out_3"
-   internal="divider_0.data_out_3"
-   type="avalon_streaming"
-   dir="start" />
- <interface
-   name="divider_0_data_out_4"
-   internal="divider_0.data_out_4"
-   type="avalon_streaming"
-   dir="start" />
- <interface
-   name="divider_0_data_out_5"
-   internal="divider_0.data_out_5"
-   type="avalon_streaming"
-   dir="start" />
- <interface
-   name="divider_0_data_out_6"
-   internal="divider_0.data_out_6"
-   type="avalon_streaming"
-   dir="start" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <module name="byteSub_0" kind="byteSub" version="1.0" enabled="1" />
+ <module name="byte_div_0" kind="byte_div" version="1.0" enabled="1" />
  <module name="clk_0" kind="clock_source" version="18.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
- <module name="display_0" kind="display" version="1.0" enabled="0" />
- <module name="display_1" kind="display" version="1.0" enabled="0" />
- <module name="display_2" kind="display" version="1.0" enabled="0" />
- <module name="display_3" kind="display" version="1.0" enabled="0" />
- <module name="display_4" kind="display" version="1.0" enabled="0" />
- <module name="display_5" kind="display" version="1.0" enabled="0" />
- <module name="divider_0" kind="divider" version="1.0" enabled="1" />
  <connection
    kind="avalon_streaming"
    version="18.0"
    start="byteSub_0.avalon_streaming_source"
-   end="divider_0.data_in" />
+   end="byte_div_0.data_in" />
  <connection kind="clock" version="18.0" start="clk_0.clk" end="byteSub_0.clock" />
- <connection kind="clock" version="18.0" start="clk_0.clk" end="divider_0.clock" />
- <connection
-   kind="clock"
-   version="18.0"
-   start="clk_0.clk"
-   end="display_0.clock_sink_1" />
- <connection
-   kind="clock"
-   version="18.0"
-   start="clk_0.clk"
-   end="display_1.clock_sink_1" />
- <connection
-   kind="clock"
-   version="18.0"
-   start="clk_0.clk"
-   end="display_2.clock_sink_1" />
- <connection
-   kind="clock"
-   version="18.0"
-   start="clk_0.clk"
-   end="display_3.clock_sink_1" />
- <connection
-   kind="clock"
-   version="18.0"
-   start="clk_0.clk"
-   end="display_4.clock_sink_1" />
- <connection
-   kind="clock"
-   version="18.0"
-   start="clk_0.clk"
-   end="display_5.clock_sink_1" />
+ <connection kind="clock" version="18.0" start="clk_0.clk" end="byte_div_0.clock" />
  <connection
    kind="reset"
    version="18.0"
@@ -237,37 +132,7 @@
    kind="reset"
    version="18.0"
    start="clk_0.clk_reset"
-   end="divider_0.reset" />
- <connection
-   kind="reset"
-   version="18.0"
-   start="clk_0.clk_reset"
-   end="display_0.reset_sink" />
- <connection
-   kind="reset"
-   version="18.0"
-   start="clk_0.clk_reset"
-   end="display_1.reset_sink" />
- <connection
-   kind="reset"
-   version="18.0"
-   start="clk_0.clk_reset"
-   end="display_2.reset_sink" />
- <connection
-   kind="reset"
-   version="18.0"
-   start="clk_0.clk_reset"
-   end="display_3.reset_sink" />
- <connection
-   kind="reset"
-   version="18.0"
-   start="clk_0.clk_reset"
-   end="display_4.reset_sink" />
- <connection
-   kind="reset"
-   version="18.0"
-   start="clk_0.clk_reset"
-   end="display_5.reset_sink" />
+   end="byte_div_0.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
