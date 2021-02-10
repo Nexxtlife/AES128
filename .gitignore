@@ -5,3 +5,8 @@ incremental_db/
 output_files/
 ram_test_sys/*
 !**/*.qip
+*.bsf
+*.cmp
+*.html
+*.xml
+*.v

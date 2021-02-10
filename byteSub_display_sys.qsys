@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<system name="$${FILENAME}">
+ <component
+   name="$${FILENAME}"
+   displayName="$${FILENAME}"
+   version="1.0"
+   description=""
+   tags=""
+   categories="" />
+ <parameter name="bonusData"><![CDATA[bonusData 
+{
+   element byteSub_0
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+   }
+   element byteSub_display_sys
+   {
+      datum _originalDeviceFamily
+      {
+         value = "MAX 10";
+         type = "String";
+      }
+   }
+   element clk_0
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+   }
+   element display_0
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element display_1
+   {
+      datum _sortIndex
+      {
+         value = "4";
+         type = "int";
+      }
+   }
+   element display_2
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element display_3
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element divider_0
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+   }
+}
+]]></parameter>
+ <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
+ <parameter name="device" value="10M50DAF484C7G" />
+ <parameter name="deviceFamily" value="MAX 10" />
+ <parameter name="deviceSpeedGrade" value="7" />
+ <parameter name="fabricMode" value="QSYS" />
+ <parameter name="generateLegacySim" value="false" />
+ <parameter name="generationId" value="0" />
+ <parameter name="globalResetBus" value="false" />
+ <parameter name="hdlLanguage" value="VERILOG" />
+ <parameter name="hideFromIPCatalog" value="false" />
+ <parameter name="lockedInterfaceDefinition" value="" />
+ <parameter name="maxAdditionalLatency" value="1" />
+ <parameter name="projectName" value="AES.qpf" />
+ <parameter name="sopcBorderPoints" value="false" />
+ <parameter name="systemHash" value="0" />
+ <parameter name="testBenchDutName" value="" />
+ <parameter name="timeStamp" value="0" />
+ <parameter name="useTestBenchNamingPattern" value="false" />
+ <instanceScript></instanceScript>
+ <interface
+   name="bytesub_0_avalon_streaming_sink"
+   internal="byteSub_0.avalon_streaming_sink"
+   type="avalon_streaming"
+   dir="end" />
+ <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface
+   name="display_0_display_out"
+   internal="display_0.display_out"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
+   name="display_1_display_out"
+   internal="display_1.display_out"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
+   name="display_2_display_out"
+   internal="display_2.display_out"
+   type="avalon_streaming"
+   dir="start" />
+ <interface
+   name="display_3_display_out"
+   internal="display_3.display_out"
+   type="avalon_streaming"
+   dir="start" />
+ <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
+ <module name="byteSub_0" kind="byteSub" version="1.0" enabled="1" />
+ <module name="clk_0" kind="clock_source" version="18.0" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="display_0" kind="display" version="1.0" enabled="1" />
+ <module name="display_1" kind="display" version="1.0" enabled="1" />
+ <module name="display_2" kind="display" version="1.0" enabled="1" />
+ <module name="display_3" kind="display" version="1.0" enabled="1" />
+ <module name="divider_0" kind="divider" version="1.0" enabled="1" />
+ <connection
+   kind="avalon_streaming"
+   version="18.0"
+   start="byteSub_0.avalon_streaming_source"
+   end="divider_0.data_in" />
+ <connection
+   kind="avalon_streaming"
+   version="18.0"
+   start="divider_0.data_out_1"
+   end="display_0.data_in" />
+ <connection
+   kind="avalon_streaming"
+   version="18.0"
+   start="divider_0.data_out_2"
+   end="display_1.data_in" />
+ <connection
+   kind="avalon_streaming"
+   version="18.0"
+   start="divider_0.data_out_3"
+   end="display_2.data_in" />
+ <connection
+   kind="avalon_streaming"
+   version="18.0"
+   start="divider_0.data_out_4"
+   end="display_3.data_in" />
+ <connection kind="clock" version="18.0" start="clk_0.clk" end="divider_0.clock" />
+ <connection kind="clock" version="18.0" start="clk_0.clk" end="byteSub_0.clock" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_0.clk"
+   end="display_0.clock_sink_1" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_0.clk"
+   end="display_1.clock_sink_1" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_0.clk"
+   end="display_2.clock_sink_1" />
+ <connection
+   kind="clock"
+   version="18.0"
+   start="clk_0.clk"
+   end="display_3.clock_sink_1" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="divider_0.reset" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="byteSub_0.reset" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="display_0.reset_sink" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="display_1.reset_sink" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="display_2.reset_sink" />
+ <connection
+   kind="reset"
+   version="18.0"
+   start="clk_0.clk_reset"
+   end="display_3.reset_sink" />
+ <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
+ <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />
+ <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
+</system>

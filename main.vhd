@@ -53,26 +53,23 @@ end entity;
 
 architecture behave of Blinking_led is
  
- signal number_last : std_logic_vector(7 downto 0);
- signal number_new : std_logic_vector(7 downto 0);
- signal data_in_sig : std_logic_vector(3 downto 0);
- signal data_in_sig2 : std_logic_vector(3 downto 0);	
+ signal data : std_logic_vector(127 downto 0);
+ signal hex_display_0 : std_logic_vector(7 downto 0);
+ signal hex_display_1 : std_logic_vector(7 downto 0);
+ signal hex_display_2 : std_logic_vector(7 downto 0);
+ signal hex_display_3 : std_logic_vector(7 downto 0);
+	
  
-	component display
-		port(
-			data_in : in std_logic_vector(3 downto 0);
-			hex_0 : out std_logic;
-			hex_1 : out std_logic;
-			hex_2 : out std_logic;
-			hex_3 : out std_logic;
-			hex_4 : out std_logic;
-			hex_5 : out std_logic;
-			hex_6 : out std_logic;
-			hex_7 : out std_logic
-		);
-	end component;
+	
+ 
 
  begin
+ 
+
+
+
+ 
+ 
  d1 : display port map (
 					data_in => data_in_sig, 
 					hex_0 => hex_0_sig,

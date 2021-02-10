@@ -35,13 +35,13 @@ end entity;
 
 architecture behave of control is
 
-signal address_new : std_logic_vector(5 downto 0);
+signal address_new : std_logic_vector(9 downto 0);
 
 begin
 
 	process (clk)
 	begin
-	address_new <= bit_5 & bit_4 & bit_3 & bit_2 & bit_1 & bit_0;
+	address_new <= bit_9 & bit_8 & bit_7 & bit_6 & bit_5 & bit_4 & bit_3 & bit_2 & bit_1 & bit_0;
 	address <= address_new;
 	
 	if rising_edge(clk) then
