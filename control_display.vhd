@@ -82,23 +82,7 @@ architecture behave of control_display is
 	begin
 	if rising_edge(clk) then
 		if rst_n = '0' then
-		hex_0_sig <= '0';
-		hex_1_sig <= '0';
-		hex_2_sig <= '0';
-		hex_3_sig <= '0';
-		hex_4_sig <= '0';
-		hex_5_sig <= '0';
-		hex_6_sig <= '0';
-		hex_7_sig <= '0';
-		
-		hex_10_sig <= '0';
-		hex_11_sig <= '0';
-		hex_12_sig <= '0';
-		hex_13_sig <= '0';
-		hex_14_sig <= '0';
-		hex_15_sig <= '0';
-		hex_16_sig <= '0';
-		hex_17_sig <= '0';
+
 		
 		else
 		hex_disp_0 <= data_in(3 downto 0);
