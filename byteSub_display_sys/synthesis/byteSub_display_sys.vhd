@@ -21,7 +21,7 @@ architecture rtl of byteSub_display_sys is
 	component byte_sub is
 		port (
 			clk      : in  std_logic                      := 'X';             -- clk
-			reset    : in  std_logic                      := 'X';             -- reset_n
+			reset    : in  std_logic                      := 'X';             -- reset
 			out_data : out std_logic_vector(127 downto 0);                    -- data
 			in_data  : in  std_logic_vector(127 downto 0) := (others => 'X')  -- data
 		);
@@ -105,18 +105,18 @@ architecture rtl of byteSub_display_sys is
 	end component altera_reset_controller;
 
 	signal bytesub_0_avalon_streaming_source_data   : std_logic_vector(127 downto 0); -- byteSub_0:out_data -> byte_div_0:in_data
-	signal rst_controller_reset_out_reset           : std_logic;                      -- rst_controller:reset_out -> rst_controller_reset_out_reset:in
+	signal rst_controller_reset_out_reset           : std_logic;                      -- rst_controller:reset_out -> [byteSub_0:reset, rst_controller_reset_out_reset:in]
 	signal reset_reset_n_ports_inv                  : std_logic;                      -- reset_reset_n:inv -> rst_controller:reset_in0
-	signal rst_controller_reset_out_reset_ports_inv : std_logic;                      -- rst_controller_reset_out_reset:inv -> [byteSub_0:reset, byte_div_0:reset_n]
+	signal rst_controller_reset_out_reset_ports_inv : std_logic;                      -- rst_controller_reset_out_reset:inv -> byte_div_0:reset_n
 
 begin
 
 	bytesub_0 : component byte_sub
 		port map (
-			clk      => clk_clk,                                  --                   clock.clk
-			reset    => rst_controller_reset_out_reset_ports_inv, --                   reset.reset_n
-			out_data => bytesub_0_avalon_streaming_source_data,   -- avalon_streaming_source.data
-			in_data  => bytesub_0_avalon_streaming_sink_data      --   avalon_streaming_sink.data
+			clk      => clk_clk,                                --                   clock.clk
+			reset    => rst_controller_reset_out_reset,         --                   reset.reset
+			out_data => bytesub_0_avalon_streaming_source_data, -- avalon_streaming_source.data
+			in_data  => bytesub_0_avalon_streaming_sink_data    --   avalon_streaming_sink.data
 		);
 
 	byte_div_0 : component byte_div

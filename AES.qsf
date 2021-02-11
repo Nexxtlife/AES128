@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50DAF484C7G
-set_global_assignment -name TOP_LEVEL_ENTITY byteSub_display_sys
+set_global_assignment -name TOP_LEVEL_ENTITY main_2
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.0.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:06:47  FEBRUARY 08, 2021"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.0.0 Lite Edition"
@@ -48,6 +48,8 @@ set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name VERILOG_FILE byteSub_display_sys/synthesis/submodules/altera_reset_synchronizer.v
+set_global_assignment -name VERILOG_FILE byteSub_display_sys/synthesis/submodules/altera_reset_controller.v
 set_global_assignment -name VHDL_FILE byteSub_display_sys/synthesis/byteSub_display_sys.vhd
 set_global_assignment -name VHDL_FILE main.vhd
 set_global_assignment -name VHDL_FILE display.vhd
@@ -55,7 +57,46 @@ set_global_assignment -name VHDL_FILE sbox.vhd
 set_global_assignment -name VHDL_FILE byte_sub.vhd
 set_global_assignment -name VHDL_FILE control_display.vhd
 set_global_assignment -name VHDL_FILE byte_div.vhd
+set_global_assignment -name VHDL_FILE main_2.vhd
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_location_assignment PIN_P11 -to clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
+set_location_assignment PIN_B8 -to rst_n
+set_location_assignment PIN_A7 -to load
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to load
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to rst_n
+set_location_assignment PIN_C14 -to hex_0_sig
+set_location_assignment PIN_E15 -to hex_1_sig
+set_location_assignment PIN_C15 -to hex_2_sig
+set_location_assignment PIN_C16 -to hex_3_sig
+set_location_assignment PIN_E16 -to hex_4_sig
+set_location_assignment PIN_D17 -to hex_5_sig
+set_location_assignment PIN_C17 -to hex_6_sig
+set_location_assignment PIN_D15 -to hex_7_sig
+set_location_assignment PIN_C18 -to hex_10_sig
+set_location_assignment PIN_D18 -to hex_11_sig
+set_location_assignment PIN_E18 -to hex_12_sig
+set_location_assignment PIN_B16 -to hex_13_sig
+set_location_assignment PIN_A17 -to hex_14_sig
+set_location_assignment PIN_A18 -to hex_15_sig
+set_location_assignment PIN_B17 -to hex_16_sig
+set_location_assignment PIN_A16 -to hex_17_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_0_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_1_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_2_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_3_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_4_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_5_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_6_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_7_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_10_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_11_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_12_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_13_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_17_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_14_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_15_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_16_sig
