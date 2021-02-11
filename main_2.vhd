@@ -73,18 +73,14 @@ end entity;
 architecture behave of main_2 is
  
  signal data : std_logic_vector(127 downto 0) := x"01010202010102020101020201010202";
- signal hex_data_0 : std_logic_vector(7 downto 0);
- signal hex_data_1 : std_logic_vector(7 downto 0);
- signal hex_data_2 : std_logic_vector(7 downto 0);
-
- component byteSub_display_sys is
-        port (
-            byte_div_0_data_out_0_data           : out std_logic_vector(7 downto 0);                      -- data
-            byte_div_0_data_out_1_data           : out std_logic_vector(7 downto 0);                      -- data
-            byte_div_0_data_out_2_data           : out std_logic_vector(7 downto 0);                      -- data
-            bytesub_0_avalon_streaming_sink_data : in  std_logic_vector(127 downto 0) := (others => 'X'); -- data
-            clk_clk                              : in  std_logic                      := 'X';             -- clk
-            reset_reset_n                        : in  std_logic                      := 'X'              -- reset_n
+ signal hex_data : std_logic_vector(127 downto 0);
+ 
+component byteSub_display_sys is
+		port (
+          bytesub_0_avalon_streaming_sink_data     : in  std_logic_vector(127 downto 0) := (others => 'X'); -- data
+          clk_clk                                  : in  std_logic                      := 'X';             -- clk
+          reset_reset_n                            : in  std_logic                      := 'X';             -- reset_n
+          shift_row_0_avalon_streaming_source_data : out std_logic_vector(127 downto 0)                     -- data
         );
 end component byteSub_display_sys;
 
@@ -105,20 +101,18 @@ component display
 
  begin
 
+u0 : component byteSub_display_sys
+       port map (
+          bytesub_0_avalon_streaming_sink_data     => data,     --     bytesub_0_avalon_streaming_sink.data
+          clk_clk                                  => clk,                                  --                                 clk.clk
+          reset_reset_n                            => rst_n,                            --                               reset.reset_n
+          shift_row_0_avalon_streaming_source_data => hex_data  -- shift_row_0_avalon_streaming_source.data
+ );
+ 
 
  
- u0 : component byteSub_display_sys
-		port map (
-			bytesub_0_avalon_streaming_sink_data => data, -- bytesub_0_avalon_streaming_sink.data
-			clk_clk                              => clk,                              --                             clk.clk
-			reset_reset_n                        => rst_n,                        --                           reset.reset_n
-			byte_div_0_data_out_0_data           => hex_data_0,           --           byte_div_0_data_out_0.data
-			byte_div_0_data_out_1_data           => hex_data_1,           --           byte_div_0_data_out_1.data
-			byte_div_0_data_out_2_data           => hex_data_2            --           byte_div_0_data_out_2.data
-		);
- 
 d0 : display port map (
-					data_in => hex_data_0(3 downto 0), 
+					data_in => hex_data(3 downto 0), 
 					hex_0 => hex_0_sig,
 					hex_1 => hex_1_sig,
 					hex_2 => hex_2_sig,
@@ -129,7 +123,7 @@ d0 : display port map (
 					hex_7 => hex_7_sig
 				);
 d1 : display port map (
-					data_in => hex_data_0(7 downto 4), 
+					data_in => hex_data(7 downto 4), 
 					hex_0 => hex_10_sig,
 					hex_1 => hex_11_sig,
 					hex_2 => hex_12_sig,
@@ -140,7 +134,7 @@ d1 : display port map (
 					hex_7 => hex_17_sig
 				);
 d2 : display port map (
-					data_in => hex_data_1(3 downto 0), 
+					data_in => hex_data(11 downto 8), 
 					hex_0 => hex_20_sig,
 					hex_1 => hex_21_sig,
 					hex_2 => hex_22_sig,
@@ -151,7 +145,7 @@ d2 : display port map (
 					hex_7 => hex_27_sig
 				);
 d3 : display port map (
-					data_in => hex_data_1(7 downto 4), 
+					data_in => hex_data(15 downto 12), 
 					hex_0 => hex_30_sig,
 					hex_1 => hex_31_sig,
 					hex_2 => hex_32_sig,
@@ -162,7 +156,7 @@ d3 : display port map (
 					hex_7 => hex_37_sig
 				);
 d4 : display port map (
-					data_in => hex_data_2(3 downto 0), 
+					data_in => hex_data(19 downto 16), 
 					hex_0 => hex_40_sig,
 					hex_1 => hex_41_sig,
 					hex_2 => hex_42_sig,
@@ -173,7 +167,7 @@ d4 : display port map (
 					hex_7 => hex_47_sig
 				);
 d5 : display port map (
-					data_in => hex_data_2(7 downto 4), 
+					data_in => hex_data(23 downto 20), 
 					hex_0 => hex_50_sig,
 					hex_1 => hex_51_sig,
 					hex_2 => hex_52_sig,
@@ -191,7 +185,6 @@ d5 : display port map (
 			data<=(others=>'0');
 		else
 			if load = '0' then
-			data<=x"01010202010102020101020201010201";
 			end if;
 
 		end if;

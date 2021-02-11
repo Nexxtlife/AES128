@@ -81,14 +81,6 @@
          type = "String";
       }
    }
-   element byte_div_0
-   {
-      datum _sortIndex
-      {
-         value = "2";
-         type = "int";
-      }
-   }
    element clk_0
    {
       datum _sortIndex
@@ -101,7 +93,7 @@
    {
       datum _sortIndex
       {
-         value = "3";
+         value = "2";
          type = "int";
       }
    }
@@ -127,29 +119,18 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface
-   name="byte_div_0_data_out_0"
-   internal="byte_div_0.data_out_0"
-   type="avalon_streaming"
-   dir="start" />
- <interface
-   name="byte_div_0_data_out_1"
-   internal="byte_div_0.data_out_1"
-   type="avalon_streaming"
-   dir="start" />
- <interface
-   name="byte_div_0_data_out_2"
-   internal="byte_div_0.data_out_2"
-   type="avalon_streaming"
-   dir="start" />
- <interface
    name="bytesub_0_avalon_streaming_sink"
    internal="byteSub_0.avalon_streaming_sink"
    type="avalon_streaming"
    dir="end" />
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
+ <interface
+   name="shift_row_0_avalon_streaming_source"
+   internal="shift_row_0.avalon_streaming_source"
+   type="avalon_streaming"
+   dir="start" />
  <module name="byteSub_0" kind="byteSub" version="1.0" enabled="1" />
- <module name="byte_div_0" kind="byte_div" version="1.0" enabled="1" />
  <module name="clk_0" kind="clock_source" version="18.0" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
@@ -162,24 +143,13 @@
    version="18.0"
    start="byteSub_0.avalon_streaming_source"
    end="shift_row_0.avalon_streaming_sink" />
- <connection
-   kind="avalon_streaming"
-   version="18.0"
-   start="shift_row_0.avalon_streaming_source"
-   end="byte_div_0.data_in" />
  <connection kind="clock" version="18.0" start="clk_0.clk" end="byteSub_0.clock" />
- <connection kind="clock" version="18.0" start="clk_0.clk" end="byte_div_0.clock" />
  <connection kind="clock" version="18.0" start="clk_0.clk" end="shift_row_0.clock" />
  <connection
    kind="reset"
    version="18.0"
    start="clk_0.clk_reset"
    end="byteSub_0.reset" />
- <connection
-   kind="reset"
-   version="18.0"
-   start="clk_0.clk_reset"
-   end="byte_div_0.reset" />
  <connection
    kind="reset"
    version="18.0"
