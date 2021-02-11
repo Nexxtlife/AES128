@@ -207,7 +207,7 @@ d2 : control_display port map (
 	begin
 	if rising_edge(clk) then
 		if rst_n = '0' then
-			hex_data_0 <= "00000000";
+			data <= (others=>'0');
 			--hex_data_1 <= "00000000";
 			--hex_data_2 <= "00000000";
 		else

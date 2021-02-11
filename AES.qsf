@@ -61,7 +61,6 @@ set_global_assignment -name VHDL_FILE main_2.vhd
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_location_assignment PIN_P11 -to clk
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
 set_location_assignment PIN_B8 -to rst_n
@@ -100,3 +99,68 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_17_sig
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_14_sig
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_15_sig
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_16_sig
+set_location_assignment PIN_B20 -to hex_20_sig
+set_location_assignment PIN_A20 -to hex_21_sig
+set_location_assignment PIN_B19 -to hex_22_sig
+set_location_assignment PIN_A21 -to hex_23_sig
+set_location_assignment PIN_B21 -to hex_24_sig
+set_location_assignment PIN_C22 -to hex_25_sig
+set_location_assignment PIN_B22 -to hex_26_sig
+set_location_assignment PIN_A19 -to hex_27_sig
+set_location_assignment PIN_F21 -to hex_30_sig
+set_location_assignment PIN_E22 -to hex_31_sig
+set_location_assignment PIN_E21 -to hex_32_sig
+set_location_assignment PIN_C19 -to hex_33_sig
+set_location_assignment PIN_C20 -to hex_34_sig
+set_location_assignment PIN_D19 -to hex_35_sig
+set_location_assignment PIN_E17 -to hex_36_sig
+set_location_assignment PIN_D22 -to hex_37_sig
+set_location_assignment PIN_F18 -to hex_40_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_20_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_21_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_22_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_23_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_24_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_25_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_26_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_27_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_30_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_31_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_32_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_33_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_34_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_35_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_36_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_37_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_40_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_41_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_42_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_43_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_44_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_45_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_46_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_47_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_50_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_51_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_52_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_53_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_54_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_55_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_56_sig
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex_57_sig
+set_location_assignment PIN_E20 -to hex_41_sig
+set_location_assignment PIN_E19 -to hex_42_sig
+set_location_assignment PIN_J18 -to hex_43_sig
+set_location_assignment PIN_H19 -to hex_44_sig
+set_location_assignment PIN_F19 -to hex_45_sig
+set_location_assignment PIN_F20 -to hex_46_sig
+set_location_assignment PIN_F17 -to hex_47_sig
+set_location_assignment PIN_J20 -to hex_50_sig
+set_location_assignment PIN_K20 -to hex_51_sig
+set_location_assignment PIN_L18 -to hex_52_sig
+set_location_assignment PIN_N18 -to hex_53_sig
+set_location_assignment PIN_M20 -to hex_54_sig
+set_location_assignment PIN_N19 -to hex_55_sig
+set_location_assignment PIN_N20 -to hex_56_sig
+set_location_assignment PIN_L19 -to hex_57_sig
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
