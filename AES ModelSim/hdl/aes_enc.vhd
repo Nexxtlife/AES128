@@ -41,18 +41,18 @@ begin
 			input2 => round_key,
 			output => subbox_input
 		);
-	sub_byte_inst : entity work.sub_byte
+	byte_sub_inst : entity work.byte_sub
 		port map(
-			input_data  => subbox_input,
-			output_data => subbox_output
+			data_in  => subbox_input,
+			data_out => subbox_output
 			
 		);
-	shift_rows_inst : entity work.shift_rows
+	shft_row_inst : entity work.shft_row
 		port map(
-			input  => subbox_output,
-			output => shiftrows_output
+			data_in  => subbox_output,
+			data_out => shiftrows_output
 		);
-	mix_columns_inst : entity work.mix_columns
+	mix_columns_inst : entity work.mix_column
 		port map(
 			input_data  => shiftrows_output,
 			output_data => mixcol_output

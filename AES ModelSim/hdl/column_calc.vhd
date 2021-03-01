@@ -24,22 +24,22 @@ begin
 	temp1 <= input_data(15 downto 8) xor input_data(23 downto 16);
 	temp2 <= input_data(23 downto 16) xor input_data(31 downto 24);
 	temp3 <= input_data(31 downto 24) xor input_data(7 downto 0);
-	gfmult_by2_inst0 : entity work.gfmult_by2
+	gf_mult_inst0 : entity work.gf_mult
 		port map(
 			input_byte  => temp0,
 			output_byte => temp0x2
 		);
-	gfmult_by2_inst1 : entity work.gfmult_by2
+	gf_mult_inst1 : entity work.gf_mult
 		port map(
 			input_byte  => temp1,
 			output_byte => temp1x2
 		);
-	gfmult_by2_inst2 : entity work.gfmult_by2
+	gf_mult_inst2 : entity work.gf_mult
 		port map(
 			input_byte  => temp2,
 			output_byte => temp2x2
 		);
-	gfmult_by2_inst3 : entity work.gfmult_by2
+	gf_mult_inst3 : entity work.gf_mult
 		port map(
 			input_byte  => temp3,
 			output_byte => temp3x2

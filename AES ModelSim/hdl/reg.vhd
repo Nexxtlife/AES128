@@ -1,36 +1,24 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+library ieee;
+use ieee.std_logic_1164.all;
 
-entity reg is 
-port(
-	clk : in std_logic;
-	load : in std_logic;
-	rst : in std_logic;
-	enable_out : in std_logic;
-	data_in : in std_logic_vector(127 downto 0);
-	data_out : out std_logic_vector(127 downto 0)
-);
-end entity;
+entity reg is
+	generic (size : positive);
+	port (
+		clk : in std_logic;
+		d : in std_logic_vector(size - 1 downto 0);
+		q : out std_logic_vector(size - 1 downto 0)
+	);
+end reg;
 
-
-architecture behave of reg is
-signal state : std_logic_vector (127 downto 0) := (others => 'Z');
-
+architecture behavioral of reg is
+	signal current_stata, next_state : std_logic_vector(size - 1 downto 0);
 begin
-
-process(clk)
-begin
-	if rst = '1' then
-		state <= (others=>'0');
-		elsif rising_edge(clk) then 
-			if load = '1' then
-				state <= data_in;
-			elsif enable_out = '1' then
-				data_out<= state;
-			end if;
-	end if;
-
-end process;
-
-
-end behave;
+	next_state <= d;
+	p1 : process(clk) is		
+	begin
+		if (clk'event and clk = '1') then
+			current_stata <= next_state;
+		end if;
+	end process p1;
+	q <= current_stata;	
+end architecture behavioral;

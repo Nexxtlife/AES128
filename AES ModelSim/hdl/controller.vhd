@@ -37,7 +37,7 @@ begin
 	--		end if;
 	--    end process register_with_reset;
 
-	gfmult_by2_inst : entity work.gfmult_by2
+	gf_mult_inst : entity work.gf_mult
 		port map(
 			input_byte  => reg_output,
 			output_byte => feedback

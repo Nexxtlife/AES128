@@ -15,7 +15,7 @@ architecture behavioral of key_sch_round_function is
 	signal w3, w2, w1, w0 : std_logic_vector(31 downto 0);
 begin
 	gen_sboxes : for i in 12 to 15 generate
-		sbox_inst : entity work.sbox
+		s_box_inst : entity work.s_box
 			port map(
 				input_byte  => subkey((i + 1)*8 - 1 downto i*8),
 				output_byte => substitued_sk((i + 1 - 12)*8 - 1 downto (i - 12)*8)
