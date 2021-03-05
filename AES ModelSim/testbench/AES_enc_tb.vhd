@@ -1,10 +1,10 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity test_enc is 
-end test_enc;
+entity AES_enc_tb is 
+end AES_enc_tb;
 
-architecture behavior of test_enc is
+architecture behavior of AES_enc_tb is
 	component aes_enc
 		port(
 			clk        : in  std_logic;

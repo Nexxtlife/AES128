@@ -27,8 +27,6 @@ architecture behavior of interface is
 			done       : out std_logic
 		);		
 	end component aes_enc;	
-	signal clk : std_logic := '0';
-	signal rst : std_logic := '0';
 	signal plaintext : std_logic_vector(127 downto 0);
 	signal key : std_logic_vector(127 downto 0);	
 	
@@ -64,13 +62,10 @@ begin
 		
 				--plaintext <= x"54776F204F6E65204E696E652054776F";
 				key <= x"5468617473206D79204B756E67204675";
-				rst <= '0';		
-				wait for clk_period * 1;
-				rst <= '1';
-				wait until done = '1';
+				
+				--wait until done = '1';
 				interface_0_avalon_streaming_source_data <= ciphertext;
 				interface_0_avalon_streaming_source_valid <= '1';
-				wait for clk_period * 1;
 				interface_0_avalon_streaming_source_data <= (others=>'0');
 				interface_0_avalon_streaming_source_valid <= '0';
 		end if;

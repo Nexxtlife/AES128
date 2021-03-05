@@ -5,8 +5,9 @@ entity interface is
 	port(
 			clk_clk                                   : in  std_logic                      := 'X';             -- clk
 			reset_reset_n                             : in  std_logic                      := 'X';             -- reset_n
-			interface_0_avalon_master_1_read          : out std_logic;                                         -- read
-			interface_0_avalon_master_1_address       : out std_logic_vector(4 downto 0);                      -- address
+			interface_0_avalon_master_1_read          : out std_logic;  
+			interface_0_avalon_master_1_waitrequest   : in std_logic;  
+			interface_0_avalon_master_1_address       : out std_logic_vector(16 downto 0);                      -- address
 			interface_0_avalon_master_1_byteenable    : out std_logic_vector(15 downto 0);                     -- byteenable
 			interface_0_avalon_master_1_readdata      : in  std_logic_vector(127 downto 0) := (others => 'X'); -- readdata
 			
@@ -49,30 +50,34 @@ begin
 	);
 
 
-	process (clk_clk)
+	process(clk_clk)
 	begin
 	if rising_edge(clk_clk) then
 		if(reset_reset_n ='1') then
 			interface_0_avalon_streaming_source_data <= (others =>'0');
 			interface_0_avalon_streaming_source_valid <='0';
+			
+			
+			
 		elsif(interface_0_avalon_streaming_source_ready = '1') then
 				interface_0_avalon_master_1_read <= '1';
-				interface_0_avalon_master_1_address <= "00000";
+				interface_0_avalon_master_1_address <= (others=>'0');
 				interface_0_avalon_master_1_byteenable <= x"FFFF";
-				plaintext <= interface_0_avalon_master_1_readdata;
-
-		
-				--plaintext <= x"54776F204F6E65204E696E652054776F";
-				key <= x"5468617473206D79204B756E67204675";
-				rst <= '0';		
-				wait for clk_period * 1;
-				rst <= '1';
-				wait until done = '1';
-				interface_0_avalon_streaming_source_data <= ciphertext;
-				interface_0_avalon_streaming_source_valid <= '1';
-				wait for clk_period * 1;
-				interface_0_avalon_streaming_source_data <= (others=>'0');
-				interface_0_avalon_streaming_source_valid <= '0';
+				if interface_0_avalon_master_1_waitrequest = '0' then
+					if rising_edge(clk_clk) then
+						plaintext <= interface_0_avalon_master_1_readdata;
+						--plaintext <= x"54776F204F6E65204E696E652054776F";
+						key <= x"5468617473206D79204B756E67204675";
+						if done = '1' then -- ta część się nie liczy jeszcze
+							--wait until done = '1';
+							interface_0_avalon_streaming_source_data <= ciphertext;
+							interface_0_avalon_streaming_source_valid <= '1';
+							--wait until rising_edge(clk_clk);
+							interface_0_avalon_streaming_source_data <= (others=>'0');
+							interface_0_avalon_streaming_source_valid <= '0';
+						end if;
+					end if;
+				end if;
 		end if;
 	end if;
 	
