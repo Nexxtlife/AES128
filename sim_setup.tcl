@@ -28,21 +28,22 @@ set library_file_list {
   }
   test_library {
     testbench/aes_enc_tb.vhd
+    testbench/test_enc_tb.vhd
   }
 }
 
-set top_level test_library.aes_enc_tb
+set top_level test_library.test_enc
 
 set wave_patterns {
   {clk and reset} {
-    clk_tb
-    rst_tb
+    clk
+    rst
   }
   {DUT} {
-    key_tb
-    plaintext_tb
-    ciphertext_tb
-    done_tb
+    key
+    plaintext
+    ciphertext
+    done
   }
   
 }
@@ -54,9 +55,9 @@ set wave_radices {
   }
   hexadecimal {
     # tutaj wpisujesz nazwy sygnałów które mają być wyświetlane jako heksadecymalne
-    key_tb
-    plaintext_tb
-    ciphertext_tb
+    key
+    plaintext
+    ciphertext
   }
   decimal {
     # tutaj wpisujesz nazwy sygnałów które mają być wyświetlane jako wartości dziesiętne
