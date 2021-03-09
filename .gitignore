@@ -4,6 +4,13 @@ incremental_db/
 *.sopcinfo
 output_files/
 ram_test_sys/*
+
+**/design_library/
+**/test_library/
+*.wlf
+transcript
+start_time.txt
+
 !**/*.qip
 *.bsf
 *.cmp
