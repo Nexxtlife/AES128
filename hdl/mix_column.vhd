@@ -1,6 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
-
+ 
 entity mix_column is
 	port (
 		input_data : in std_logic_vector(127 downto 0);
