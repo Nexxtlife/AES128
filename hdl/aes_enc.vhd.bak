@@ -15,7 +15,6 @@ end aes_enc;
 architecture behavioral of aes_enc is
 	signal inverted_plaintext : std_logic_vector(127 downto 0);
 	signal inverted_key : std_logic_vector(127 downto 0);
-	signal inverted_cyphertext : std_logic_vector(127 downto 0);
 	signal reg_input : std_logic_vector(127 downto 0);
 	signal reg_output : std_logic_vector(127 downto 0);
 	signal subbox_input : std_logic_vector(127 downto 0);
@@ -30,18 +29,14 @@ begin
 	inverter_inst_plaintext : entity work.inverter
 		port map(
 			data_in => plaintext,
-			data_out => inverted_plaintext
+			data_out => inverted_plaintext,
 		);
 	inverter_inst_key : entity work.inverter
 		port map(
 			data_in => key,
-			data_out => inverted_key
+			data_out => inverted_key,
 		);	
-	inverter_inst_cyphertext : entity work.inverter
-		port map(
-			data_in => inverted_cyphertext,
-			data_out => ciphertext
-		);
+
 	reg_input <= inverted_plaintext when rst = '0' else feedback;
 	reg_inst : entity work.reg
 		generic map(
@@ -76,7 +71,7 @@ begin
 			output_data => mixcol_output
 		);
 	feedback <= mixcol_output when sel = '0' else shiftrows_output;
-	inverted_cyphertext <= subbox_input;	
+	ciphertext <= subbox_input;	
 	-- Controller
 	controller_inst : entity work.controller
 		port map(
