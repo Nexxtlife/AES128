@@ -72,7 +72,7 @@ infact = $MODEL_TECH/../infact
 
 
 vhdlopt_lib = $MODEL_TECH/../vhdlopt_lib
-work = design_lib
+work = test_lib
 test_lib = test_lib
 [DefineOptionset]
 ; Define optionset entries for the various compilers, vmake, and vsim.
@@ -817,7 +817,7 @@ Resolution = ns
 UserTimeUnit = default
 
 ; Default run length
-RunLength = 100
+RunLength = 100 ns
 
 ; Maximum iterations that can be run without advancing simulation time
 IterationLimit = 10000000
@@ -886,7 +886,7 @@ IterationLimit = 10000000
 ; given severity or higher will cause a running simulation to stop.
 ; This value is ignored during elaboration.
 ; 0 = Note  1 = Warning  2 = Error  3 = Failure  4 = Fatal
-BreakOnAssertion = 3
+BreakOnAssertion = 4
 
 ; Severity level of a tool message which will cause a running simulation to 
 ; stop. This value is ignored during elaboration. Default is to not break.
@@ -1925,6 +1925,7 @@ MvcHome = $MODEL_TECH/..
 ;    (e.g. SVPrettyPrintFlags=I4S,L20,C256,F4,E50,D5)
 ; SVPrettyPrintFlags=I4S
 
+DelayFileOpen = 1
 [lmc]
 ; The simulator's interface to Logic Modeling's SmartModel SWIFT software
 libsm = $MODEL_TECH/libsm.sl
@@ -2033,7 +2034,7 @@ suppress = 8780 ;an explanation can be had by running: verror 8780
 ;            can result in a corrupt MPF file.  All project properties
 ;            can be modified through project window dialogs.
 Project_Version = 6
-Project_DefaultLib = design_lib
+Project_DefaultLib = work
 Project_SortMethod = unused
 Project_Files_Count = 15
 Project_File_0 = C:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd
@@ -2045,27 +2046,27 @@ Project_File_P_2 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 v
 Project_File_3 = C:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd
 Project_File_P_3 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614335100 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 10 cover_nosub 0 dont_compile 0 vhdl_use93 2002
 Project_File_4 = C:/Users/test/Desktop/GitLab/AES/hdl/aes_enc.vhd
-Project_File_P_4 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1615361631 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 2 cover_nosub 0 dont_compile 0 vhdl_use93 2002
+Project_File_P_4 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1615361631 vhdl_disableopt 0 cover_excludedefault 0 vhdl_vital 0 vhdl_warn1 1 vhdl_showsource 0 vhdl_explicit 1 vhdl_warn2 1 vhdl_0InOptions {} cover_covercells 0 vhdl_warn3 1 vhdl_options {} cover_optlevel 3 voptflow 1 vhdl_warn4 1 ood 0 toggle - vhdl_warn5 1 compile_to design_lib cover_noshort 0 compile_order 2 dont_compile 0 cover_nosub 0 vhdl_use93 2002
 Project_File_5 = C:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd
 Project_File_P_5 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1615360903 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 8 cover_nosub 0 dont_compile 0 vhdl_use93 2002
 Project_File_6 = C:/Users/test/Desktop/GitLab/AES/hdl/interface.vhd
 Project_File_P_6 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614937041 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 7 cover_nosub 0 dont_compile 0 vhdl_use93 2002
 Project_File_7 = C:/Users/test/Desktop/GitLab/AES/testbench/aes_enc_tb.vhd
-Project_File_P_7 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1615380576 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to test_lib compile_order 14 cover_nosub 0 dont_compile 0 vhdl_use93 2002
+Project_File_P_7 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1615380576 vhdl_disableopt 0 cover_excludedefault 0 vhdl_vital 0 vhdl_warn1 1 vhdl_showsource 0 vhdl_explicit 1 vhdl_warn2 1 vhdl_0InOptions {} cover_covercells 0 vhdl_warn3 1 vhdl_options {} cover_optlevel 3 voptflow 1 vhdl_warn4 1 ood 0 toggle - vhdl_warn5 1 compile_to test_lib cover_noshort 0 compile_order 14 dont_compile 0 cover_nosub 0 vhdl_use93 2002
 Project_File_8 = C:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd
 Project_File_P_8 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1615294080 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 11 cover_nosub 0 dont_compile 0 vhdl_use93 2002
 Project_File_9 = C:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd
 Project_File_P_9 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614594544 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 0 cover_nosub 0 dont_compile 0 vhdl_use93 2002
 Project_File_10 = C:/Users/test/Desktop/GitLab/AES/hdl/controller.vhd
 Project_File_P_10 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1615294342 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 5 cover_nosub 0 dont_compile 0 vhdl_use93 2002
-Project_File_11 = C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd
-Project_File_P_11 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614594376 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 12 cover_nosub 0 dont_compile 0 vhdl_use93 2002
-Project_File_12 = C:/Users/test/Desktop/GitLab/AES/hdl/gf_mult.vhd
-Project_File_P_12 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614334896 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 6 cover_nosub 0 dont_compile 0 vhdl_use93 2002
-Project_File_13 = C:/Users/test/Desktop/GitLab/AES/hdl/add_round_key.vhd
-Project_File_P_13 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614334992 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 1 cover_nosub 0 dont_compile 0 vhdl_use93 2002
-Project_File_14 = C:/Users/test/Desktop/GitLab/AES/hdl/column_calc.vhd
-Project_File_P_14 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614593803 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 4 cover_nosub 0 dont_compile 0 vhdl_use93 2002
+Project_File_11 = C:/Users/test/Desktop/GitLab/AES/hdl/gf_mult.vhd
+Project_File_P_11 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614334896 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 6 cover_nosub 0 dont_compile 0 vhdl_use93 2002
+Project_File_12 = C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd
+Project_File_P_12 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614594376 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 12 cover_nosub 0 dont_compile 0 vhdl_use93 2002
+Project_File_13 = C:/Users/test/Desktop/GitLab/AES/hdl/column_calc.vhd
+Project_File_P_13 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614593803 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 4 cover_nosub 0 dont_compile 0 vhdl_use93 2002
+Project_File_14 = C:/Users/test/Desktop/GitLab/AES/hdl/add_round_key.vhd
+Project_File_P_14 = vhdl_novitalcheck 0 file_type vhdl group_id 0 cover_nofec 0 vhdl_nodebug 0 vhdl_1164 1 vhdl_noload 0 vhdl_synth 0 vhdl_enable0In 0 folder {Top Level} last_compile 1614334992 vhdl_disableopt 0 vhdl_vital 0 cover_excludedefault 0 vhdl_warn1 1 vhdl_warn2 1 vhdl_explicit 1 vhdl_showsource 0 vhdl_warn3 1 cover_covercells 0 vhdl_0InOptions {} vhdl_warn4 1 voptflow 1 cover_optlevel 3 vhdl_options {} vhdl_warn5 1 toggle - ood 0 cover_noshort 0 compile_to design_lib compile_order 1 cover_nosub 0 dont_compile 0 vhdl_use93 2002
 Project_Sim_Count = 1
 Project_Sim_0 = AES_Sim
 Project_Sim_P_0 = -L {} -Lf {} -sdf {} selected_du {} additional_dus test_lib.aes_enc_tb folder {Top Level} ok 1 -t default timing default +plusarg {} -nofileshare 0 -sdfnowarn 0 OtherArgs {} -sdfnoerror 0 -std_input {} -hazards 0 -noglitch 0 -absentisempty 0 +no_pulse_msg 0 +pulse_r {} -multisource_delay {} -vital2.2b 0 +notimingchecks 0 +pulse_e {} -std_output {} vopt_env 1 is_vopt_flow 0 Generics {}
