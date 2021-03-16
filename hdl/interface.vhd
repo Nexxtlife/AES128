@@ -1,19 +1,24 @@
-library ieee;
+zlibrary ieee;
 use ieee.std_logic_1164.all;
 
 entity interface is
 	port(
 			clk_clk                                   : in  std_logic                      := 'X';             -- clk
 			reset_reset_n                             : in  std_logic                      := 'X';             -- reset_n
+						
 			interface_0_avalon_master_1_read          : out std_logic;  
 			interface_0_avalon_master_1_waitrequest   : in std_logic;  
-			interface_0_avalon_master_1_address       : out std_logic_vector(16 downto 0);                      -- address
+			interface_0_avalon_master_1_address       : out std_logic_vector(16 downto 0);                     -- address
 			interface_0_avalon_master_1_byteenable    : out std_logic_vector(15 downto 0);                     -- byteenable
 			interface_0_avalon_master_1_readdata      : in  std_logic_vector(127 downto 0) := (others => 'X'); -- readdata
 			
 			interface_0_avalon_streaming_source_data  : out std_logic_vector(127 downto 0);                    -- data
 			interface_0_avalon_streaming_source_ready : in  std_logic                      := 'X';             -- ready
 			interface_0_avalon_streaming_source_valid : out std_logic                                          -- valid
+			
+			interface_1_avalon_streaming_source_data  : in std_logic_vector(127 downto 0);                    -- data
+			interface_1_avalon_streaming_source_ready : out  std_logic;            							  -- ready
+			interface_1_avalon_streaming_source_valid : in std_logic                                          -- valid
 	);
 end interface;
 
