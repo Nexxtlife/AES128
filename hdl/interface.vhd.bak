@@ -1,22 +1,29 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
-entity test_enc is
+entity interface is
 	port(
 			clk_clk                                   : in  std_logic                      := 'X';             -- clk
 			reset_reset_n                             : in  std_logic                      := 'X';             -- reset_n
-			interface_0_avalon_master_1_read          : out std_logic;                                         -- read
-			interface_0_avalon_master_1_address       : out std_logic_vector(4 downto 0);                      -- address
-			interface_0_avalon_master_1_byteenable    : out std_logic_vector(15 downto 0);                     -- byteenable
-			interface_0_avalon_master_1_readdata      : in  std_logic_vector(127 downto 0) := (others => 'X'); -- readdata
+						
+			--interface_0_avalon_master_1_read          : out std_logic;  
+			--interface_0_avalon_master_1_waitrequest   : in std_logic;  
+			--interface_0_avalon_master_1_address       : out std_logic_vector(16 downto 0);                     -- address
+			--interface_0_avalon_master_1_byteenable    : out std_logic_vector(15 downto 0);                     -- byteenable
+			--interface_0_avalon_master_1_readdata      : in  std_logic_vector(127 downto 0) := (others => 'X'); -- readdata
 			
 			interface_0_avalon_streaming_source_data  : out std_logic_vector(127 downto 0);                    -- data
 			interface_0_avalon_streaming_source_ready : in  std_logic                      := 'X';             -- ready
-			interface_0_avalon_streaming_source_valid : out std_logic                                          -- valid
+			interface_0_avalon_streaming_source_valid : out std_logic;                                          -- valid
+			
+			interface_1_avalon_streaming_sink_data  : in std_logic_vector(127 downto 0);                    -- data
+			interface_1_avalon_streaming_sink_ready : out  std_logic;            							  -- ready
+			interface_1_avalon_streaming_sink_valid : in std_logic                                          -- valid
 	);
-end test_enc;
+end interface;
 
-architecture behavior of test_enc is
+architecture behavior of interface is
 	component aes_enc
 		port(
 			clk        : in  std_logic;
@@ -36,69 +43,41 @@ architecture behavior of test_enc is
 	signal ciphertext : std_logic_vector(127 downto 0);	
 	constant clk_period : time := 10 ns;
 	
+begin
+	
 	enc_inst : aes_enc
 				port map(
-					clk        => clk,
-					rst        => rst,
+					clk        => clk_clk,
+					rst        => reset_reset_n,
 					key        => key,
 					plaintext  => plaintext,
 					ciphertext => ciphertext,
 					done       => done
-				);
-begin
-	process (clk)
+	);
+
+
+	interf: process
 	begin
-	if rising_edge(clk) then
-		if(reset_reset_n) then
-			interface_0_avalon_streaming_source_data <= (others ='0');
-			interface_0_avalon_streaming_source_ready <= '0';
+	if rising_edge(clk_clk) then
+		if(reset_reset_n ='1') then
+			interface_0_avalon_streaming_source_data <= (others =>'0');
 			interface_0_avalon_streaming_source_valid <='0';
-		elsif(interface_0_avalon_streaming_source_ready) then		
-				plaintext <= x"54776F204F6E65204E696E652054776F";
-				key <= x"5468617473206D79204B756E67204675";
-				rst <= '0';		
-				wait for clk_period * 1;
-				rst <= '1';
+		else 
+			interface_1_avalon_streaming_sink_ready <= '1';
+			if(interface_1_avalon_streaming_sink_valid = '1') then
+				plaintext <= interface_1_avalon_streaming_sink_data;
+				wait until rising_edge(clk_clk);
+				interface_1_avalon_streaming_sink_ready <= '0';
+				key <= "80000000000000000000000000000000"; --avalon mm here
 				wait until done = '1';
+				interface_0_avalon_streaming_source_valid <='1';
+				wait until interface_0_avalon_streaming_source_ready = '1';
 				interface_0_avalon_streaming_source_data <= ciphertext;
-				interface_0_avalon_streaming_source_valid <= '1';
-				wait for clk_period * 1;
-				interface_0_avalon_streaming_source_data <= (others=>'0');
-				interface_0_avalon_streaming_source_valid <= '0';
+			end if;
 		end if;
 	end if;
-	end;
-
-
-	enc_inst : aes_enc
-		port map(
-			clk        => clk,
-			rst        => rst,
-			key        => key,
-			plaintext  => plaintext,
-			ciphertext => ciphertext,
-			done       => done
-		);	
-	clk_process : process is
-	begin
-		clk <= '0';
-		wait for clk_period/2;
-		clk <= '1';
-		wait for clk_period/2;
-	end process clk_process;
 	
-	sim_proc : process is
-	begin
+	end process;
 
-		plaintext <= x"54776F204F6E65204E696E652054776F";
-		key <= x"5468617473206D79204B756E67204675";
-		rst <= '0';		
-		wait for clk_period * 1;
-		rst <= '1';
-		wait until done = '1';
-		wait for clk_period/2;			
-
-		wait;
-	end process sim_proc;
 	
 end architecture behavior;

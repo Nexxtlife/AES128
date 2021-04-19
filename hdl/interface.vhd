@@ -1,24 +1,25 @@
-zlibrary ieee;
+library ieee;
 use ieee.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
 entity interface is
 	port(
 			clk_clk                                   : in  std_logic                      := 'X';             -- clk
 			reset_reset_n                             : in  std_logic                      := 'X';             -- reset_n
 						
-			interface_0_avalon_master_1_read          : out std_logic;  
-			interface_0_avalon_master_1_waitrequest   : in std_logic;  
-			interface_0_avalon_master_1_address       : out std_logic_vector(16 downto 0);                     -- address
-			interface_0_avalon_master_1_byteenable    : out std_logic_vector(15 downto 0);                     -- byteenable
-			interface_0_avalon_master_1_readdata      : in  std_logic_vector(127 downto 0) := (others => 'X'); -- readdata
+			--interface_0_avalon_master_1_read          : out std_logic;  
+			--interface_0_avalon_master_1_waitrequest   : in std_logic;  
+			--interface_0_avalon_master_1_address       : out std_logic_vector(16 downto 0);                     -- address
+			--interface_0_avalon_master_1_byteenable    : out std_logic_vector(15 downto 0);                     -- byteenable
+			--interface_0_avalon_master_1_readdata      : in  std_logic_vector(127 downto 0) := (others => 'X'); -- readdata
 			
 			interface_0_avalon_streaming_source_data  : out std_logic_vector(127 downto 0);                    -- data
 			interface_0_avalon_streaming_source_ready : in  std_logic                      := 'X';             -- ready
-			interface_0_avalon_streaming_source_valid : out std_logic                                          -- valid
+			interface_0_avalon_streaming_source_valid : out std_logic;                                          -- valid
 			
-			interface_1_avalon_streaming_source_data  : in std_logic_vector(127 downto 0);                    -- data
-			interface_1_avalon_streaming_source_ready : out  std_logic;            							  -- ready
-			interface_1_avalon_streaming_source_valid : in std_logic                                          -- valid
+			interface_1_avalon_streaming_sink_data  : in std_logic_vector(127 downto 0);                    -- data
+			interface_1_avalon_streaming_sink_ready : out  std_logic;            							  -- ready
+			interface_1_avalon_streaming_sink_valid : in std_logic                                          -- valid
 	);
 end interface;
 
@@ -55,34 +56,31 @@ begin
 	);
 
 
-	process(clk_clk)
+	interf: process
 	begin
+	report "here";
 	if rising_edge(clk_clk) then
 		if(reset_reset_n ='1') then
+			report "reset";
 			interface_0_avalon_streaming_source_data <= (others =>'0');
 			interface_0_avalon_streaming_source_valid <='0';
-			
-			
-			
-		elsif(interface_0_avalon_streaming_source_ready = '1') then
-				interface_0_avalon_master_1_read <= '1';
-				interface_0_avalon_master_1_address <= (others=>'0');
-				interface_0_avalon_master_1_byteenable <= x"FFFF";
-				if interface_0_avalon_master_1_waitrequest = '0' then
-					if rising_edge(clk_clk) then
-						plaintext <= interface_0_avalon_master_1_readdata;
-						--plaintext <= x"54776F204F6E65204E696E652054776F";
-						key <= x"5468617473206D79204B756E67204675";
-						if done = '1' then -- ta część się nie liczy jeszcze
-							--wait until done = '1';
-							interface_0_avalon_streaming_source_data <= ciphertext;
-							interface_0_avalon_streaming_source_valid <= '1';
-							--wait until rising_edge(clk_clk);
-							interface_0_avalon_streaming_source_data <= (others=>'0');
-							interface_0_avalon_streaming_source_valid <= '0';
-						end if;
-					end if;
-				end if;
+			interface_1_avalon_streaming_sink_ready <= '0';
+		else 
+			report "not reset";
+			interface_1_avalon_streaming_sink_ready <= '1';
+			wait until rising_edge(clk_clk);
+			if(interface_1_avalon_streaming_sink_valid = '1') then
+				plaintext <= interface_1_avalon_streaming_sink_data;
+				wait until rising_edge(clk_clk);
+				interface_1_avalon_streaming_sink_ready <= '0';
+				
+				key <= x"80000000000000000000000000000000"; --avalon mm
+				
+				wait until done = '1';
+				interface_0_avalon_streaming_source_valid <='1';
+				wait until interface_0_avalon_streaming_source_ready = '1';
+				interface_0_avalon_streaming_source_data <= ciphertext;
+			end if;
 		end if;
 	end if;
 	

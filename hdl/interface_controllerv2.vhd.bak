@@ -1,0 +1,50 @@
+-- Author: Damian Bachmat
+-- date: 18.03.2021
+-- company: NCBC
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity interface_controller is
+  generic (
+    INTERFACE_WIDTH is integer := 8; -- w tym miejscu powinno być do wyboru [8,16,31]
+    INTERFACE_LENGTH : natural := 8; -- w tym miejscu można podać długość rejestru [0-n]
+    INTERFACE_ADDR_WIDTH : natural := 3;
+	INTERFACE_BYTE_ENABLE : natural := 3
+  );
+  port (
+    clk, rst_n : in std_logic;
+	
+	interface_0_avalon_master_1_read          : out std_logic; 
+	interface_0_avalon_master_1_write         : out std_logic;  	
+	interface_0_avalon_master_1_waitrequest   : in std_logic;  
+	interface_0_avalon_master_1_address       : out std_logic_vector(INTERFACE_ADDR_WIDTH - 1 downto 0);                    -- address
+	interface_0_avalon_master_1_byteenable    : out std_logic_vector(INTERFACE_BYTE_ENABLE - 1 downto 0);                     -- byteenable
+	interface_0_avalon_master_1_readdata      : in  std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); -- readdata
+	interface_0_avalon_master_1_writedata     :   std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); -- readdata
+	
+	
+	interface_0_avalon_slave_1_read          : in std_logic;
+	interface_0_avalon_slave_1_write         : in std_logic;
+	interface_0_avalon_slave_1_waitrequest   : out std_logic;  
+	interface_0_avalon_slave_1_address       : in std_logic_vector(INTERFACE_ADDR_WIDTH - 1 downto 0);                    -- address
+	interface_0_avalon_slave_1_byteenable    : in std_logic_vector(INTERFACE_BYTE_ENABLE - 1 downto 0);                     -- byteenable
+	interface_0_avalon_slave_1_readdata      : out  std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); -- readdata
+	interface_0_avalon_slave_1_writedata     : out  std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); -- readdata
+	
+	interface_0_avalon_streaming_source_data  : out std_logic_vector(INTERFACE_ADDR_WIDTH - 1 downto 0);                    -- data
+	interface_0_avalon_streaming_source_ready : in  std_logic                      := 'X';             -- ready
+	interface_0_avalon_streaming_source_valid : out std_logic
+  );
+end interface_controller;
+
+
+architecture behave of interface_controller is
+begin
+	process
+	begin
+
+	end process;
+  
+end architecture behave;
