@@ -103,7 +103,7 @@ begin
 -------------------------------------------------------------------------------
 write_slave: process (clk, rst)
 begin
-	if rst = '0' then
+	if rst = '1' then
 		slave_write_state <= idle;	
 	elsif rising_edge (clk) then
 
