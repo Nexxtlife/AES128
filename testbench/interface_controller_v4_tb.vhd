@@ -5,64 +5,65 @@ entity interface_tb is
 end interface_tb;
 
 architecture behavior of interface_tb is
-	component interface
+	component interface_controller
 		port(
-			clk_clk                                   : in  std_logic                      := 'X';             -- clk
-			reset_reset_n                             : in  std_logic                      := 'X';             -- reset_n 	
-			
-			interface_0_avalon_master_1_read          : out std_logic; 
-			interface_0_avalon_master_1_waitrequest   : in std_logic;  
-			interface_0_avalon_master_1_address       : out std_logic_vector(4 - 1 downto 0);                -- address
-			interface_0_avalon_master_1_byteenable    : out std_logic_vector(4 - 1 downto 0);               -- byteenable
-			interface_0_avalon_master_1_readdata      : in  std_logic_vector(32 - 1 downto 0);  -- readdata
+			clk                                  : in  std_logic                      := 'X';             -- clk
+			rst                             : in  std_logic                      := 'X';             -- reset_n 	
 			
 			
-			-- control & status registers (CSR) slave
-			interface_0_avalon_slave_1_write          : in std_logic;
-			interface_0_avalon_slave_1_waitrequest   : out std_logic :='1';  
-			interface_0_avalon_slave_1_address       : in std_logic_vector(4 - 1 downto 0);                  -- address
-			interface_0_avalon_slave_1_byteenable    : in std_logic_vector(4 - 1 downto 0);                 -- byteenable
-			interface_0_avalon_slave_1_writedata      : in  std_logic_vector(32 - 1 downto 0) 	-- readdata
+			interface_0_avalon_slave_1_read          : in std_logic;
+			interface_0_avalon_slave_1_write         : in std_logic;
+			interface_0_avalon_slave_1_waitrequest   : out std_logic;  
+			interface_0_avalon_slave_1_address       : in std_logic_vector(4 downto 0);                  -- address
+			interface_0_avalon_slave_1_byteenable    : in std_logic_vector(4 downto 0);                 -- byteenable
+			interface_0_avalon_slave_1_readdata      : out  std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
+			interface_0_avalon_slave_1_writedata     : in  std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
 			
-			
-			
+			key        : out  std_logic_vector(127 downto 0);
+			plaintext  : out  std_logic_vector(127 downto 0);
+			ciphertext : in std_logic_vector(127 downto 0);
+			done       : in std_logic														-- valid st
 			
 	);	
-	end component interface;	
+	end component interface_controller;	
 	signal clk_tb : std_logic := '0';
 	signal rst_tb : std_logic := '0';
 	
-	signal	interface_0_avalon_slave_1_write_tb          :  std_logic;
+	signal	interface_0_avalon_slave_1_read_tb          : std_logic;
+	signal	interface_0_avalon_slave_1_write_tb         :  std_logic;
 	signal	interface_0_avalon_slave_1_waitrequest_tb   :  std_logic;  
-	signal	interface_0_avalon_slave_1_address_tb       :  std_logic_vector(4 - 1 downto 0);                  -- address
-	signal	interface_0_avalon_slave_1_byteenable_tb    :  std_logic_vector(4 - 1 downto 0);                 -- byteenable
-	signal	interface_0_avalon_slave_1_writedata_tb      :   std_logic_vector(32 - 1 downto 0); 	-- readdata
-	
-	signal	interface_0_avalon_master_1_read_tb          :  std_logic; 
-	signal	interface_0_avalon_master_1_waitrequest_tb   :  std_logic;  
-	signal	interface_0_avalon_master_1_address_tb       :  std_logic_vector(4 - 1 downto 0);                -- address
-	signal	interface_0_avalon_master_1_byteenable_tb    :  std_logic_vector(4 - 1 downto 0);               -- byteenable
-	signal	interface_0_avalon_master_1_readdata_tb      :  std_logic_vector(32 - 1 downto 0);  -- readdata
+	signal	interface_0_avalon_slave_1_address_tb       :  std_logic_vector(4 downto 0);                  -- address
+	signal	interface_0_avalon_slave_1_byteenable_tb    :  std_logic_vector(4 downto 0);                 -- byteenable
+	signal	interface_0_avalon_slave_1_readdata_tb      :   std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
+	signal	interface_0_avalon_slave_1_writedata_tb     :   std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
+			
+	signal	key_tb        :   std_logic_vector(127 downto 0);
+	signal plaintext_tb  :   std_logic_vector(127 downto 0);
+	signal	ciphertext_tb :  std_logic_vector(127 downto 0);
+	signal	done_tb       :  std_logic;			
 
 	constant clk_period : time := 10 ns;
 	
 begin
-	interface_inst : interface
+	interface_inst : interface_controller
 		port map(
-			clk_clk =>  clk_tb,
-			reset_reset_n =>  rst_tb,
+			clk =>  clk_tb,
+			rst =>  rst_tb,
 			
-			interface_0_avalon_master_1_read   =>    interface_0_avalon_master_1_read_tb,   
-			interface_0_avalon_master_1_waitrequest  =>interface_0_avalon_master_1_waitrequest_tb,
-			interface_0_avalon_master_1_address    =>   interface_0_avalon_master_1_address_tb,
-			interface_0_avalon_master_1_byteenable  => interface_0_avalon_master_1_byteenable_tb,
-			interface_0_avalon_master_1_readdata   =>  interface_0_avalon_master_1_readdata_tb,
+			interface_0_avalon_slave_1_read   =>    interface_0_avalon_slave_1_read_tb,   
+			interface_0_avalon_slave_1_write  =>interface_0_avalon_slave_1_write_tb,
+			interface_0_avalon_slave_1_waitrequest    =>   interface_0_avalon_slave_1_waitrequest_tb,
+			interface_0_avalon_slave_1_address  => interface_0_avalon_slave_1_address_tb,
+			interface_0_avalon_slave_1_byteenable   =>  interface_0_avalon_slave_1_byteenable_tb,
+			interface_0_avalon_slave_1_readdata    =>    interface_0_avalon_slave_1_readdata_tb,
+			interface_0_avalon_slave_1_writedata  =>interface_0_avalon_slave_1_writedata_tb,
 			
-			interface_0_avalon_slave_1_write    =>    interface_0_avalon_slave_1_write_tb,
-			interface_0_avalon_slave_1_waitrequest  =>interface_0_avalon_slave_1_waitrequest_tb,
-			interface_0_avalon_slave_1_address   =>   interface_0_avalon_slave_1_address_tb,
-			interface_0_avalon_slave_1_byteenable  => interface_0_avalon_slave_1_byteenable_tb,
-			interface_0_avalon_slave_1_writedata =>   interface_0_avalon_slave_1_writedata_tb
+			
+			
+			key   =>   key_tb,
+			plaintext  => plaintext_tb,
+			ciphertext =>   ciphertext_tb,
+			done =>   done_tb
 			
 	);
 	clk_process : process is
@@ -76,13 +77,39 @@ begin
 	sim_proc : process is
 	begin
 		report "Testbench started";
+		interface_0_avalon_slave_1_write_tb <= '0';
+		interface_0_avalon_slave_1_address_tb <= (others => '0');
+		interface_0_avalon_slave_1_read_tb <= '0';
+		interface_0_avalon_slave_1_writedata_tb <= (others => '0');
+		interface_0_avalon_slave_1_byteenable_tb <= (others => '1');
+		
+		rst_tb <= '1';
+		wait for clk_period/2;
+		rst_tb <='0';  
+		rst_tb <= '1';
+		wait for clk_period/2;
+		rst_tb <='0'; 
+		report "reset done";
+		
 		wait until rising_edge(clk_tb) and rst_tb = '0';
+			report "start";
 			interface_0_avalon_slave_1_write_tb <= '1';
+			interface_0_avalon_slave_1_address_tb <= "00000";
 			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
 			report "entering csr";
-			interface_0_avalon_slave_1_address_tb <= x"0";
-			interface_0_avalon_slave_1_byteenable_tb <= "1111";
 			interface_0_avalon_slave_1_writedata_tb <= x"aaaaaaaa";
+			wait for clk_period;
+			interface_0_avalon_slave_1_write_tb <= '0';
+			wait for clk_period *2;
+			rst_tb <='1';  
+			wait for clk_period;
+			rst_tb <= '0';
+			wait for clk_period;		
+			interface_0_avalon_slave_1_read_tb <= '1';
+			interface_0_avalon_slave_1_address_tb <= "00000";
+			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
+			interface_0_avalon_slave_1_read_tb <= '0';
+			wait;
 		--end if;
 	end process sim_proc;
 	

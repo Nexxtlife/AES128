@@ -9,9 +9,9 @@ use IEEE.numeric_std.all;
 
 entity interface_controller is
   generic (
-    INTERFACE_WIDTH : integer := 32; -- change in tcl file [8,16,32]
-    INTERFACE_LENGTH : natural := 32; -- change in tcl file [0-n]
-    INTERFACE_ADDR_WIDTH : natural := 5
+    INTERFACE_WIDTH : integer := 8; -- change in tcl file [8,16,32]
+    INTERFACE_LENGTH : natural := 1; -- change in tcl file [0-n]
+    INTERFACE_ADDR_WIDTH : natural := 3
   );
   port (
     clk, rst : in std_logic;
@@ -86,7 +86,6 @@ read_csr: process (clk, rst)
 begin
 	if rst = '1' then
 		read_state <= idle;
-		interface_0_avalon_slave_1_waitrequest <= '0';
 	elsif rising_edge (clk) then
 	
 		case read_state is
@@ -95,8 +94,7 @@ begin
 				if write_state = idle and interface_0_avalon_slave_1_read = '1' then
 					read_state <= running;
 					interface_0_avalon_slave_1_waitrequest <= '1';
-					data_temp <= csr_reg(0);
-					--data_temp <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+					data_temp <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
 				end if;
 				
 			when running =>
@@ -120,7 +118,6 @@ write_csr: process (clk, rst)
 begin
 	if rst = '1' then
 		write_state <= idle;
-		interface_0_avalon_slave_1_waitrequest <= '0';
 		
 	elsif rising_edge (clk) then
 		case write_state is
@@ -133,9 +130,8 @@ begin
 	
 			when running =>	
 			
-				interface_0_avalon_slave_1_waitrequest <= '0';	
-				csr_reg(0) <= interface_0_avalon_slave_1_writedata;
-				--csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
+				interface_0_avalon_slave_1_waitrequest <= '0';			
+				csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
 								
 			when stopping =>
 		
@@ -157,7 +153,6 @@ csr: process (clk, rst)
 begin
 	if rst = '1' then
 		csr_reg <= (others => (others => '0'));
-		interface_0_avalon_slave_1_waitrequest <= '0';
 	elsif rising_edge (clk) then
 		case encrypt_decrypt is
 			when '1' =>
@@ -170,7 +165,6 @@ begin
 				if start_flag = '1' then
 				end if;
 
-			when others =>
 
 			end case;
 	end if;
