@@ -36,32 +36,34 @@ end interface_controller;
 
 architecture behave of interface_controller is
 
-subtype word_t is std_logic_vector(INTERFACE_WIDTH - 1  downto 0);
-type register_t is array(integer range <>) of word_t;
-
-
 -- state machine states
 type read_states_T is (idle, running, stopping);
 type write_states_T is (idle, running, stopping);
 signal read_state : read_states_T;
 signal write_state : write_states_T;
 
+-- temp data storage
 signal data_temp : std_logic_vector (INTERFACE_WIDTH - 1 downto 0); 
 signal data_temp_AES : std_logic_vector (127 downto 0);
 
 --CSR initial values
-function init_csr
-  return register_t is
-  variable temp: register_t(INTERFACE_LENGTH - 1 downto 0);
-  begin
+--function init_csr
+  --return register_t is
+  --variable temp: register_t(INTERFACE_LENGTH - 1 downto 0);
+  --begin
 	--entire table set to '0'
-    temp := (others => (others => '0'));
-    return temp;
-  end init_csr;
-
-----------TEMPORATY SOLUTION---------------------------------------------------------------
+    --temp := (others => (others => '0'));
+    --return temp;
+  --end init_csr;
+  
+-------------------------------------------------------------------------------------------
+----------CSR SOLUTION---------------------------------------------------------------------
+-------------------------------------------------------------------------------------------
+subtype word_t is std_logic_vector(INTERFACE_WIDTH - 1  downto 0);
 type reg_t is array (INTERFACE_LENGTH - 1 downto 0) of word_t;
-signal csr_reg : reg_t := (others => (others => '0'));
+
+signal csr_reg : reg_t:= (others => (others => '0'));
+signal test_temp : std_logic_vector(31 downto 0) := (others => '0');
 -------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------
 
@@ -77,11 +79,13 @@ alias end_flag : std_logic is control_reg(3);         -- logic 1 if either state
 
 signal out_waitrequest : std_logic;
 
-begin
 
+begin
 -------------------------------------------------------------------------------
 -- THE READ SLAVE STATE MACHINE
 -------------------------------------------------------------------------------
+
+
 read_csr: process (clk, rst)
 begin
 	if rst = '1' then
@@ -95,13 +99,14 @@ begin
 				if write_state = idle and interface_0_avalon_slave_1_read = '1' then
 					read_state <= running;
 					interface_0_avalon_slave_1_waitrequest <= '1';
-					data_temp <= csr_reg(0);
+					--data_temp <= csr_reg(0);
 					--data_temp <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+					
 				end if;
 				
 			when running =>
 				interface_0_avalon_slave_1_waitrequest <= '0';
-				interface_0_avalon_slave_1_readdata <= data_temp;
+				interface_0_avalon_slave_1_readdata <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
 				read_state <= stopping;
 				
 			when stopping =>
@@ -133,9 +138,11 @@ begin
 	
 			when running =>	
 			
-				interface_0_avalon_slave_1_waitrequest <= '0';	
-				csr_reg(0) <= interface_0_avalon_slave_1_writedata;
-				--csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
+				interface_0_avalon_slave_1_waitrequest <= '0';
+				--test_temp <= interface_0_avalon_slave_1_writedata;
+				--csr_reg(1) <= interface_0_avalon_slave_1_writedata;
+				csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
+				write_state <= stopping;	
 								
 			when stopping =>
 		
@@ -146,17 +153,13 @@ begin
 end process;
 
 -------------------------------------------------------------------------------
--- THE WRITE MASTER STATE MACHINE
--------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------
 -- CSR PROCESS
 -------------------------------------------------------------------------------
 
 csr: process (clk, rst)
 begin
 	if rst = '1' then
-		csr_reg <= (others => (others => '0'));
+		--csr_reg <= (others => (others => '0'));
 		interface_0_avalon_slave_1_waitrequest <= '0';
 	elsif rising_edge (clk) then
 		case encrypt_decrypt is

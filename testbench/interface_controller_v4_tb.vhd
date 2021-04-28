@@ -80,7 +80,7 @@ begin
 		interface_0_avalon_slave_1_write_tb <= '0';
 		interface_0_avalon_slave_1_address_tb <= (others => '0');
 		interface_0_avalon_slave_1_read_tb <= '0';
-		interface_0_avalon_slave_1_writedata_tb <= (others => '0');
+		interface_0_avalon_slave_1_writedata_tb <= x"aaaaaaaa";
 		interface_0_avalon_slave_1_byteenable_tb <= (others => '1');
 		
 		rst_tb <= '1';
@@ -93,22 +93,67 @@ begin
 		
 		wait until rising_edge(clk_tb) and rst_tb = '0';
 			report "start";
+			--write--------------------------------------------------------
+			wait for clk_period;
 			interface_0_avalon_slave_1_write_tb <= '1';
 			interface_0_avalon_slave_1_address_tb <= "00000";
+			interface_0_avalon_slave_1_writedata_tb <= x"aaaaaaaa";
 			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
 			report "entering csr";
-			interface_0_avalon_slave_1_writedata_tb <= x"aaaaaaaa";
 			wait for clk_period;
 			interface_0_avalon_slave_1_write_tb <= '0';
-			wait for clk_period *2;
-			rst_tb <='1';  
+			---------------------------------------------------------------
+			
+			--write--------------------------------------------------------
 			wait for clk_period;
-			rst_tb <= '0';
-			wait for clk_period;		
+			interface_0_avalon_slave_1_write_tb <= '1';
+			interface_0_avalon_slave_1_address_tb <= "00001";
+			interface_0_avalon_slave_1_writedata_tb <= x"bbbbbbbb";
+			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
+			report "entering csr";
+			wait for clk_period;
+			interface_0_avalon_slave_1_write_tb <= '0';
+			--------------------------------------------------------------
+			
+			--write--------------------------------------------------------
+			wait for clk_period;
+			interface_0_avalon_slave_1_write_tb <= '1';
+			interface_0_avalon_slave_1_address_tb <= "00010";
+			interface_0_avalon_slave_1_writedata_tb <= x"cccccccc";
+			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
+			report "entering csr";
+			wait for clk_period;
+			interface_0_avalon_slave_1_write_tb <= '0';
+			--------------------------------------------------------------
+			
+			wait for clk_period *2;
+
+			--read--------------------------------------------------------
+			wait for clk_period;
 			interface_0_avalon_slave_1_read_tb <= '1';
 			interface_0_avalon_slave_1_address_tb <= "00000";
 			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
+			wait for clk_period;
 			interface_0_avalon_slave_1_read_tb <= '0';
+			--------------------------------------------------------------
+			
+			--read--------------------------------------------------------
+			wait for clk_period;
+			interface_0_avalon_slave_1_read_tb <= '1';
+			interface_0_avalon_slave_1_address_tb <= "00001";
+			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
+			wait for clk_period;
+			interface_0_avalon_slave_1_read_tb <= '0';
+			--------------------------------------------------------------
+			
+			--read--------------------------------------------------------
+			wait for clk_period;
+			interface_0_avalon_slave_1_read_tb <= '1';
+			interface_0_avalon_slave_1_address_tb <= "00010";
+			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
+			wait for clk_period;
+			interface_0_avalon_slave_1_read_tb <= '0';
+			--------------------------------------------------------------
 			wait;
 		--end if;
 	end process sim_proc;

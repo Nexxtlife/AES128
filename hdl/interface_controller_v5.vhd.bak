@@ -9,9 +9,9 @@ use IEEE.numeric_std.all;
 
 entity interface_controller is
   generic (
-    INTERFACE_WIDTH : integer := 8; -- change in tcl file [8,16,32]
-    INTERFACE_LENGTH : natural := 1; -- change in tcl file [0-n]
-    INTERFACE_ADDR_WIDTH : natural := 3
+    INTERFACE_WIDTH : integer := 32; -- change in tcl file [8,16,32]
+    INTERFACE_LENGTH : natural := 32; -- change in tcl file [0-n]
+    INTERFACE_ADDR_WIDTH : natural := 5
   );
   port (
     clk, rst : in std_logic;
@@ -36,8 +36,8 @@ end interface_controller;
 
 architecture behave of interface_controller is
 
-subtype word_t is std_logic_vector(INTERFACE_WIDTH - 1  downto 0);
-type register_t is array(integer range <>) of word_t;
+--subtype word_t is std_logic_vector(INTERFACE_WIDTH - 1  downto 0);
+--type register_t is array(integer range <>) of word_t;
 
 
 -- state machine states
@@ -50,19 +50,27 @@ signal data_temp : std_logic_vector (INTERFACE_WIDTH - 1 downto 0);
 signal data_temp_AES : std_logic_vector (127 downto 0);
 
 --CSR initial values
-function init_csr
-  return register_t is
-  variable temp: register_t(INTERFACE_LENGTH - 1 downto 0);
-  begin
+--function init_csr
+  --return register_t is
+  --variable temp: register_t(INTERFACE_LENGTH - 1 downto 0);
+  --begin
 	--entire table set to '0'
-    temp := (others => (others => '0'));
-    return temp;
-  end init_csr;
+    --temp := (others => (others => '0'));
+    --return temp;
+  --end init_csr;
 
 ----------TEMPORATY SOLUTION---------------------------------------------------------------
-type reg_t is array (INTERFACE_LENGTH - 1 downto 0) of word_t;
-signal csr_reg : reg_t := (others => (others => '0'));
+--subtype word_csr is std_logic_vector(INTERFACE_WIDTH -1 downto 0);
+--type register_csr is array (INTERFACE_LENGTH -1 downto 0) of std_logic_vector(INTERFACE_WIDTH -1 downto 0);
+--type reg_t is array (INTERFACE_LENGTH - 1 downto 0) of word_t;
+subtype word_t is std_logic_vector(INTERFACE_WIDTH - 1  downto 0);
+type register_temp is array (natural range <>) of word_t;
+signal csr_reg : register_temp(INTERFACE_LENGTH -1 downto 0)(INTERFACE_WIDTH -1 downto 0);
+--signal csr_reg : register_csr;-- := (others => (others => '0'));
+signal test_temp : std_logic_vector(31 downto 0) := (others => '0');
+
 -------------------------------------------------------------------------------------------
+
 -------------------------------------------------------------------------------------------
 
 -- aliasy do obszarów w csr
@@ -77,15 +85,18 @@ alias end_flag : std_logic is control_reg(3);         -- logic 1 if either state
 
 signal out_waitrequest : std_logic;
 
-begin
 
+begin
 -------------------------------------------------------------------------------
 -- THE READ SLAVE STATE MACHINE
 -------------------------------------------------------------------------------
+
+
 read_csr: process (clk, rst)
 begin
 	if rst = '1' then
 		read_state <= idle;
+		interface_0_avalon_slave_1_waitrequest <= '0';
 	elsif rising_edge (clk) then
 	
 		case read_state is
@@ -94,12 +105,16 @@ begin
 				if write_state = idle and interface_0_avalon_slave_1_read = '1' then
 					read_state <= running;
 					interface_0_avalon_slave_1_waitrequest <= '1';
-					data_temp <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+					csr_reg(1) <= x"bbbbbbbb";
+					--data_temp <= csr_reg(0);
+					--data_temp <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+					
 				end if;
 				
 			when running =>
 				interface_0_avalon_slave_1_waitrequest <= '0';
-				interface_0_avalon_slave_1_readdata <= data_temp;
+				interface_0_avalon_slave_1_readdata <= csr_reg(1);
+				--interface_0_avalon_slave_1_readdata <= csr_reg(5);
 				read_state <= stopping;
 				
 			when stopping =>
@@ -118,6 +133,7 @@ write_csr: process (clk, rst)
 begin
 	if rst = '1' then
 		write_state <= idle;
+		interface_0_avalon_slave_1_waitrequest <= '0';
 		
 	elsif rising_edge (clk) then
 		case write_state is
@@ -130,8 +146,11 @@ begin
 	
 			when running =>	
 			
-				interface_0_avalon_slave_1_waitrequest <= '0';			
-				csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
+				interface_0_avalon_slave_1_waitrequest <= '0';
+				--test_temp <= interface_0_avalon_slave_1_writedata;
+				csr_reg(2) <= interface_0_avalon_slave_1_writedata;
+				--csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
+				write_state <= stopping;	
 								
 			when stopping =>
 		
@@ -142,17 +161,14 @@ begin
 end process;
 
 -------------------------------------------------------------------------------
--- THE WRITE MASTER STATE MACHINE
--------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------
 -- CSR PROCESS
 -------------------------------------------------------------------------------
 
 csr: process (clk, rst)
 begin
 	if rst = '1' then
-		csr_reg <= (others => (others => '0'));
+		--csr_reg <= (others => (others => '0'));
+		interface_0_avalon_slave_1_waitrequest <= '0';
 	elsif rising_edge (clk) then
 		case encrypt_decrypt is
 			when '1' =>
@@ -165,6 +181,7 @@ begin
 				if start_flag = '1' then
 				end if;
 
+			when others =>
 
 			end case;
 	end if;
