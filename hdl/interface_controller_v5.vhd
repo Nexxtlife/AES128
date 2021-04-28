@@ -25,10 +25,10 @@ entity interface_controller is
 	interface_0_avalon_slave_1_readdata      : out  std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); 	-- readdata
 	interface_0_avalon_slave_1_writedata     : in  std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); 	-- readdata
 	
-	key        : out  std_logic_vector(127 downto 0);
-	plaintext  : out  std_logic_vector(127 downto 0);
-	ciphertext : in std_logic_vector(127 downto 0);
-	done       : in std_logic														-- valid st
+	key_out        : out  std_logic_vector(127 downto 0);
+	plaintext_out  : out  std_logic_vector(127 downto 0);
+	ciphertext_out : out std_logic_vector(127 downto 0);
+	done_out       : out std_logic														-- valid st
   
   );
 end interface_controller;
@@ -39,6 +39,8 @@ architecture behave of interface_controller is
 -- state machine states
 type read_states_T is (idle, running, stopping);
 type write_states_T is (idle, running, stopping);
+type encrypt_states_T is(idle, running, stopping);
+signal encrypt_state : encrypt_states_T;
 signal read_state : read_states_T;
 signal write_state : write_states_T;
 
@@ -66,13 +68,19 @@ signal csr_reg : reg_t:= (others => (others => '0'));
 signal test_temp : std_logic_vector(31 downto 0) := (others => '0');
 -------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------
+--signals for aes_enc
 
--- aliasy do obszarów w csr
+signal key_t :  std_logic_vector(127 downto 0);
+signal plaintext_t : std_logic_vector(127 downto 0);
+signal ciphertext_t :  std_logic_vector(127 downto 0);
+signal done_t :  std_logic;
+
+-- aliasy do obszarÃ³w w csr
 alias control_reg:   std_logic_vector(INTERFACE_WIDTH - 1 downto 0)  is csr_reg(0);
 alias key_reg:  std_logic_vector(INTERFACE_WIDTH - 1 downto 0)  is csr_reg(1);
 alias  plain_text_reg :  std_logic_vector(INTERFACE_WIDTH - 1 downto 0)	is csr_reg(5);
 
--- aliasy do bitów w obrzarach
+-- aliasy do bitÃ³w w obrzarach
 alias encrypt_decrypt : std_logic is control_reg(0);         -- used to start the DMA (when logic 1)
 alias start_flag : std_logic is control_reg(2);         -- logic 1 if either state machines are active
 alias end_flag : std_logic is control_reg(3);         -- logic 1 if either state machines are active
@@ -84,7 +92,15 @@ begin
 -------------------------------------------------------------------------------
 -- THE READ SLAVE STATE MACHINE
 -------------------------------------------------------------------------------
-
+aes_enc_inst : entity work.aes_enc
+		port map(
+		clk => clk,
+		rst => rst,
+		key => key_t,
+		plaintext => plaintext_t,
+		ciphertext => ciphertext_t,
+		done => done_t	
+		);
 
 read_csr: process (clk, rst)
 begin
@@ -153,30 +169,49 @@ begin
 end process;
 
 -------------------------------------------------------------------------------
--- CSR PROCESS
+-- ENCRYPT
 -------------------------------------------------------------------------------
-
-csr: process (clk, rst)
+encrypt: process (clk, rst)
 begin
 	if rst = '1' then
-		--csr_reg <= (others => (others => '0'));
-		interface_0_avalon_slave_1_waitrequest <= '0';
+		encrypt_state <= idle;
+			key_t <= (others => '0');
+			plaintext_t <= (others => '0');
+		
 	elsif rising_edge (clk) then
-		case encrypt_decrypt is
-			when '1' =>
-				if start_flag = '1' then
-					key <= key_reg;
-					plaintext <= plain_text_reg;
+		case encrypt_state is
+		
+			when idle =>
+				if encrypt_decrypt = '1' and start_flag = '1' then
+					encrypt_state <= running;
 				end if;
-					
-			when '0' =>
-				if start_flag = '1' then
+	
+			when running =>	
+
+				key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
+				plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
+				key_out <= key_t;
+				plaintext_out<= plaintext_t;
+				ciphertext_out <= ciphertext_t;
+				done_out <= done_t;
+				
+				if done_t = '0' then
+					encrypt_state <= stopping;
 				end if;
-
-			when others =>
-
-			end case;
+				
+								
+			when stopping =>				
+				--end_flag <= '1';
+				key_out <= key_t;
+				plaintext_out<= plaintext_t;
+				ciphertext_out <= ciphertext_t;
+				done_out <= done_t;
+				encrypt_state <= idle;
+		
+		end case;
 	end if;
-end process;	
+end process;
+
+-------------------------------------------------------------------------------
 
 end architecture behave;
