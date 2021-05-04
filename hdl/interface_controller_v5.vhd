@@ -14,7 +14,7 @@ entity interface_controller is
     INTERFACE_ADDR_WIDTH : natural := 5
   );
   port (
-    clk, rst : in std_logic;
+    clk_clk, rst_t : in std_logic;
 	
 	-- control & status registers (CSR) slave
 	interface_0_avalon_slave_1_read          : in std_logic;
@@ -81,12 +81,11 @@ alias key_reg:  std_logic_vector(INTERFACE_WIDTH - 1 downto 0)  is csr_reg(1);
 alias  plain_text_reg :  std_logic_vector(INTERFACE_WIDTH - 1 downto 0)	is csr_reg(5);
 
 -- aliasy do bitÃ³w w obrzarach
-alias encrypt_decrypt : std_logic is control_reg(0);         -- used to start the DMA (when logic 1)
-alias start_flag : std_logic is control_reg(2);         -- logic 1 if either state machines are active
-alias end_flag : std_logic is control_reg(3);         -- logic 1 if either state machines are active
-
-signal out_waitrequest : std_logic;
-
+alias encrypt_decrypt : std_logic is control_reg(0); 
+alias start_flag : std_logic is control_reg(2);   
+alias end_flag : std_logic is control_reg(3); 
+constant PERIOD : time := 10 ns;
+signal rst_aes : std_logic;
 
 begin
 -------------------------------------------------------------------------------
@@ -94,20 +93,20 @@ begin
 -------------------------------------------------------------------------------
 aes_enc_inst : entity work.aes_enc
 		port map(
-		clk => clk,
-		rst => rst,
+		clk => clk_clk,
+		rst => rst_aes,
 		key => key_t,
 		plaintext => plaintext_t,
 		ciphertext => ciphertext_t,
 		done => done_t	
 		);
 
-read_csr: process (clk, rst)
+read_csr: process (clk_clk, rst_t)
 begin
-	if rst = '1' then
+	if rst_t = '1' then
 		read_state <= idle;
 		interface_0_avalon_slave_1_waitrequest <= '0';
-	elsif rising_edge (clk) then
+	elsif rising_edge (clk_clk) then
 	
 		case read_state is
 			
@@ -137,13 +136,14 @@ end process;
 -- THE WRITE SLAVE STATE MACHINE
 -------------------------------------------------------------------------------
 
-write_csr: process (clk, rst)
+write_csr: process (clk_clk, rst_t)
 begin
-	if rst = '1' then
+	if rst_t = '1' then
+	
 		write_state <= idle;
 		interface_0_avalon_slave_1_waitrequest <= '0';
 		
-	elsif rising_edge (clk) then
+	elsif rising_edge (clk_clk) then
 		case write_state is
 		
 			when idle =>
@@ -171,47 +171,65 @@ end process;
 -------------------------------------------------------------------------------
 -- ENCRYPT
 -------------------------------------------------------------------------------
-encrypt: process (clk, rst)
-begin
-	if rst = '1' then
-		encrypt_state <= idle;
-			key_t <= (others => '0');
-			plaintext_t <= (others => '0');
+-- enc : process (clk_clk, rst_t)
+-- begin
+		-- plaintext_out <= plaintext_t;
+		-- key_out <= key_t;
+		-- done_out <= done_t;
+		-- ciphertext_out <= ciphertext_t;
 		
-	elsif rising_edge (clk) then
-		case encrypt_state is
-		
-			when idle =>
-				if encrypt_decrypt = '1' and start_flag = '1' then
-					encrypt_state <= running;
-				end if;
-	
-			when running =>	
+	-- if rst_t = '1' then
+		-- plaintext_t <= (others => '0');
+		-- key_t <= (others => '0');
 
-				key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
-				plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
-				key_out <= key_t;
-				plaintext_out<= plaintext_t;
-				ciphertext_out <= ciphertext_t;
-				done_out <= done_t;
-				
-				if done_t = '0' then
-					encrypt_state <= stopping;
-				end if;
-				
-								
-			when stopping =>				
-				--end_flag <= '1';
-				key_out <= key_t;
-				plaintext_out<= plaintext_t;
-				ciphertext_out <= ciphertext_t;
-				done_out <= done_t;
-				encrypt_state <= idle;
+	-- elsif rising_edge (clk_clk) then
+
+		-- if encrypt_decrypt = '1' and start_flag = '1' then
+			-- plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
+			-- key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
+			-- if done_t = '1' then
+				-- csr_reg(9) <= ciphertext_t(127 downto 96);
+				-- csr_reg(10) <= ciphertext_t(95 downto 64);
+				-- csr_reg(11) <= ciphertext_t(63 downto 32);
+				-- csr_reg(12) <= ciphertext_t(31 downto 0);
+				-- ciphertext_out <= ciphertext_t;
+			-- end if;
+		-- end if;
+	-- end if;
+-- end process;
+
+
+enc : process
+begin	
+		wait until start_flag ='1';
+		rst_aes <= '0';
+		plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
+		key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
+		wait until rising_edge(clk_clk) and rst_aes = '0';
+		rst_aes <= '1';		
+		wait until done_t = '1';
+		rst_aes <= '0';
+		wait for PERIOD * 1;
+		-- csr_reg(9) <= ciphertext_t(127 downto 96);
+		-- csr_reg(10) <= ciphertext_t(95 downto 64);
+		-- csr_reg(11) <= ciphertext_t(63 downto 32);
+		-- csr_reg(12) <= ciphertext_t(31 downto 0);
+		ciphertext_out <= ciphertext_t;
+		data_temp_AES <= ciphertext_t;
+		--csr_reg(0)<= x"00000000";
 		
-		end case;
-	end if;
+		--ciphertext_out <= ciphertext_t;
+		csr_reg(9) <= data_temp_AES(127 downto 96);
+		csr_reg(10) <= data_temp_AES(95 downto 64);
+		csr_reg(11) <= data_temp_AES(63 downto 32);
+		csr_reg(12) <= data_temp_AES(31 downto 0);
+		
+		csr_reg(13) <= x"aaaaaaaa";
+		csr_reg(14) <= x"aaaaaaaa";
+		csr_reg(15) <= x"aaaaaaaa";
+		csr_reg(16) <= x"aaaaaaaa";
+
 end process;
-
 -------------------------------------------------------------------------------
 
 end architecture behave;
