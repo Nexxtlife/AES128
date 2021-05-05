@@ -1,12 +1,28 @@
+# Quartus Auto-generated
 db/
-.qsys_edit/
 incremental_db/
-*.sopcinfo
+.qsys_edit/
 output_files/
-ram_test_sys/*
-!**/*.qip
+*.sopcinfo
 *.bsf
 *.cmp
 *.html
 *.xml
-*.v
+*.bak
+
+# But exclude qip - design and qsys - system constructs
+!**/*.qip
+!**/*.qsys
+
+# Modelsim Auto-generated (if you create any named library in simulation script add its name to gitignore below)
+/design_library/
+test_library/
+work/
+transcript
+vsim.wlf
+start_time.txt
+
+# Ignore files from ModelSim directory except *.mpf and *.tcl
+ModelSim/*
+!ModelSim/*.mpf
+!ModelSim/*.tcl
