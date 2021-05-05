@@ -79,6 +79,7 @@ signal done_t :  std_logic;
 alias control_reg:   std_logic_vector(INTERFACE_WIDTH - 1 downto 0)  is csr_reg(0);
 alias key_reg:  std_logic_vector(INTERFACE_WIDTH - 1 downto 0)  is csr_reg(1);
 alias  plain_text_reg :  std_logic_vector(INTERFACE_WIDTH - 1 downto 0)	is csr_reg(5);
+alias cipher_text_reg : std_logic_vector(INTERFACE_WIDTH - 1 downto 0)	is csr_reg(9);
 
 -- aliasy do bitÃ³w w obrzarach
 alias encrypt_decrypt : std_logic is control_reg(0); 
@@ -86,6 +87,8 @@ alias start_flag : std_logic is control_reg(2);
 alias end_flag : std_logic is control_reg(3); 
 constant PERIOD : time := 10 ns;
 signal rst_aes : std_logic;
+signal write_flag : std_logic := '0';
+
 
 begin
 -------------------------------------------------------------------------------
@@ -209,27 +212,71 @@ begin
 		rst_aes <= '1';		
 		wait until done_t = '1';
 		rst_aes <= '0';
-		wait for PERIOD * 1;
+		--wait for PERIOD * 1;
 		-- csr_reg(9) <= ciphertext_t(127 downto 96);
 		-- csr_reg(10) <= ciphertext_t(95 downto 64);
 		-- csr_reg(11) <= ciphertext_t(63 downto 32);
 		-- csr_reg(12) <= ciphertext_t(31 downto 0);
+		-- csr_reg(13) <= x"aaaaaaaa";
+		-- csr_reg(14) <= x"aaaaaaaa";
+		-- csr_reg(15) <= x"aaaaaaaa";
+		-- csr_reg(16) <= x"aaaaaaaa";
+		wait until rising_edge(clk_clk);
+		-- csr_reg(9) <= (others => '1');
+		-- csr_reg(10) <= plaintext_t(95 downto 64);
+		-- csr_reg(11) <= (others => '0');
+		-- csr_reg(12) <= (others => '0');
+		-- csr_reg(13) <= (others => '0');
+		-- csr_reg(14) <= (others => '0');
+		-- csr_reg(15) <= (others => '0');
+		-- csr_reg(16) <= (others => '0');
 		ciphertext_out <= ciphertext_t;
 		data_temp_AES <= ciphertext_t;
+		write_flag <= '1';
+		wait until rising_edge(clk_clk);
+		csr_reg(9) <= (others => '1');
 		--csr_reg(0)<= x"00000000";
-		
+		-- if write_to_csr = '0' then
 		--ciphertext_out <= ciphertext_t;
-		csr_reg(9) <= data_temp_AES(127 downto 96);
-		csr_reg(10) <= data_temp_AES(95 downto 64);
-		csr_reg(11) <= data_temp_AES(63 downto 32);
-		csr_reg(12) <= data_temp_AES(31 downto 0);
+		-- csr_reg(9) <= data_temp_AES(127 downto 96);
+		-- csr_reg(10) <= data_temp_AES(95 downto 64);
+		-- csr_reg(11) <= data_temp_AES(63 downto 32);
+		-- csr_reg(12) <= data_temp_AES(31 downto 0);
 		
-		csr_reg(13) <= x"aaaaaaaa";
-		csr_reg(14) <= x"aaaaaaaa";
-		csr_reg(15) <= x"aaaaaaaa";
-		csr_reg(16) <= x"aaaaaaaa";
+		-- csr_reg(13) <= x"aaaaaaaa";
+		-- csr_reg(14) <= x"aaaaaaaa";
+		-- csr_reg(15) <= x"aaaaaaaa";
+		-- csr_reg(16) <= x"aaaaaaaa";
+		-- write_to_csr <= '1';
+		-- end if;
 
 end process;
--------------------------------------------------------------------------------
+
+-- write_cipher_to_csr : process (clk_clk, rst_t)
+-- begin
+	-- if rst_t = '1' then
+	
+	-- csr_reg(9) <= (others => '0');
+	-- csr_reg(10) <= (others => '0');
+	-- csr_reg(11) <= (others => '0');
+	-- csr_reg(12) <= (others => '0');
+	-- csr_reg(13) <= (others => '0');
+	-- csr_reg(14) <= (others => '0');
+	-- csr_reg(15) <= (others => '0');
+	-- csr_reg(16) <= (others => '0');
+		
+	-- elsif rising_edge (clk_clk) and done_t = '1' then
+		-- plaintext_out <= (others => '0');
+		-- cipher_text_reg <= x"12345678";
+		-- --csr_reg(6) <= x"12345678";
+		-- --csr_reg(7) <= x"12345678";
+		-- --csr_reg(8) <= x"12345678";
+		-- --csr_reg(13) <= x"12345678";
+		-- --csr_reg(14) <= x"12345678";
+		-- --csr_reg(15) <= x"12345678";
+		-- --csr_reg(16) <= x"12345678";
+	-- end if;
+-- end process;
+-- -------------------------------------------------------------------------------
 
 end architecture behave;
