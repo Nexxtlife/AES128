@@ -21,7 +21,7 @@ entity interface_controller is
 	interface_0_avalon_master_1_address       : out std_logic_vector(INTERFACE_ADDR_WIDTH - 1 downto 0);                -- address
 	interface_0_avalon_master_1_byteenable    : out std_logic_vector(INTERFACE_BYTE_ENABLE - 1 downto 0);               -- byteenable
 	interface_0_avalon_master_1_readdata      : in  std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X');  -- readdata
-	interface_0_avalon_master_1_writedata     :   std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); 	-- readdata
+	interface_0_avalon_master_1_writedata     : out std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); 	-- readdata
 	
 	-- control & status registers (CSR) slave
 	interface_0_avalon_slave_1_read          : in std_logic;

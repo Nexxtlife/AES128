@@ -1,4 +1,5 @@
-sputs {
+
+puts {
   ModelSimSE general compile script version 1.1
   Copyright (c) Doulos June 2004, SD
 }
@@ -25,24 +26,30 @@ set library_file_list {
     ../hdl/controller.vhd
     ../hdl/key_schedule.vhd
     ../hdl/aes_enc.vhd
+	../hdl/interface.vhd
   }
   test_lib {
-    ../testbench/aes_enc_tb.vhd
+    ../testbench/interface_tb.vhd
   }
 }
 
-set top_level test_lib.aes_enc_tb
+set top_level test_lib.interface_tb
 
 set wave_patterns {
   {clk and reset} {
     clk_tb
     rst_tb
   }
-  {DUT} {
-    key_tb
-    plaintext_tb
-    ciphertext_tb
-    done_tb
+  {src} {
+    interface_0_avalon_streaming_source_ready_tb
+	interface_0_avalon_streaming_source_valid_tb
+	interface_0_avalon_streaming_source_data_tb	
+
+  }
+  {sink} {
+	interface_1_avalon_streaming_sink_ready_tb
+	interface_1_avalon_streaming_sink_valid_tb
+	interface_1_avalon_streaming_sink_data_tb
   }
   
 }
@@ -51,12 +58,16 @@ set wave_radices {
   binary {
     clk_tb
     rst_tb
+	interface_0_avalon_streaming_source_ready_tb
+	interface_0_avalon_streaming_source_valid_tb
+	interface_1_avalon_streaming_sink_ready_tb
+	interface_1_avalon_streaming_sink_valid_tb
   }
   hexadecimal {
     # tutaj wpisujesz nazwy sygnałów które mają być wyświetlane jako heksadecymalne
-    key_tb
-    plaintext_tb
-    ciphertext_tb
+	interface_0_avalon_streaming_source_data_tb			
+	interface_1_avalon_streaming_sink_data_tb
+
   }
   decimal {
     # tutaj wpisujesz nazwy sygnałów które mają być wyświetlane jako wartości dziesiętne
@@ -69,7 +80,8 @@ set wave_radices {
 set wave_colors {
   
   gold {
-    ciphertext_tb
+    interface_0_avalon_streaming_source_data_tb			
+	interface_1_avalon_streaming_sink_data_tb
   }
 }
 

@@ -1,7 +1,3 @@
--- Author: Damian Bachmat
--- date: 18.03.2021
--- company: NCBC
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -11,9 +7,9 @@ entity <entity-name> is
     CSR_WIDTH : natural := 8; -- w tym miejscu powinno być do wyboru [8,16,31]
     CSR_LENGTH : natural := 8; -- w tym miejscu można podać długość rejestru [0-n]
     CSR_ADDR_WIDTH : natural := 3 
-  )
+  ) 
   port (
-    clk, rst_n : in std_logic;
+    clk, rst_n : in std_logic; 
     . . . 
     -- csr interface signals
     csr_address:    in  std_logic_vector(CSR_ADDR_WIDTH - 1 downto 0);

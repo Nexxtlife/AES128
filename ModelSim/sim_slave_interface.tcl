@@ -25,9 +25,10 @@ set library_file_list {
     ../hdl/controller.vhd
     ../hdl/key_schedule.vhd
     ../hdl/aes_enc.vhd
+	../hdl/interface_controller_v5.vhd
   }
   test_lib {
-    ../testbench/aes_enc_tb.vhd
+    ../testbench/interface_controller_v4_tb.vhd
   }
 }
 
@@ -38,11 +39,21 @@ set wave_patterns {
     clk_tb
     rst_tb
   }
-  {DUT} {
+  {aes} {
     key_tb
     plaintext_tb
     ciphertext_tb
     done_tb
+  }
+  {interface} {
+	interface_0_avalon_slave_1_read_tb
+	interface_0_avalon_slave_1_write_tb
+	interface_0_avalon_slave_1_waitrequest_tb
+	interface_0_avalon_slave_1_address_tb
+	interface_0_avalon_slave_1_byteenable_tb
+	interface_0_avalon_slave_1_readdata_tb
+	interface_0_avalon_slave_1_writedata_tb
+
   }
   
 }
@@ -57,6 +68,10 @@ set wave_radices {
     key_tb
     plaintext_tb
     ciphertext_tb
+	interface_0_avalon_slave_1_address_tb
+	interface_0_avalon_slave_1_byteenable_tb
+	interface_0_avalon_slave_1_readdata_tb
+	interface_0_avalon_slave_1_writedata_tb
   }
   decimal {
     # tutaj wpisujesz nazwy sygnałów które mają być wyświetlane jako wartości dziesiętne

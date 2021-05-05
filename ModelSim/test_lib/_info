@@ -9,7 +9,7 @@ z2
 cModel Technology
 Z0 dC:/Users/test/Desktop/GitLab/AES/ModelSim
 Eaes_enc_tb
-Z1 w1615380576
+Z1 w1620200749
 Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
@@ -22,24 +22,24 @@ VC]GbkScFITN02P]9MC`l23
 !s100 ZgK[jiJ1I:IdBS40Pdz`n2
 Z7 OP;C;10.4a;61
 32
-Z8 !s110 1615455188
+Z8 !s110 1620201177
 !i10b 1
-Z9 !s108 1615455188.000000
+Z9 !s108 1620201177.000000
 Z10 !s90 -reportprogress|300|-work|test_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/testbench/aes_enc_tb.vhd|
 Z11 !s107 C:/Users/test/Desktop/GitLab/AES/testbench/aes_enc_tb.vhd|
 !i113 1
 Z12 o-work test_lib -2002 -explicit -O0
 Z13 tExplicit 1
 Asim
-Z14 DEx10 design_lib 7 aes_enc 0 22 YMgYo8bKmbMlZ@5RBb@8E1
+DEx10 design_lib 7 aes_enc 0 22 YMgYo8bKmbMlZ@5RBb@8E1
 R2
 R3
 R4
-Z15 DEx4 work 10 aes_enc_tb 0 22 C]GbkScFITN02P]9MC`l23
+DEx4 work 10 aes_enc_tb 0 22 C]GbkScFITN02P]9MC`l23
 l24
 L11
-Z16 VdID]:[Sj1FcOR3HK?Q]0o0
-Z17 !s100 OSPJSGc0MWnj3SG9KFcMD0
+V<4Mc;1`2lCEJTWC=dzRBU2
+!s100 3RIE?XMleEfkfRlRkfgL`0
 R7
 32
 R8
@@ -47,6 +47,47 @@ R8
 R9
 R10
 R11
+!i113 1
+R12
+R13
+Einterface_tb
+Z14 w1620201191
+R3
+R4
+R0
+Z15 8C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd
+Z16 FC:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd
+l0
+L7
+VQI=;e]<^OQNYbgJB6:[5G3
+!s100 8CKS>7?MflULF>0D[D^P10
+R7
+32
+Z17 !s110 1620201195
+!i10b 1
+Z18 !s108 1620201195.000000
+Z19 !s90 -reportprogress|300|-work|test_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd|
+Z20 !s107 C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd|
+!i113 1
+R12
+R13
+Abehavior
+R2
+Z21 DEx10 design_lib 20 interface_controller 0 22 A`BSBFKz7BnGEK=bmOOIZ1
+R3
+R4
+Z22 DEx4 work 12 interface_tb 0 22 QI=;e]<^OQNYbgJB6:[5G3
+l50
+L10
+VSHWg6EZ@Q;3K@61;@PhNc0
+!s100 =QS5EjfRmW7i@2D3oR4aj3
+R7
+32
+R17
+!i10b 1
+R18
+R19
+R20
 !i113 1
 R12
 R13

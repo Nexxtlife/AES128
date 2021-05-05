@@ -234,21 +234,9 @@ begin
 		data_temp_AES <= ciphertext_t;
 		write_flag <= '1';
 		wait until rising_edge(clk_clk);
-		csr_reg(9) <= (others => '1');
-		--csr_reg(0)<= x"00000000";
-		-- if write_to_csr = '0' then
-		--ciphertext_out <= ciphertext_t;
-		-- csr_reg(9) <= data_temp_AES(127 downto 96);
-		-- csr_reg(10) <= data_temp_AES(95 downto 64);
-		-- csr_reg(11) <= data_temp_AES(63 downto 32);
-		-- csr_reg(12) <= data_temp_AES(31 downto 0);
-		
-		-- csr_reg(13) <= x"aaaaaaaa";
-		-- csr_reg(14) <= x"aaaaaaaa";
-		-- csr_reg(15) <= x"aaaaaaaa";
-		-- csr_reg(16) <= x"aaaaaaaa";
-		-- write_to_csr <= '1';
-		-- end if;
+		ciphertext_out <= data_temp_AES;
+		csr_reg(9) <= data_temp_AES(95 downto 64);
+
 
 end process;
 

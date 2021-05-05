@@ -1,6 +1,9 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
+library design_lib;
+use design_lib.all;
+
 entity interface_tb is 
 end interface_tb;
 
@@ -45,7 +48,7 @@ architecture behavior of interface_tb is
 	constant clk_period : time := 10 ns;
 	
 begin
-	interface_inst : interface_controller
+	interface_inst : entity design_lib.interface_controller
 		port map(
 			clk_clk =>  clk_tb,
 			rst_t =>  rst_tb,

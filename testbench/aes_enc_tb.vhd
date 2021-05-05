@@ -2,8 +2,8 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
---library design_lib;
---use design_lib.all;
+library design_lib;
+use design_lib.all;
 
 entity aes_enc_tb is
 end entity aes_enc_tb;
@@ -24,7 +24,7 @@ signal stop_clk : boolean := false;
 begin
   
   -- instancja modułu testowanego
-  DUT : entity work.aes_enc(behavioral)
+  DUT : entity design_lib.aes_enc(behavioral)
   port map (
     clk => clk_tb, 
     rst => rst_tb, 

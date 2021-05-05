@@ -42,8 +42,8 @@ begin
     -- TODO:
     -- tutaj musisz uzupełnic własne wymuszenia
     -- testowanego modułu. --3925841d02dc09fbdc118597196a0b32
-	plaintext_tb <= x"3243f6a8 885a308d 313198a2 e0370734";
-	key_tb <= x"2b7e1516 28aed2a6 abf71588 09cf4f3c";
+	plaintext_tb <= x"3243f6a8885a308d313198a2e0370734";
+	key_tb <= x"2b7e151628aed2a6abf7158809cf4f3c";
 	wait for PERIOD * 1;
 	wait until done_tb = '1'; --3925841D02DC09FBDC118597196A0B32
 	wait for PERIOD/2;
