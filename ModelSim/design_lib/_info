@@ -298,7 +298,7 @@ R58
 R59
 R12
 Einterface_controller
-Z60 w1620281771
+Z60 w1620304864
 R51
 R1
 R2
@@ -311,9 +311,9 @@ VA`BSBFKz7BnGEK=bmOOIZ1
 !s100 0C@48fa>h;oXJbGPUI;Dd2
 R6
 32
-Z63 !s110 1620281787
+Z63 !s110 1620304882
 !i10b 1
-Z64 !s108 1620281787.000000
+Z64 !s108 1620304882.000000
 Z65 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller_v5.vhd|
 Z66 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller_v5.vhd|
 !i113 1
@@ -325,10 +325,10 @@ R51
 R1
 R2
 Z67 DEx4 work 20 interface_controller 0 22 A`BSBFKz7BnGEK=bmOOIZ1
-l97
+l104
 L37
-V<iL<KW3WI=zklkk]d_9:>0
-!s100 :o;2OgCGHRkJXaFSD_TgQ0
+VCAzmTM_Xj>ODFF>_PcEhb0
+!s100 OSA?HhF8hSY;eQ>[Ni5`M2
 R6
 32
 R63

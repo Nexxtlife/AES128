@@ -88,11 +88,18 @@ alias end_flag : std_logic is control_reg(3);
 constant PERIOD : time := 10 ns;
 signal rst_aes : std_logic;
 signal temp : std_logic_vector (31 downto 0);
-signal write_flag : std_logic := '0';
 
 --wait_request signals
 signal local_write_wait : std_logic := '0';
 signal local_read_wait : std_logic := '0';
+
+--csr write signals
+signal csr_buffer_1 : std_logic_vector ( 31 downto 0);
+signal csr_buffer_2 : std_logic_vector ( 31 downto 0);
+signal csr_buffer_3 : std_logic_vector ( 31 downto 0);
+signal csr_buffer_4 : std_logic_vector ( 31 downto 0);
+signal csr_write_flag : std_logic := '0';
+signal csr_write_address : std_logic_vector(5 downto 0);
 
 begin
 -------------------------------------------------------------------------------
@@ -112,7 +119,7 @@ read_csr: process (clk_clk, rst_t)
 begin
 	if rst_t = '1' then
 		read_state <= idle;
-		local_read_wait <= '0';
+		--local_read_wait <= '0';
 	elsif rising_edge (clk_clk) then
 	
 		case read_state is
@@ -120,14 +127,12 @@ begin
 			when idle =>
 				if write_state = idle and interface_0_avalon_slave_1_read = '1' then
 					read_state <= running;
-					local_read_wait <= '1';
-					--data_temp <= csr_reg(0);
-					--data_temp <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+					--local_read_wait <= '1';
 					
 				end if;
 				
 			when running =>
-				local_read_wait <= '0';
+				--local_read_wait <= '0';
 				interface_0_avalon_slave_1_readdata <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
 				read_state <= stopping;
 				
@@ -148,7 +153,7 @@ begin
 	if rst_t = '1' then
 	
 		write_state <= idle;
-		local_write_wait <= '0';
+		--local_write_wait <= '0';
 		
 	elsif rising_edge (clk_clk) then
 		case write_state is
@@ -156,19 +161,21 @@ begin
 			when idle =>
 				if read_state = idle and interface_0_avalon_slave_1_write = '1' then
 					write_state <= running;			
-					local_write_wait <= '1';
+					--local_write_wait <= '1';
 				end if;
+				
 	
 			when running =>	
 			
-				local_write_wait <= '0';
-				--test_temp <= interface_0_avalon_slave_1_writedata;
-				--csr_reg(1) <= interface_0_avalon_slave_1_writedata;
+				--local_write_wait <= '0';
+				--csr_buffer_1 <= interface_0_avalon_slave_1_writedata;
+				--csr_write_address <= interface_0_avalon_slave_1_address;
+				--csr_write_flag <= '1';
 				csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
 				write_state <= stopping;	
 								
 			when stopping =>
-		
+				csr_write_flag <= '0';
 				write_state <= idle;
 		
 		end case;
@@ -176,15 +183,36 @@ begin
 end process;
 
 
-wait_request : process (clk_clk, rst_t)
+wait_request : process (clk_clk)
 begin
-	if rst_t = '1' then
-		interface_0_avalon_slave_1_waitrequest <= '0';
-	elsif rising_edge (clk_clk) then
-		interface_0_avalon_slave_1_waitrequest <= local_read_wait or local_write_wait;
-	end if;
+		if rst_t = '1' then
+			interface_0_avalon_slave_1_waitrequest <= '0';
+			
+		elsif write_state = idle  and interface_0_avalon_slave_1_write = '1' then
+			interface_0_avalon_slave_1_waitrequest <= '1';
+		elsif read_state = idle and interface_0_avalon_slave_1_read = '1'then
+			interface_0_avalon_slave_1_waitrequest <= '1';
+		elsif write_state = running then
+			interface_0_avalon_slave_1_waitrequest <= '0';
+		elsif read_state = running then 
+			interface_0_avalon_slave_1_waitrequest <= '0';
+		end if;
 
 end process;
+
+-- csr_process: process (clk_clk, rst_t)
+-- begin
+	-- if rst_t = '1' then
+		-- csr_buffer_1 <= (others => '0');
+		
+	-- elsif rising_edge (clk_clk) and csr_write_flag = '1' then
+		-- csr_reg(to_integer(unsigned(csr_write_address))) <= csr_buffer_1;
+	-- end if;
+
+-- end process;
+
+
+
 -------------------------------------------------------------------------------
 -- ENCRYPT
 -------------------------------------------------------------------------------
@@ -216,45 +244,45 @@ end process;
 -- end process;
 
 
-enc : process
-begin	
-		wait until start_flag ='1';
-		rst_aes <= '0';
-		csr_reg(9) <= (others=>'0');
-		csr_reg(10) <= (others=>'0');
-		csr_reg(11) <= (others=>'0');
-		csr_reg(12) <= (others=>'0');
+-- enc : process
+-- begin	
+		-- wait until start_flag ='1';
+		-- rst_aes <= '0';
+		-- csr_reg(9) <= (others=>'0');
+		-- csr_reg(10) <= (others=>'0');
+		-- csr_reg(11) <= (others=>'0');
+		-- csr_reg(12) <= (others=>'0');
 		
-		plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
-		key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
-		wait until rising_edge(clk_clk) and rst_aes = '0';
-		rst_aes <= '1';		
-		wait until done_t = '1';
-		rst_aes <= '0';
-		--wait for PERIOD * 1;
+		-- plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
+		-- key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
+		-- wait until rising_edge(clk_clk) and rst_aes = '0';
+		-- rst_aes <= '1';		
+		-- wait until done_t = '1';
+		-- rst_aes <= '0';
+		-- --wait for PERIOD * 1;
+		-- -- csr_reg(9) <= ciphertext_t(127 downto 96);
+		-- -- csr_reg(10) <= ciphertext_t(95 downto 64);
+		-- -- csr_reg(11) <= ciphertext_t(63 downto 32);
+		-- -- csr_reg(12) <= ciphertext_t(31 downto 0);
+		-- -- csr_reg(13) <= x"aaaaaaaa";
+		-- -- csr_reg(14) <= x"aaaaaaaa";
+		-- -- csr_reg(15) <= x"aaaaaaaa";
+		-- -- csr_reg(16) <= x"aaaaaaaa";
+		-- wait until rising_edge(clk_clk);		
+		-- ciphertext_out <= ciphertext_t;
+		-- data_temp_AES <= ciphertext_t;
+		-- ciphertext_out <= data_temp_AES;
+		-- temp <= ciphertext_t(95 downto 64);
 		-- csr_reg(9) <= ciphertext_t(127 downto 96);
 		-- csr_reg(10) <= ciphertext_t(95 downto 64);
 		-- csr_reg(11) <= ciphertext_t(63 downto 32);
 		-- csr_reg(12) <= ciphertext_t(31 downto 0);
-		-- csr_reg(13) <= x"aaaaaaaa";
-		-- csr_reg(14) <= x"aaaaaaaa";
-		-- csr_reg(15) <= x"aaaaaaaa";
-		-- csr_reg(16) <= x"aaaaaaaa";
-		wait until rising_edge(clk_clk);		
-		ciphertext_out <= ciphertext_t;
-		data_temp_AES <= ciphertext_t;
-		ciphertext_out <= data_temp_AES;
-		temp <= ciphertext_t(95 downto 64);
-		csr_reg(9) <= ciphertext_t(127 downto 96);
-		csr_reg(10) <= ciphertext_t(95 downto 64);
-		csr_reg(11) <= ciphertext_t(63 downto 32);
-		csr_reg(12) <= ciphertext_t(31 downto 0);
-		wait until rising_edge(clk_clk);
-		temp <= csr_reg(9);
+		-- wait until rising_edge(clk_clk);
+		-- temp <= csr_reg(9);
 
 
 
-end process;
+-- end process;
 -- -------------------------------------------------------------------------------
 
 end architecture behave;
