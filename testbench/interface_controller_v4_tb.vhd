@@ -301,6 +301,27 @@ begin
 			interface_0_avalon_slave_1_read_tb <= '0';
 			--------------------------------------------------------------
 			
+			
+			
+			--------------------------------------------------------------
+			--write--------------------------------------------------------
+			wait for clk_period;
+			interface_0_avalon_slave_1_write_tb <= '1';
+			interface_0_avalon_slave_1_address_tb <= "00001";
+			interface_0_avalon_slave_1_writedata_tb <= x"12345678";
+			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
+			report "entering csr";
+			wait for clk_period;
+			interface_0_avalon_slave_1_write_tb <= '0';
+			---------------------------------------------------------------
+			--read--------------------------------------------------------
+			wait for clk_period;
+			interface_0_avalon_slave_1_read_tb <= '1';
+			interface_0_avalon_slave_1_address_tb <= "00001";
+			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
+			wait for clk_period;
+			interface_0_avalon_slave_1_read_tb <= '0';
+			--------------------------------------------------------------
 			wait;
 		--end if;
 	end process sim_proc;
