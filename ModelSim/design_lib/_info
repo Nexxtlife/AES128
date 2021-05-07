@@ -303,19 +303,19 @@ R51
 R1
 R2
 R3
-Z61 8C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller_v5.vhd
-Z62 FC:/Users/test/Desktop/GitLab/AES/hdl/interface_controller_v5.vhd
+Z61 8C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller.vhd
+Z62 FC:/Users/test/Desktop/GitLab/AES/hdl/interface_controller.vhd
 l0
 L5
 Vf3T3a]EAioBV140NJUO[N3
 !s100 SG2H^BEi;D9ZZ=NTHb6?21
 R6
 32
-R7
+Z63 !s110 1620386978
 !i10b 1
-R8
-Z63 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller_v5.vhd|
-Z64 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller_v5.vhd|
+Z64 !s108 1620386978.000000
+Z65 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller.vhd|
+Z66 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller.vhd|
 !i113 1
 R11
 R12
@@ -324,28 +324,28 @@ R26
 R51
 R1
 R2
-DEx4 work 20 interface_controller 0 22 f3T3a]EAioBV140NJUO[N3
+Z67 DEx4 work 20 interface_controller 0 22 f3T3a]EAioBV140NJUO[N3
 l75
 L27
-V;5`TZ<iK:bA622b<k]SID3
-!s100 f?<z>^U=AmUkg;VMLTI]R2
+Z68 V;5`TZ<iK:bA622b<k]SID3
+Z69 !s100 f?<z>^U=AmUkg;VMLTI]R2
 R6
 32
-R7
-!i10b 1
-R8
 R63
+!i10b 1
 R64
+R65
+R66
 !i113 1
 R11
 R12
 Einverter
-Z65 w1615364503
+Z70 w1615364503
 R1
 R2
 R3
-Z66 8C:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd
-Z67 FC:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd
+Z71 8C:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd
+Z72 FC:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd
 l0
 L4
 Vm54V@;VY06CKG_9BPM63`3
@@ -355,8 +355,8 @@ R6
 R7
 !i10b 1
 R8
-Z68 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd|
-Z69 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd|
+Z73 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd|
+Z74 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/inverter.vhd|
 !i113 1
 R11
 R12
@@ -373,18 +373,18 @@ R6
 R7
 !i10b 1
 R8
-R68
-R69
+R73
+R74
 !i113 1
 R11
 R12
 Ekey_sch_round_function
-Z70 w1614597470
+Z75 w1614597470
 R1
 R2
 R3
-Z71 8C:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd
-Z72 FC:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd
+Z76 8C:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd
+Z77 FC:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd
 l0
 L4
 V1Kg<A00k2M7PQ4O8<:6F62
@@ -394,8 +394,8 @@ R6
 R7
 !i10b 1
 R8
-Z73 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd|
-Z74 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd|
+Z78 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd|
+Z79 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/key_sch_round_function.vhd|
 !i113 1
 R11
 R12
@@ -403,7 +403,7 @@ Abehavioral
 R32
 R1
 R2
-Z75 DEx4 work 22 key_sch_round_function 0 22 1Kg<A00k2M7PQ4O8<:6F62
+Z80 DEx4 work 22 key_sch_round_function 0 22 1Kg<A00k2M7PQ4O8<:6F62
 l16
 L12
 Vg6O42?X963W^[Dh5:OHU40
@@ -413,18 +413,18 @@ R6
 R7
 !i10b 1
 R8
-R73
-R74
+R78
+R79
 !i113 1
 R11
 R12
 Ekey_schedule
-Z76 w1614338700
+Z81 w1614338700
 R1
 R2
 R3
-Z77 8C:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd
-Z78 FC:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd
+Z82 8C:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd
+Z83 FC:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd
 l0
 L4
 V0Mgoc`J8l_BWUOPzi@UmH2
@@ -434,13 +434,13 @@ R6
 R7
 !i10b 1
 R8
-Z79 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd|
-Z80 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd|
+Z84 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd|
+Z85 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/key_schedule.vhd|
 !i113 1
 R11
 R12
 Abehavioral
-R75
+R80
 R24
 R1
 R2
@@ -454,18 +454,18 @@ R6
 R7
 !i10b 1
 R8
-R79
-R80
+R84
+R85
 !i113 1
 R11
 R12
 Emix_column
-Z81 w1615297680
+Z86 w1615297680
 R1
 R2
 R3
-Z82 8C:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd
-Z83 FC:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd
+Z87 8C:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd
+Z88 FC:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd
 l0
 L4
 VKlOH5U<BV>cCAe:JOYaz20
@@ -475,8 +475,8 @@ R6
 R7
 !i10b 1
 R8
-Z84 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd|
-Z85 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd|
+Z89 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd|
+Z90 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/mix_column.vhd|
 !i113 1
 R11
 R12
@@ -494,18 +494,18 @@ R6
 R7
 !i10b 1
 R8
-R84
-R85
+R89
+R90
 !i113 1
 R11
 R12
 Ereg
-Z86 w1614597976
+Z91 w1614597976
 R1
 R2
 R3
-Z87 8C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd
-Z88 FC:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd
+Z92 8C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd
+Z93 FC:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd
 l0
 L4
 VmM4DjS6@TAG2Xb4h7;I:53
@@ -515,8 +515,8 @@ R6
 R7
 !i10b 1
 R8
-Z89 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd|
-Z90 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd|
+Z94 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd|
+Z95 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd|
 !i113 1
 R11
 R12
@@ -533,18 +533,18 @@ R6
 R7
 !i10b 1
 R8
-R89
-R90
+R94
+R95
 !i113 1
 R11
 R12
 Es_box
-Z91 w1615299162
+Z96 w1615299162
 R1
 R2
 R3
-Z92 8C:/Users/test/Desktop/GitLab/AES/hdl/s_box.vhd
-Z93 FC:/Users/test/Desktop/GitLab/AES/hdl/s_box.vhd
+Z97 8C:/Users/test/Desktop/GitLab/AES/hdl/s_box.vhd
+Z98 FC:/Users/test/Desktop/GitLab/AES/hdl/s_box.vhd
 l0
 L4
 V4>7cV?W72@8D?Ee1D8ok80
@@ -554,8 +554,8 @@ R6
 R7
 !i10b 1
 R8
-Z94 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/s_box.vhd|
-Z95 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/s_box.vhd|
+Z99 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/s_box.vhd|
+Z100 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/s_box.vhd|
 !i113 1
 R11
 R12
@@ -572,18 +572,18 @@ R6
 R7
 !i10b 1
 R8
-R94
-R95
+R99
+R100
 !i113 1
 R11
 R12
 Eshft_row
-Z96 w1614598144
+Z101 w1614598144
 R1
 R2
 R3
-Z97 8C:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd
-Z98 FC:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd
+Z102 8C:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd
+Z103 FC:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd
 l0
 L4
 Vb2_A6LHlB?SMo3a]od<Cl0
@@ -593,8 +593,8 @@ R6
 R7
 !i10b 1
 R8
-Z99 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd|
-Z100 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd|
+Z104 !s90 -reportprogress|300|-work|design_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd|
+Z105 !s107 C:/Users/test/Desktop/GitLab/AES/hdl/shft_row.vhd|
 !i113 1
 R11
 R12
@@ -604,15 +604,15 @@ R2
 R22
 l16
 L12
-Z101 VF8=ZC^cSaalZkB`7z@9W43
-Z102 !s100 9UM1_QWAclX8C<URjG3=i1
+VF8=ZC^cSaalZkB`7z@9W43
+!s100 9UM1_QWAclX8C<URjG3=i1
 R6
 32
 R7
 !i10b 1
 R8
-R99
-R100
+R104
+R105
 !i113 1
 R11
 R12
