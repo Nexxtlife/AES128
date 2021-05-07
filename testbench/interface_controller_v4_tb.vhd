@@ -20,12 +20,7 @@ architecture behavior of interface_tb is
 			interface_0_avalon_slave_1_address       : in std_logic_vector(4 downto 0);                  -- address
 			interface_0_avalon_slave_1_byteenable    : in std_logic_vector(4 downto 0);                 -- byteenable
 			interface_0_avalon_slave_1_readdata      : out  std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
-			interface_0_avalon_slave_1_writedata     : in  std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
-			
-			key_out        : out  std_logic_vector(127 downto 0);
-			plaintext_out  : out  std_logic_vector(127 downto 0);
-			ciphertext_out : out std_logic_vector(127 downto 0);
-			done_out       : out std_logic														-- valid st
+			interface_0_avalon_slave_1_writedata     : in  std_logic_vector(31 downto 0) := (others => 'X') 	-- readdata
 			
 	);	
 	end component interface_controller;	
@@ -39,11 +34,6 @@ architecture behavior of interface_tb is
 	signal	interface_0_avalon_slave_1_byteenable_tb    :  std_logic_vector(4 downto 0);                 -- byteenable
 	signal	interface_0_avalon_slave_1_readdata_tb      :   std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
 	signal	interface_0_avalon_slave_1_writedata_tb     :   std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
-			
-	signal	key_tb        :   std_logic_vector(127 downto 0);
-	signal plaintext_tb  :   std_logic_vector(127 downto 0);
-	signal	ciphertext_tb :  std_logic_vector(127 downto 0);
-	signal	done_tb       :  std_logic;			
 
 	constant clk_period : time := 10 ns;
 	
@@ -59,14 +49,7 @@ begin
 			interface_0_avalon_slave_1_address  => interface_0_avalon_slave_1_address_tb,
 			interface_0_avalon_slave_1_byteenable   =>  interface_0_avalon_slave_1_byteenable_tb,
 			interface_0_avalon_slave_1_readdata    =>    interface_0_avalon_slave_1_readdata_tb,
-			interface_0_avalon_slave_1_writedata  =>interface_0_avalon_slave_1_writedata_tb,
-			
-			
-			
-			key_out   =>   key_tb,
-			plaintext_out  => plaintext_tb,
-			ciphertext_out =>   ciphertext_tb,
-			done_out =>   done_tb
+			interface_0_avalon_slave_1_writedata  =>interface_0_avalon_slave_1_writedata_tb
 			
 	);
 	clk_process : process is
@@ -302,22 +285,11 @@ begin
 			--------------------------------------------------------------
 			
 			
-			
-			--------------------------------------------------------------
-			--write--------------------------------------------------------
-			wait for clk_period;
-			interface_0_avalon_slave_1_write_tb <= '1';
-			interface_0_avalon_slave_1_address_tb <= "00001";
-			interface_0_avalon_slave_1_writedata_tb <= x"12345678";
-			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
-			report "entering csr";
-			wait for clk_period;
-			interface_0_avalon_slave_1_write_tb <= '0';
-			---------------------------------------------------------------
+			--READING CONTROL REG
 			--read--------------------------------------------------------
 			wait for clk_period;
 			interface_0_avalon_slave_1_read_tb <= '1';
-			interface_0_avalon_slave_1_address_tb <= "00001";
+			interface_0_avalon_slave_1_address_tb <= "00000";
 			wait until interface_0_avalon_slave_1_waitrequest_tb = '0';
 			wait for clk_period;
 			interface_0_avalon_slave_1_read_tb <= '0';

@@ -31,15 +31,15 @@ Z11 !s107 C:/Users/test/Desktop/GitLab/AES/testbench/aes_enc_tb.vhd|
 Z12 o-work test_lib -2002 -explicit -O0
 Z13 tExplicit 1
 Asim
-Z14 DEx10 design_lib 7 aes_enc 0 22 YMgYo8bKmbMlZ@5RBb@8E1
+DEx10 design_lib 7 aes_enc 0 22 YMgYo8bKmbMlZ@5RBb@8E1
 R2
 R3
 R4
-Z15 DEx4 work 10 aes_enc_tb 0 22 C]GbkScFITN02P]9MC`l23
+DEx4 work 10 aes_enc_tb 0 22 C]GbkScFITN02P]9MC`l23
 l24
 L11
-Z16 V<4Mc;1`2lCEJTWC=dzRBU2
-Z17 !s100 3RIE?XMleEfkfRlRkfgL`0
+V<4Mc;1`2lCEJTWC=dzRBU2
+!s100 3RIE?XMleEfkfRlRkfgL`0
 R7
 32
 R8
@@ -51,43 +51,43 @@ R11
 R12
 R13
 Einterface_tb
-Z18 w1620206046
+Z14 w1620373972
 R3
 R4
 R0
-Z19 8C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd
-Z20 FC:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd
+Z15 8C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd
+Z16 FC:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd
 l0
 L7
 VQI=;e]<^OQNYbgJB6:[5G3
 !s100 8CKS>7?MflULF>0D[D^P10
 R7
 32
-R8
+Z17 !s110 1620373983
 !i10b 1
-R9
-Z21 !s90 -reportprogress|300|-work|test_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd|
-Z22 !s107 C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd|
+Z18 !s108 1620373983.000000
+Z19 !s90 -reportprogress|300|-work|test_lib|-2002|-explicit|-stats=none|C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd|
+Z20 !s107 C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_v4_tb.vhd|
 !i113 1
 R12
 R13
 Abehavior
 R2
-DEx10 design_lib 20 interface_controller 0 22 A`BSBFKz7BnGEK=bmOOIZ1
+Z21 DEx10 design_lib 20 interface_controller 0 22 lQz`fM;C9MeDN4ImO<6Fn0
 R3
 R4
-DEx4 work 12 interface_tb 0 22 QI=;e]<^OQNYbgJB6:[5G3
-l50
+Z22 DEx4 work 12 interface_tb 0 22 QI=;e]<^OQNYbgJB6:[5G3
+l40
 L10
-V@z4IlTQL7gJ9iSQe>MFmX2
-!s100 PVWU`;f5K:HFF3fEeBXSk0
+Vf7Ao;ni@]]>hV;cPgiR7=0
+!s100 UeLooMOVbMLK^SKUS@RR@3
 R7
 32
-R8
+R17
 !i10b 1
-R9
-R21
-R22
+R18
+R19
+R20
 !i113 1
 R12
 R13
