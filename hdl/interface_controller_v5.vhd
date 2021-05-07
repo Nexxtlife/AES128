@@ -1,8 +1,3 @@
--- this is a temporary working file 
--- need to implement a fifo for master read ( i think)
--- detect if fifo is full or empty
--- read from fifo must be controlled
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -16,12 +11,12 @@ entity interface_controller is
   port (
     clk_clk, rst_t : in std_logic;
 	
-	-- control & status registers (CSR) slave
+	--avalon slave interface
 	interface_0_avalon_slave_1_read          : in std_logic;
 	interface_0_avalon_slave_1_write         : in std_logic;
 	interface_0_avalon_slave_1_waitrequest   : out std_logic;  
 	interface_0_avalon_slave_1_address       : in std_logic_vector(INTERFACE_ADDR_WIDTH - 1 downto 0);                  -- address
-	interface_0_avalon_slave_1_byteenable    : in std_logic_vector(INTERFACE_ADDR_WIDTH - 1 downto 0);                 -- byteenable
+	interface_0_avalon_slave_1_byteenable    : in std_logic_vector(INTERFACE_ADDR_WIDTH - 1 downto 0);                 	-- byteenable
 	interface_0_avalon_slave_1_readdata      : out  std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X'); 	-- readdata
 	interface_0_avalon_slave_1_writedata     : in  std_logic_vector(INTERFACE_WIDTH - 1 downto 0) := (others => 'X') 	-- readdata
   
@@ -40,7 +35,6 @@ signal read_state : read_states_T;
 signal write_state : write_states_T;
 
 -- temp data storage
-signal data_temp : std_logic_vector (INTERFACE_WIDTH - 1 downto 0); 
 signal data_temp_AES : std_logic_vector (127 downto 0);
 
 -------------------------------------------------------------------------------------------
@@ -70,8 +64,8 @@ alias cipher_text_reg : std_logic_vector(INTERFACE_WIDTH - 1 downto 0)	is csr_re
 alias encrypt_decrypt : std_logic is control_reg(0); 
 alias start_flag : std_logic is control_reg(2);   
 alias end_flag : std_logic is control_reg(3); 
+
 signal rst_aes : std_logic;
-signal temp : std_logic_vector (31 downto 0);
 
 --wait_request signals
 signal local_write_wait : std_logic := '0';
@@ -111,7 +105,6 @@ begin
 				read_state <= stopping;
 				
 			when stopping =>
-				data_temp <= (others => '0');
 				read_state <= idle;
 		
 		end case;
@@ -170,6 +163,7 @@ begin
 					encrypt_state <= running;
 					
 				end if;
+				--ADD HERE THE DECRYPT
 				
 			when running =>
 				rst_aes <= '1';	
