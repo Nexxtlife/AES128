@@ -15,16 +15,6 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity s_box
 -- Compiling architecture behavioral of s_box
 
-} {} {}} C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller.vhd {1 {vcom -work design_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/hdl/interface_controller.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity interface_controller
--- Compiling architecture behave of interface_controller
--- Loading entity aes_enc
-
 } {} {}} C:/Users/test/Desktop/GitLab/AES/hdl/byte_sub.vhd {1 {vcom -work design_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/hdl/byte_sub.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -68,6 +58,16 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity inverter
 -- Compiling architecture behavioral of inverter
 
+} {} {}} C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_tb.vhd {1 {vcom -work test_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/testbench/interface_controller_tb.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity interface_tb
+-- Compiling architecture behavior of interface_tb
+-- Loading package NUMERIC_STD
+-- Loading entity interface_controller
+
 } {} {}} C:/Users/test/Desktop/GitLab/AES/testbench/aes_enc_tb.vhd {1 {vcom -work test_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/testbench/aes_enc_tb.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -105,6 +105,14 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Loading entity reg
 -- Loading entity gf_mult
 
+} {} {}} C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd {1 {vcom -work design_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd
+Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity reg
+-- Compiling architecture behavioral of reg
+
 } {} {}} C:/Users/test/Desktop/GitLab/AES/hdl/gf_mult.vhd {1 {vcom -work design_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/hdl/gf_mult.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
@@ -113,13 +121,13 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity gf_mult
 -- Compiling architecture behavioral of gf_mult
 
-} {} {}} C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd {1 {vcom -work design_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/hdl/reg.vhd
+} {} {}} C:/Users/test/Desktop/GitLab/AES/hdl/add_round_key.vhd {1 {vcom -work design_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/hdl/add_round_key.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
--- Compiling entity reg
--- Compiling architecture behavioral of reg
+-- Compiling entity add_round_key
+-- Compiling architecture rtl of add_round_key
 
 } {} {}} C:/Users/test/Desktop/GitLab/AES/hdl/column_calc.vhd {1 {vcom -work design_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/hdl/column_calc.vhd
 Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
@@ -129,13 +137,5 @@ Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 
 -- Compiling entity column_calc
 -- Compiling architecture rtl of column_calc
 -- Loading entity gf_mult
-
-} {} {}} C:/Users/test/Desktop/GitLab/AES/hdl/add_round_key.vhd {1 {vcom -work design_lib -2002 -explicit -stats=none C:/Users/test/Desktop/GitLab/AES/hdl/add_round_key.vhd
-Model Technology ModelSim PE Student Edition vcom 10.4a Compiler 2015.03 Apr  7 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling entity add_round_key
--- Compiling architecture rtl of add_round_key
 
 } {} {}}
