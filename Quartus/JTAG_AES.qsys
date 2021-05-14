@@ -68,6 +68,7 @@
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface name="reset_n" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <module name="AES_0" kind="AES" version="1.0" enabled="1">
   <parameter name="INTERFACE_ADDR_WIDTH" value="5" />
   <parameter name="INTERFACE_LENGTH" value="32" />
@@ -114,11 +115,6 @@
    version="18.0"
    start="clk_0.clk_reset"
    end="AES_0.reset_sink" />
- <connection
-   kind="reset"
-   version="18.0"
-   start="master_0.master_reset"
-   end="clk_0.clk_in_reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.enableEccProtection" value="FALSE" />
  <interconnectRequirement for="$system" name="qsys_mm.insertDefaultSlave" value="FALSE" />

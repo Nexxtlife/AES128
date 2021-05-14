@@ -8,7 +8,8 @@ use IEEE.numeric_std.all;
 
 entity JTAG_AES is
 	port (
-		clk_clk : in std_logic := '0'  -- clk.clk
+		clk_clk         : in std_logic := '0'; --     clk.clk
+		reset_n_reset_n : in std_logic := '0'  -- reset_n.reset_n
 	);
 end entity JTAG_AES;
 
@@ -142,7 +143,6 @@ architecture rtl of JTAG_AES is
 		);
 	end component altera_reset_controller;
 
-	signal master_0_master_reset_reset                                    : std_logic;                     -- master_0:master_reset_reset -> [master_0:clk_reset_reset, rst_controller:reset_in0]
 	signal master_0_master_readdata                                       : std_logic_vector(31 downto 0); -- mm_interconnect_0:master_0_master_readdata -> master_0:master_readdata
 	signal master_0_master_waitrequest                                    : std_logic;                     -- mm_interconnect_0:master_0_master_waitrequest -> master_0:master_waitrequest
 	signal master_0_master_address                                        : std_logic_vector(31 downto 0); -- master_0:master_address -> mm_interconnect_0:master_0_master_address
@@ -159,6 +159,7 @@ architecture rtl of JTAG_AES is
 	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_write       : std_logic;                     -- mm_interconnect_0:AES_0_interface_0_avalon_slave_1_write -> AES_0:interface_0_avalon_slave_1_write
 	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_writedata   : std_logic_vector(31 downto 0); -- mm_interconnect_0:AES_0_interface_0_avalon_slave_1_writedata -> AES_0:interface_0_avalon_slave_1_writedata
 	signal rst_controller_reset_out_reset                                 : std_logic;                     -- rst_controller:reset_out -> [AES_0:rst_t, mm_interconnect_0:AES_0_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_0:master_0_clk_reset_reset_bridge_in_reset_reset]
+	signal reset_n_reset_n_ports_inv                                      : std_logic;                     -- reset_n_reset_n:inv -> [master_0:clk_reset_reset, rst_controller:reset_in0]
 
 begin
 
@@ -188,7 +189,7 @@ begin
 		)
 		port map (
 			clk_clk              => clk_clk,                       --          clk.clk
-			clk_reset_reset      => master_0_master_reset_reset,   --    clk_reset.reset
+			clk_reset_reset      => reset_n_reset_n_ports_inv,     --    clk_reset.reset
 			master_address       => master_0_master_address,       --       master.address
 			master_readdata      => master_0_master_readdata,      --             .readdata
 			master_read          => master_0_master_read,          --             .read
@@ -197,7 +198,7 @@ begin
 			master_waitrequest   => master_0_master_waitrequest,   --             .waitrequest
 			master_readdatavalid => master_0_master_readdatavalid, --             .readdatavalid
 			master_byteenable    => master_0_master_byteenable,    --             .byteenable
-			master_reset_reset   => master_0_master_reset_reset    -- master_reset.reset
+			master_reset_reset   => open                           -- master_reset.reset
 		);
 
 	mm_interconnect_0 : component JTAG_AES_mm_interconnect_0
@@ -250,7 +251,7 @@ begin
 			ADAPT_RESET_REQUEST       => 0
 		)
 		port map (
-			reset_in0      => master_0_master_reset_reset,    -- reset_in0.reset
+			reset_in0      => reset_n_reset_n_ports_inv,      -- reset_in0.reset
 			clk            => clk_clk,                        --       clk.clk
 			reset_out      => rst_controller_reset_out_reset, -- reset_out.reset
 			reset_req      => open,                           -- (terminated)
@@ -286,5 +287,7 @@ begin
 			reset_in15     => '0',                            -- (terminated)
 			reset_req_in15 => '0'                             -- (terminated)
 		);
+
+	reset_n_reset_n_ports_inv <= not reset_n_reset_n;
 
 end architecture rtl; -- of JTAG_AES

@@ -98,3 +98,6 @@ namespace eval console {
   }
 
 }
+
+::console::get_master_path
+::console::get_master_claim

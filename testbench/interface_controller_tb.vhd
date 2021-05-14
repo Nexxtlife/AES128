@@ -18,7 +18,7 @@ architecture behavior of interface_tb is
 			interface_0_avalon_slave_1_write         : in std_logic;
 			interface_0_avalon_slave_1_waitrequest   : out std_logic;  
 			interface_0_avalon_slave_1_address       : in std_logic_vector(4 downto 0);                  -- address
-			interface_0_avalon_slave_1_byteenable    : in std_logic_vector(4 downto 0);                 -- byteenable
+			interface_0_avalon_slave_1_byteenable    : in std_logic_vector(3 downto 0);                 -- byteenable
 			interface_0_avalon_slave_1_readdata      : out  std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
 			interface_0_avalon_slave_1_writedata     : in  std_logic_vector(31 downto 0) := (others => 'X') 	-- readdata
 			
@@ -31,7 +31,7 @@ architecture behavior of interface_tb is
 	signal	interface_0_avalon_slave_1_write_tb         :  std_logic;
 	signal	interface_0_avalon_slave_1_waitrequest_tb   :  std_logic;  
 	signal	interface_0_avalon_slave_1_address_tb       :  std_logic_vector(4 downto 0);                  -- address
-	signal	interface_0_avalon_slave_1_byteenable_tb    :  std_logic_vector(4 downto 0);                 -- byteenable
+	signal	interface_0_avalon_slave_1_byteenable_tb    :  std_logic_vector(3 downto 0);                 -- byteenable
 	signal	interface_0_avalon_slave_1_readdata_tb      :   std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
 	signal	interface_0_avalon_slave_1_writedata_tb     :   std_logic_vector(31 downto 0) := (others => 'X'); 	-- readdata
 
