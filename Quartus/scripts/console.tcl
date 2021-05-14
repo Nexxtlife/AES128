@@ -101,3 +101,13 @@ namespace eval console {
 
 ::console::get_master_path
 ::console::get_master_claim
+::console::set_reg 0 0x00000000
+::console::set_reg 4 0xaaaaaaaa
+::console::set_reg 8 0xbbbbbbbb
+::console::set_reg 12 0xcccccccc
+::console::set_reg 16 0xdddddddd
+::console::get_reg 0
+::console::get_reg 4
+::console::get_reg 8
+::console::get_reg 12
+::console::get_reg 16
