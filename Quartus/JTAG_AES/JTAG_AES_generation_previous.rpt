@@ -1,24 +1,3 @@
-Info: Starting: Create block symbol file (.bsf)
-Info: qsys-generate C:\Users\test\Desktop\GitLab\AES\Quartus\JTAG_AES.qsys --block-symbol-file --output-directory=C:\Users\test\Desktop\GitLab\AES\Quartus\JTAG_AES --family="MAX 10" --part=10M50DAF484C7G
-Progress: Loading Quartus/JTAG_AES.qsys
-Progress: Reading input file
-Progress: Adding AES_0 [AES 1.0]
-Progress: Parameterizing module AES_0
-Progress: Adding clk_0 [clock_source 18.0]
-Progress: Parameterizing module clk_0
-Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 18.0]
-Progress: Parameterizing module jtag_uart_0
-Progress: Adding master_0 [altera_jtag_avalon_master 18.0]
-Progress: Parameterizing module master_0
-Progress: Building connections
-Progress: Parameterizing connections
-Progress: Validating
-Progress: Done reading input file
-Info: JTAG_AES.jtag_uart_0: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
-Warning: JTAG_AES.jtag_uart_0: Interrupt sender jtag_uart_0.irq is not connected to an interrupt receiver
-Info: qsys-generate succeeded.
-Info: Finished: Create block symbol file (.bsf)
-Info: 
 Info: Starting: Create HDL design files for synthesis
 Info: qsys-generate C:\Users\test\Desktop\GitLab\AES\Quartus\JTAG_AES.qsys --synthesis=VHDL --output-directory=C:\Users\test\Desktop\GitLab\AES\Quartus\JTAG_AES\synthesis --family="MAX 10" --part=10M50DAF484C7G
 Progress: Loading Quartus/JTAG_AES.qsys
@@ -27,25 +6,17 @@ Progress: Adding AES_0 [AES 1.0]
 Progress: Parameterizing module AES_0
 Progress: Adding clk_0 [clock_source 18.0]
 Progress: Parameterizing module clk_0
-Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 18.0]
-Progress: Parameterizing module jtag_uart_0
 Progress: Adding master_0 [altera_jtag_avalon_master 18.0]
 Progress: Parameterizing module master_0
 Progress: Building connections
 Progress: Parameterizing connections
 Progress: Validating
 Progress: Done reading input file
-Info: JTAG_AES.jtag_uart_0: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
-Warning: JTAG_AES.jtag_uart_0: Interrupt sender jtag_uart_0.irq is not connected to an interrupt receiver
 Info: JTAG_AES: Generating JTAG_AES "JTAG_AES" for QUARTUS_SYNTH
+Info: Interconnect is inserted between master master_0.master and slave AES_0.interface_0_avalon_slave_1 because the master has address signal 32 bit wide, but the slave is 5 bit wide.
+Info: Interconnect is inserted between master master_0.master and slave AES_0.interface_0_avalon_slave_1 because the master has readdatavalid signal 1 bit wide, but the slave is 0 bit wide.
 Info: AES_0: "JTAG_AES" instantiated AES "AES_0"
-Info: jtag_uart_0: Starting RTL generation for module 'JTAG_AES_jtag_uart_0'
-Info: jtag_uart_0:   Generation command is [exec C:/intelfpga_lite/18.0/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.0/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.0/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.0/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.0/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.0/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart -- C:/intelfpga_lite/18.0/quartus/../ip/altera/sopc_builder_ip/altera_avalon_jtag_uart/generate_rtl.pl --name=JTAG_AES_jtag_uart_0 --dir=C:/Users/test/AppData/Local/Temp/alt8757_1754994102982151181.dir/0003_jtag_uart_0_gen/ --quartus_dir=C:/intelfpga_lite/18.0/quartus --verilog --config=C:/Users/test/AppData/Local/Temp/alt8757_1754994102982151181.dir/0003_jtag_uart_0_gen//JTAG_AES_jtag_uart_0_component_configuration.pl  --do_build_sim=0  ]
-Info: jtag_uart_0: Done RTL generation for module 'JTAG_AES_jtag_uart_0'
-Info: jtag_uart_0: "JTAG_AES" instantiated altera_avalon_jtag_uart "jtag_uart_0"
 Info: master_0: "JTAG_AES" instantiated altera_jtag_avalon_master "master_0"
-Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
-Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
 Info: mm_interconnect_0: "JTAG_AES" instantiated altera_mm_interconnect "mm_interconnect_0"
 Info: rst_controller: "JTAG_AES" instantiated altera_reset_controller "rst_controller"
 Info: jtag_phy_embedded_in_jtag_master: "master_0" instantiated altera_jtag_dc_streaming "jtag_phy_embedded_in_jtag_master"
@@ -57,21 +28,7 @@ Info: transacto: "master_0" instantiated altera_avalon_packets_to_master "transa
 Info: b2p_adapter: "master_0" instantiated channel_adapter "b2p_adapter"
 Info: p2b_adapter: "master_0" instantiated channel_adapter "p2b_adapter"
 Info: master_0_master_translator: "mm_interconnect_0" instantiated altera_merlin_master_translator "master_0_master_translator"
-Info: jtag_uart_0_avalon_jtag_slave_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "jtag_uart_0_avalon_jtag_slave_translator"
-Info: master_0_master_agent: "mm_interconnect_0" instantiated altera_merlin_master_agent "master_0_master_agent"
-Info: jtag_uart_0_avalon_jtag_slave_agent: "mm_interconnect_0" instantiated altera_merlin_slave_agent "jtag_uart_0_avalon_jtag_slave_agent"
-Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
-Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_001"
-Info: master_0_master_limiter: "mm_interconnect_0" instantiated altera_merlin_traffic_limiter "master_0_master_limiter"
-Info: Reusing file C:/Users/test/Desktop/GitLab/AES/Quartus/JTAG_AES/synthesis/submodules/altera_avalon_sc_fifo.v
-Info: Reusing file C:/Users/test/Desktop/GitLab/AES/Quartus/JTAG_AES/synthesis/submodules/altera_avalon_st_pipeline_base.v
-Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
-Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
-Info: rsp_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux"
-Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
-Info: Reusing file C:/Users/test/Desktop/GitLab/AES/Quartus/JTAG_AES/synthesis/submodules/altera_merlin_arbitrator.sv
-Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
-Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
-Info: JTAG_AES: Done "JTAG_AES" with 27 modules, 56 files
+Info: AES_0_interface_0_avalon_slave_1_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "AES_0_interface_0_avalon_slave_1_translator"
+Info: JTAG_AES: Done "JTAG_AES" with 15 modules, 41 files
 Info: qsys-generate succeeded.
 Info: Finished: Create HDL design files for synthesis

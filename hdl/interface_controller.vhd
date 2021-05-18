@@ -76,6 +76,8 @@ signal rst_aes : std_logic;
 signal local_write_wait : std_logic := '0';
 signal local_read_wait : std_logic := '0';
 signal out_waitrequest : std_logic;
+signal start_read : std_logic := '0';
+signal start_read2 : std_logic := '0';
 
 
 begin
@@ -210,20 +212,49 @@ csr_proc: process(clk_clk)
   begin
     if rising_edge(clk_clk) then
       if rst_t = '1' then
+		encrypt_state <= idle;
+		rst_aes <= '0';
         csr_reg <= (others => (others => '0'));
       else
         if interface_0_avalon_slave_1_write = '1' then
           csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
         end if;
         if interface_0_avalon_slave_1_read = '1' then
-			interface_0_avalon_slave_1_readdata <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+			if start_read = '0' and rising_edge(clk_clk) then
+				start_read <= '1';
+			end if;
+			if start_read = '1' and rising_edge(clk_clk) then
+				start_read2 <= '1';
+			end if;			
+			if start_read2 = '1' and rising_edge(clk_clk) then
+				interface_0_avalon_slave_1_readdata <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+				start_read <= '0';
+				start_read2 <= '0';
+			end if;
         end if;
-		-- if start_flag = '1' then
-			-- plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
-			-- key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
-		-- end if;
-
-      end if;
+		if start_flag = '1' and encrypt_decrypt = '1' then		
+			case encrypt_state is			
+				when idle =>
+						plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
+						key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
+						rst_aes <= '0';
+						encrypt_state <= running;
+				when running =>
+					rst_aes <= '1';	
+					if done_t = '1' then
+						rst_aes <= '0';
+						control_reg <= x"00000000";
+						csr_reg(9) <= ciphertext_t(127 downto 96);
+						csr_reg(10) <= ciphertext_t(95 downto 64);
+						csr_reg(11) <= ciphertext_t(63 downto 32);
+						csr_reg(12) <= ciphertext_t(31 downto 0);	
+						encrypt_state <= stopping;
+					end if;				
+				when stopping =>
+					encrypt_state <= idle;
+			end case;
+		end if;
+      end if; 
     end if;
   end process csr_proc;
 

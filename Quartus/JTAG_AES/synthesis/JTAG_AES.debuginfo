@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="JTAG_AES" kind="system" version="18.0" fabric="QSYS">
  <!-- Format version 18.0 614 (Future versions may contain additional information.) -->
- <!-- 2021.05.12.09:40:59 -->
+ <!-- 2021.05.18.10:35:32 -->
  <!-- A collection of modules and connections -->
  <parameter name="clockCrossingAdapter">
   <type>com.altera.sopcmodel.ensemble.EClockAdapter</type>
@@ -53,7 +53,7 @@
  </parameter>
  <parameter name="generationId">
   <type>int</type>
-  <value>1620805256</value>
+  <value>1621326930</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>true</visible>
@@ -2925,33 +2925,6 @@ parameters are a RESULT of the module parameters. -->
   <endConnectionPoint>clk_reset</endConnectionPoint>
  </connection>
  <connection
-   name="master_0.master_reset/clk_0.clk_in_reset"
-   kind="reset"
-   version="18.0"
-   start="master_0.master_reset"
-   end="clk_0.clk_in_reset">
-  <parameter name="deviceFamily">
-   <type>java.lang.String</type>
-   <value>UNKNOWN</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="generateLegacySim">
-   <type>boolean</type>
-   <value>false</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <startModule>master_0</startModule>
-  <startConnectionPoint>master_reset</startConnectionPoint>
-  <endModule>clk_0</endModule>
-  <endConnectionPoint>clk_in_reset</endConnectionPoint>
- </connection>
- <connection
    name="master_0.master/mm_interconnect_0.master_0_master"
    kind="avalon"
    version="18.0"
@@ -3336,7 +3309,7 @@ parameters are a RESULT of the module parameters. -->
   <version>18.0</version>
  </plugin>
  <plugin>
-  <instanceCount>2</instanceCount>
+  <instanceCount>1</instanceCount>
   <name>reset</name>
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IConnection</subtype>
@@ -3368,5 +3341,5 @@ parameters are a RESULT of the module parameters. -->
   <version>18.0</version>
  </plugin>
  <reportVersion>18.0 614</reportVersion>
- <uniqueIdentifier>4C1D96DF921B000001795F858942</uniqueIdentifier>
+ <uniqueIdentifier>4C1D96DF921B000001797E9DA3F7</uniqueIdentifier>
 </EnsembleReport>

@@ -1,20 +1,3 @@
-Info: Starting: Create block symbol file (.bsf)
-Info: qsys-generate C:\Users\test\Desktop\GitLab\AES\Quartus\JTAG_AES.qsys --block-symbol-file --output-directory=C:\Users\test\Desktop\GitLab\AES\Quartus\JTAG_AES --family="MAX 10" --part=10M50DAF484C7G
-Progress: Loading Quartus/JTAG_AES.qsys
-Progress: Reading input file
-Progress: Adding AES_0 [AES 1.0]
-Progress: Parameterizing module AES_0
-Progress: Adding clk_0 [clock_source 18.0]
-Progress: Parameterizing module clk_0
-Progress: Adding master_0 [altera_jtag_avalon_master 18.0]
-Progress: Parameterizing module master_0
-Progress: Building connections
-Progress: Parameterizing connections
-Progress: Validating
-Progress: Done reading input file
-Info: qsys-generate succeeded.
-Info: Finished: Create block symbol file (.bsf)
-Info: 
 Info: Starting: Create HDL design files for synthesis
 Info: qsys-generate C:\Users\test\Desktop\GitLab\AES\Quartus\JTAG_AES.qsys --synthesis=VHDL --output-directory=C:\Users\test\Desktop\GitLab\AES\Quartus\JTAG_AES\synthesis --family="MAX 10" --part=10M50DAF484C7G
 Progress: Loading Quartus/JTAG_AES.qsys

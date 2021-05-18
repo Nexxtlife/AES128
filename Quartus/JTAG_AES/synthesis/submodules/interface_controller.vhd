@@ -75,6 +75,9 @@ signal rst_aes : std_logic;
 --wait_request signals
 signal local_write_wait : std_logic := '0';
 signal local_read_wait : std_logic := '0';
+signal out_waitrequest : std_logic;
+signal start_read : std_logic := '0';
+signal start_read2 : std_logic := '0';
 
 
 begin
@@ -91,141 +94,214 @@ aes_enc_inst : entity work.aes_enc
 		done => done_t	
 		);
 
-read_csr: process (clk_clk, rst_t)
-begin
-	if rst_t = '1' then
-		read_state <= idle;
-	elsif rising_edge (clk_clk) then
+-- read_csr: process (clk_clk, rst_t)
+-- begin
+	-- if rst_t = '1' then
+		-- read_state <= idle;
+	-- elsif rising_edge (clk_clk) then
 	
-		case read_state is
+		-- case read_state is
 			
-			when idle =>
-				if write_state = idle and interface_0_avalon_slave_1_read = '1' then
-					read_state <= running;
+			-- when idle =>
+				-- if write_state = idle and interface_0_avalon_slave_1_read = '1' then
+					-- read_state <= running;
 					
-				end if;
+				-- end if;
 				
-			when running =>
-				interface_0_avalon_slave_1_readdata <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
-				read_state <= stopping;
+			-- when running =>
+				-- interface_0_avalon_slave_1_readdata <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+				-- read_state <= stopping;
 				
-			when stopping =>
-				read_state <= idle;
+			-- when stopping =>
+				-- read_state <= idle;
 		
-		end case;
-	end if;
-end process;
+		-- end case;
+	-- end if;
+-- end process;
 
--------------------------------------------------------------------------------
--- THE WRITE SLAVE STATE MACHINE
--------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------
+-- -- THE WRITE SLAVE STATE MACHINE
+-- -------------------------------------------------------------------------------
 
-write_csr: process (clk_clk, rst_t)
-begin
-	if rst_t = '1' then
+-- write_csr: process (clk_clk, rst_t)
+-- begin
+	-- if rst_t = '1' then
 	
-		write_state <= idle;
+		-- write_state <= idle;
 		
-	elsif rising_edge (clk_clk) then
-		case write_state is
+	-- elsif rising_edge (clk_clk) then
+		-- case write_state is
 		
-			when idle =>
-				if read_state = idle and interface_0_avalon_slave_1_write = '1' then
-					write_state <= running;			
-				end if;
+			-- when idle =>
+				-- if read_state = idle and interface_0_avalon_slave_1_write = '1' then
+					-- write_state <= running;			
+				-- end if;
 				
 	
-			when running =>	
-			
-				--local_write_wait <= '0';
-				--csr_buffer_1 <= interface_0_avalon_slave_1_writedata;
-				--csr_write_address <= interface_0_avalon_slave_1_address;
-				--csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
-				write_state <= stopping;	
+			-- when running =>	
+				-- write_state <= stopping;	
 								
-			when stopping =>
-				write_state <= idle;
+			-- when stopping =>
+				-- write_state <= idle;
 		
-		end case;
+		-- end case;
 
-	end if;
-end process;
+	-- end if;
+-- end process; 
 
 
-enc_csr: process (clk_clk, rst_t)
-begin
-	if rst_t = '1' then
+-- enc_csr: process (clk_clk, rst_t)
+-- begin
+	-- if rst_t = '1' then
+		-- encrypt_state <= idle;
+		-- rst_aes <= '0';
+	-- elsif rising_edge (clk_clk) then	
+		-- case encrypt_state is
+			
+			-- when idle =>
+				-- if encrypt_decrypt = '1' and start_flag = '1' then
+					-- plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
+					-- key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
+					-- rst_aes <= '0';
+					-- encrypt_state <= running;
+					
+				-- end if;
+				-- --ADD HERE THE DECRYPT
+				
+			-- when running =>
+				-- rst_aes <= '1';	
+				-- if done_t = '1' then
+					-- rst_aes <= '0';
+					-- data_temp_AES <= ciphertext_t;
+					-- encrypt_state <= stopping;
+				-- end if;
+				
+				
+			-- when stopping =>
+				-- encrypt_state <= idle;
+		
+		-- end case;
+	-- end if;
+-- end process;
+-------------------------------------------------------------------------------
+-- NON STATE MACHINE READ AND WRITE
+-------------------------------------------------------------------------------
+
+interface_0_avalon_slave_1_waitrequest <= out_waitrequest and (interface_0_avalon_slave_1_write or interface_0_avalon_slave_1_read);
+
+
+out_waitrequest_proc: process(clk_clk)
+  begin
+    if rising_edge(clk_clk) then
+      if rst_t = '1' then
+        out_waitrequest <= '1';
+      else
+        if interface_0_avalon_slave_1_write = '1' or interface_0_avalon_slave_1_read = '1' then
+          out_waitrequest <= '0';
+        end if;
+
+        if out_waitrequest = '0' and (interface_0_avalon_slave_1_write = '1' or interface_0_avalon_slave_1_read = '1') then
+          out_waitrequest <= '1';
+        end if;
+
+      end if;
+    end if;
+  end process out_waitrequest_proc; 
+  
+csr_proc: process(clk_clk)
+  begin
+    if rising_edge(clk_clk) then
+      if rst_t = '1' then
 		encrypt_state <= idle;
 		rst_aes <= '0';
-	elsif rising_edge (clk_clk) then	
-		case encrypt_state is
-			
-			when idle =>
-				if encrypt_decrypt = '1' and start_flag = '1' then
-					plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
-					key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
-					rst_aes <= '0';
-					encrypt_state <= running;
-					
-				end if;
-				--ADD HERE THE DECRYPT
-				
-			when running =>
-				rst_aes <= '1';	
-				if done_t = '1' then
-					rst_aes <= '0';
-					data_temp_AES <= ciphertext_t;
-					encrypt_state <= stopping;
-				end if;
-				
-				
-			when stopping =>
-				encrypt_state <= idle;
-		
-		end case;
-	end if;
-end process;
+        csr_reg <= (others => (others => '0'));
+      else
+        if interface_0_avalon_slave_1_write = '1' then
+          csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
+        end if;
+        if interface_0_avalon_slave_1_read = '1' then
+			if start_read = '0' and rising_edge(clk_clk) then
+				start_read <= '1';
+			end if;
+			if start_read = '1' and rising_edge(clk_clk) then
+				start_read2 <= '1';
+			end if;			
+			if start_read2 = '1' and rising_edge(clk_clk) then
+				interface_0_avalon_slave_1_readdata <= csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address)));
+				start_read <= '0';
+				start_read2 <= '0';
+			end if;
+        end if;
+		if start_flag = '1' and encrypt_decrypt = '1' then		
+			case encrypt_state is			
+				when idle =>
+						plaintext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
+						key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
+						rst_aes <= '0';
+						encrypt_state <= running;
+				when running =>
+					rst_aes <= '1';	
+					if done_t = '1' then
+						rst_aes <= '0';
+						control_reg <= x"00000000";
+						csr_reg(9) <= ciphertext_t(127 downto 96);
+						csr_reg(10) <= ciphertext_t(95 downto 64);
+						csr_reg(11) <= ciphertext_t(63 downto 32);
+						csr_reg(12) <= ciphertext_t(31 downto 0);	
+						encrypt_state <= stopping;
+					end if;				
+				when stopping =>
+					encrypt_state <= idle;
+			end case;
+		end if;
+      end if; 
+    end if;
+  end process csr_proc;
+
+
+
+
 -------------------------------------------------------------------------------
 -- WAIT_REQUEST
 -------------------------------------------------------------------------------
-wait_request : process (clk_clk)
-begin
-		if rst_t = '1' then
-			interface_0_avalon_slave_1_waitrequest <= '0';
+-- wait_request : process (clk_clk)
+-- begin
+		-- if rst_t = '1' then
+			-- interface_0_avalon_slave_1_waitrequest <= '0';
 			
-		elsif write_state = idle  and interface_0_avalon_slave_1_write = '1' then
-			interface_0_avalon_slave_1_waitrequest <= '1';
-		elsif read_state = idle and interface_0_avalon_slave_1_read = '1'then
-			interface_0_avalon_slave_1_waitrequest <= '1';
-		elsif write_state = running then
-			interface_0_avalon_slave_1_waitrequest <= '0';
-		elsif read_state = running then 
-			interface_0_avalon_slave_1_waitrequest <= '0';
-		end if;
+		-- elsif write_state = idle  and interface_0_avalon_slave_1_write = '1' then
+			-- interface_0_avalon_slave_1_waitrequest <= '1';
+		-- elsif read_state = idle and interface_0_avalon_slave_1_read = '1'then
+			-- interface_0_avalon_slave_1_waitrequest <= '1';
+		-- elsif write_state = running then
+			-- interface_0_avalon_slave_1_waitrequest <= '0';
+		-- elsif read_state = running then 
+			-- interface_0_avalon_slave_1_waitrequest <= '0'; 
+		-- end if;
 
-end process;
+-- end process;
 -------------------------------------------------------------------------------
 -- CSR_PROCESS
 -------------------------------------------------------------------------------
-csr_process: process (clk_clk, rst_t)
-begin
-	if rst_t = '1' then
-		control_reg <= x"00000000";
-	elsif rising_edge (clk_clk) then
-		if write_state = running then
-			csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
-		end if;
-		if encrypt_state = stopping then
-			--working_address <= working_address +1;
-			control_reg <= x"00000000";
-			csr_reg(9) <= data_temp_AES(127 downto 96);
-			csr_reg(10) <= data_temp_AES(95 downto 64);
-			csr_reg(11) <= data_temp_AES(63 downto 32);
-			csr_reg(12) <= data_temp_AES(31 downto 0);
-		end if;
-	end if;
+-- csr_process: process (clk_clk, rst_t)
+-- begin
+	-- if rst_t = '1' then
+		-- control_reg <= x"00000000";
+	-- elsif rising_edge (clk_clk) then
+		-- if write_state = running then
+			-- csr_reg(to_integer(unsigned(interface_0_avalon_slave_1_address))) <= interface_0_avalon_slave_1_writedata;
+		-- end if;
+		-- if encrypt_state = stopping then
+			-- --working_address <= working_address +1;
+			-- control_reg <= x"00000000";
+			-- csr_reg(9) <= data_temp_AES(127 downto 96);
+			-- csr_reg(10) <= data_temp_AES(95 downto 64);
+			-- csr_reg(11) <= data_temp_AES(63 downto 32);
+			-- csr_reg(12) <= data_temp_AES(31 downto 0);
+		-- end if;
+	-- end if;
 
-end process;
+-- end process;
 ---------------------------------------------------------------------------------
 
 end architecture behave;

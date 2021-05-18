@@ -1,8 +1,7 @@
 namespace eval console {
   variable mpath
   variable cpath
-
-  proc get_service_path {service_type} {
+ proc get_service_path {service_type} {
     if {[catch {
         set service_path [lindex [get_service_paths $service_type] 0] 
       } errmsg]} {
@@ -37,8 +36,7 @@ namespace eval console {
       return $res
     }    
   }
-  
-  proc close_service_claim {service_type service_claim} {  
+ proc close_service_claim {service_type service_claim} {  
     puts "Closing $service_claim"
     if {[catch {
         close_service $service_type $service_claim  
@@ -96,54 +94,16 @@ namespace eval console {
       puts "No open service"
     }
   }
- } 
-proc extractIntegers {number {bits 32}} {
-	set accumulator {}
-	set mask [expr {(1 << $bits) - 1}]
-	while {$number != 0} {
-		set value [expr {$number & $mask}]
-		set number [expr {$number >> $bits}]
-		lappend accumulator [format "%#x" $value]
-	}
-	return [lreverse $accumulator]
-}
 
-set f [open "input.txt"]
+}
+::console::get_master_path
+::console::get_master_claim
+::console::set_reg 0 0x00000000
+
+set f popen "input.txt"]
 set data [read $f]
 close $f
 
-# foreach line [split $data "\n"] {
-    # set plain_text [extractIntegers $line]
-	# foreach part [split $plain_text "\n"]{
-		# puts $part
-	# }
-	
-# }
-set text [extractIntegers 0x111111112222222233333333]
-
-foreach word [split $text " "]{
-	puts $word
+foreach line [split $data "\n"] {
+    # Do something with $line in here
 }
-#3243f6a8 885a308d 313198a2 e0370734 plain
-#2b7e1516 28aed2a6 abf71588 09cf4f3c key
-#3925841d 02dc09fb dc118597 196a0b32 cipher
-# ::console::get_master_path
-# ::console::get_master_claim
-# ::console::set_reg 0 0x00000000
-
-# ::console::set_reg 4 0x2b7e1516
-# ::console::set_reg 8 0x28aed2a6
-# ::console::set_reg 12 0xabf71588
-# ::console::set_reg 16 0x09cf4f3c
-
-# ::console::set_reg 20 0x3243f6a8
-# ::console::set_reg 24 0x885a308d
-# ::console::set_reg 28 0x313198a2
-# ::console::set_reg 32 0xe0370734
-
-#start
-
-
-
-
-
