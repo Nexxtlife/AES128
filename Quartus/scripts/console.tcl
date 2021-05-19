@@ -108,40 +108,47 @@ proc extractIntegers {number {bits 32}} {
 	return [lreverse $accumulator]
 }
 
+
+::console::get_master_path
+::console::get_master_claim
+
+::console::set_reg 0 0x00000000
+
+::console::set_reg 4 0x2b7e1516
+::console::set_reg 8 0x28aed2a6
+::console::set_reg 12 0xabf71588
+::console::set_reg 16 0x09cf4f3c
+
+
 set f [open "input.txt"]
 set data [read $f]
 close $f
+set counter 0
+set cipher {}
 
-# foreach line [split $data "\n"] {
-    # set plain_text [extractIntegers $line]
-	# foreach part [split $plain_text "\n"]{
-		# puts $part
-	# }
+foreach line [split $data "\n"] {
+    set plain_text [extractIntegers $line]
 	
-# }
-set text [extractIntegers 0x111111112222222233333333]
-
-foreach word [split $text " "]{
-	puts $word
+	foreach x $plain_text {	;
+		incr counter 1
+		#puts "::console::set_reg [expr {$counter*4+16}] $x\t"
+		::console::set_reg [expr {$counter*4+16}] $x
+		
+		if { $counter == 4 } {
+			::console::set_reg 0 0x0000000f
+			incr counter -4			
+			lappend cipher [::console::get_reg 36]
+			lappend cipher [::console::get_reg 40]
+			lappend cipher [::console::get_reg 44]
+			lappend cipher [::console::get_reg 48]
+			lappend cipher "\n"
+			::console::set_reg 0 0x00000000
+		}
+	}
+	
 }
-#3243f6a8 885a308d 313198a2 e0370734 plain
-#2b7e1516 28aed2a6 abf71588 09cf4f3c key
-#3925841d 02dc09fb dc118597 196a0b32 cipher
-# ::console::get_master_path
-# ::console::get_master_claim
-# ::console::set_reg 0 0x00000000
 
-# ::console::set_reg 4 0x2b7e1516
-# ::console::set_reg 8 0x28aed2a6
-# ::console::set_reg 12 0xabf71588
-# ::console::set_reg 16 0x09cf4f3c
-
-# ::console::set_reg 20 0x3243f6a8
-# ::console::set_reg 24 0x885a308d
-# ::console::set_reg 28 0x313198a2
-# ::console::set_reg 32 0xe0370734
-
-#start
+puts $cipher
 
 
 
