@@ -18,7 +18,7 @@ begin
 	w2 <= subkey(3*32 - 1 downto 2*32) xor subkey(2*32 - 1 downto 32);
 	w1 <= subkey(2*32 - 1 downto 1*32) xor subkey(1*32 - 1 downto 0);
 	gen_sboxes : for i in 0 to 3 generate
-		sbox_inst : entity work.sbox
+		s_box_inst : entity work.s_box
 			port map(
 				input_byte  => w3((i + 1)*8 - 1 downto i*8),
 				output_byte => substitued_sk((i + 1)*8 - 1 downto i*8)
