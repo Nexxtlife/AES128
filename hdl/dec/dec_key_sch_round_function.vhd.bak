@@ -1,15 +1,15 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity dec_key_schedule is
+entity dec_ksch_round_func is
 	port (		
 		subkey : in std_logic_vector(127 downto 0);
 		round_const : in std_logic_vector(7 downto 0);
 		next_subkey : out std_logic_vector(127 downto 0)		
 	);
-end dec_key_schedule;
+end dec_ksch_round_func;
 
-architecture behavioral of dec_key_schedule is
+architecture behavioral of dec_ksch_round_func is
 	signal substitued_sk : std_logic_vector(31 downto 0);
 	signal shifted_sk : std_logic_vector(31 downto 0);
 	signal w3, w2, w1, w0 : std_logic_vector(31 downto 0);
@@ -18,7 +18,7 @@ begin
 	w2 <= subkey(3*32 - 1 downto 2*32) xor subkey(2*32 - 1 downto 32);
 	w1 <= subkey(2*32 - 1 downto 1*32) xor subkey(1*32 - 1 downto 0);
 	gen_sboxes : for i in 0 to 3 generate
-		s_box_inst : entity work.s_box
+		sbox_inst : entity work.sbox
 			port map(
 				input_byte  => w3((i + 1)*8 - 1 downto i*8),
 				output_byte => substitued_sk((i + 1)*8 - 1 downto i*8)

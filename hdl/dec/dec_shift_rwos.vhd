@@ -27,4 +27,5 @@ begin
 	output(8*11 - 1  downto  8*10) <= input(8*3 - 1 downto 8*2);
 	output(8*6 - 1   downto  8*5) <= input(8*2 - 1 downto 8*1) ;
 	output(8*1 - 1   downto  8*0) <= input(8*1 - 1 downto 8*0);	 
+	
 end architecture rtl;

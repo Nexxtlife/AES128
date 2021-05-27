@@ -1,14 +1,14 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity dec_byte_sub is
+entity dec_sub_byte is
 	port (
 		input_data : in std_logic_vector(127 downto 0);
 		output_data : out std_logic_vector(127 downto 0)
 	);
-end dec_byte_sub;
+end dec_sub_byte;
 
-architecture behavioral of dec_byte_sub is
+architecture behavioral of dec_sub_byte is
 	
 begin
 	gen : for i in 0 to 15 generate

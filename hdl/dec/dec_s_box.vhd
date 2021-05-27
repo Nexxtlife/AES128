@@ -270,7 +270,7 @@ begin
 			when x"fd" => output_byte <= x"21";
 			when x"fe" => output_byte <= x"0c";
 			when x"ff" => output_byte <= x"7d";
-			when others => null;
+			when others => null; -- GHDL complains without this statement
 		end case;
 
 	end process lut;
