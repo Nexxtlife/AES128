@@ -16,4 +16,5 @@ begin
 	conditional_xor <= "000" & input_byte(7) & input_byte(7) & "0" & input_byte(7) & input_byte(7);
 	output_byte <= shifted_byte xor conditional_xor;
 	
+	
 end architecture behavioral;

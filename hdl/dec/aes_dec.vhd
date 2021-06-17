@@ -13,6 +13,11 @@ entity aes_dec is
 end aes_dec;
 
 architecture rtl of aes_dec is
+
+	signal inverted_plaintext : std_logic_vector(127 downto 0);
+	signal inverted_key : std_logic_vector(127 downto 0);
+	signal inverted_cyphertext : std_logic_vector(127 downto 0);
+
 	signal mux_output : std_logic_vector(127 downto 0);
 	signal reg_output : std_logic_vector(127 downto 0);
 	signal dec_mixcol_input : std_logic_vector(127 downto 0);
@@ -24,7 +29,22 @@ architecture rtl of aes_dec is
 	signal round_const : std_logic_vector(7 downto 0);
 	signal is_first_round : std_logic;
 begin
-	-- Decryption body
+	inverter_inst_plaintext : entity work.inverter
+		port map(
+			data_in => plaintext,
+			data_out => inverted_plaintext
+		);
+	inverter_inst_key : entity work.inverter
+		port map(
+			data_in => key,
+			data_out => inverted_key
+		);	
+	inverter_inst_cyphertext : entity work.inverter
+		port map(
+			data_in => inverted_cyphertext,
+			data_out => ciphertext
+		);
+		
 	mux_output <= ciphertext when rst = '0' else feedback;
 	reg_inst : entity work.reg
 		generic map(
@@ -59,7 +79,7 @@ begin
 			input_data  => invsb_input,
 			output_data => feedback
 		);	
-	 -- Keyschedule 
+		
 	 key_schedule_inst : entity work.key_schedule
 	 	port map(
 	 		clk         => clk,
@@ -68,7 +88,6 @@ begin
 	 		round_const => round_const,
 	 		round_key   => round_key
 	 	);
-	 -- Controller
 	 controller_inst : entity work.controller
 	 	port map(
 	 		clk            => clk,
@@ -77,5 +96,5 @@ begin
 	 		is_first_round => is_first_round,
 	 		done           => done
 	 	);
-	 plaintext <= dec_mixcol_input;
+	 inverted_plaintext <= dec_mixcol_input;
 end architecture rtl;
