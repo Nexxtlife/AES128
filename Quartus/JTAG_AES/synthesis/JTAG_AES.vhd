@@ -21,15 +21,15 @@ architecture rtl of JTAG_AES is
 			INTERFACE_ADDR_WIDTH : natural := 5
 		);
 		port (
+			clk_clk                                : in  std_logic                     := 'X';             -- clk
+			rst_t                                  : in  std_logic                     := 'X';             -- reset
 			interface_0_avalon_slave_1_read        : in  std_logic                     := 'X';             -- read
 			interface_0_avalon_slave_1_write       : in  std_logic                     := 'X';             -- write
 			interface_0_avalon_slave_1_waitrequest : out std_logic;                                        -- waitrequest
 			interface_0_avalon_slave_1_address     : in  std_logic_vector(4 downto 0)  := (others => 'X'); -- address
 			interface_0_avalon_slave_1_byteenable  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
 			interface_0_avalon_slave_1_readdata    : out std_logic_vector(31 downto 0);                    -- readdata
-			interface_0_avalon_slave_1_writedata   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
-			clk_clk                                : in  std_logic                     := 'X';             -- clk
-			rst_t                                  : in  std_logic                     := 'X'              -- reset
+			interface_0_avalon_slave_1_writedata   : in  std_logic_vector(31 downto 0) := (others => 'X')  -- writedata
 		);
 	end component interface_controller;
 
@@ -67,13 +67,13 @@ architecture rtl of JTAG_AES is
 			master_0_master_readdatavalid                  : out std_logic;                                        -- readdatavalid
 			master_0_master_write                          : in  std_logic                     := 'X';             -- write
 			master_0_master_writedata                      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
-			AES_0_interface_0_avalon_slave_1_address       : out std_logic_vector(4 downto 0);                     -- address
-			AES_0_interface_0_avalon_slave_1_write         : out std_logic;                                        -- write
-			AES_0_interface_0_avalon_slave_1_read          : out std_logic;                                        -- read
-			AES_0_interface_0_avalon_slave_1_readdata      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
-			AES_0_interface_0_avalon_slave_1_writedata     : out std_logic_vector(31 downto 0);                    -- writedata
-			AES_0_interface_0_avalon_slave_1_byteenable    : out std_logic_vector(3 downto 0);                     -- byteenable
-			AES_0_interface_0_avalon_slave_1_waitrequest   : in  std_logic                     := 'X'              -- waitrequest
+			AES_0_interface_0_avalon_slave_0_address       : out std_logic_vector(4 downto 0);                     -- address
+			AES_0_interface_0_avalon_slave_0_write         : out std_logic;                                        -- write
+			AES_0_interface_0_avalon_slave_0_read          : out std_logic;                                        -- read
+			AES_0_interface_0_avalon_slave_0_readdata      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			AES_0_interface_0_avalon_slave_0_writedata     : out std_logic_vector(31 downto 0);                    -- writedata
+			AES_0_interface_0_avalon_slave_0_byteenable    : out std_logic_vector(3 downto 0);                     -- byteenable
+			AES_0_interface_0_avalon_slave_0_waitrequest   : in  std_logic                     := 'X'              -- waitrequest
 		);
 	end component JTAG_AES_mm_interconnect_0;
 
@@ -151,13 +151,13 @@ architecture rtl of JTAG_AES is
 	signal master_0_master_readdatavalid                                  : std_logic;                     -- mm_interconnect_0:master_0_master_readdatavalid -> master_0:master_readdatavalid
 	signal master_0_master_write                                          : std_logic;                     -- master_0:master_write -> mm_interconnect_0:master_0_master_write
 	signal master_0_master_writedata                                      : std_logic_vector(31 downto 0); -- master_0:master_writedata -> mm_interconnect_0:master_0_master_writedata
-	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_readdata    : std_logic_vector(31 downto 0); -- AES_0:interface_0_avalon_slave_1_readdata -> mm_interconnect_0:AES_0_interface_0_avalon_slave_1_readdata
-	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_waitrequest : std_logic;                     -- AES_0:interface_0_avalon_slave_1_waitrequest -> mm_interconnect_0:AES_0_interface_0_avalon_slave_1_waitrequest
-	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_address     : std_logic_vector(4 downto 0);  -- mm_interconnect_0:AES_0_interface_0_avalon_slave_1_address -> AES_0:interface_0_avalon_slave_1_address
-	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_read        : std_logic;                     -- mm_interconnect_0:AES_0_interface_0_avalon_slave_1_read -> AES_0:interface_0_avalon_slave_1_read
-	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_byteenable  : std_logic_vector(3 downto 0);  -- mm_interconnect_0:AES_0_interface_0_avalon_slave_1_byteenable -> AES_0:interface_0_avalon_slave_1_byteenable
-	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_write       : std_logic;                     -- mm_interconnect_0:AES_0_interface_0_avalon_slave_1_write -> AES_0:interface_0_avalon_slave_1_write
-	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_1_writedata   : std_logic_vector(31 downto 0); -- mm_interconnect_0:AES_0_interface_0_avalon_slave_1_writedata -> AES_0:interface_0_avalon_slave_1_writedata
+	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_0_readdata    : std_logic_vector(31 downto 0); -- AES_0:interface_0_avalon_slave_1_readdata -> mm_interconnect_0:AES_0_interface_0_avalon_slave_0_readdata
+	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_0_waitrequest : std_logic;                     -- AES_0:interface_0_avalon_slave_1_waitrequest -> mm_interconnect_0:AES_0_interface_0_avalon_slave_0_waitrequest
+	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_0_address     : std_logic_vector(4 downto 0);  -- mm_interconnect_0:AES_0_interface_0_avalon_slave_0_address -> AES_0:interface_0_avalon_slave_1_address
+	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_0_read        : std_logic;                     -- mm_interconnect_0:AES_0_interface_0_avalon_slave_0_read -> AES_0:interface_0_avalon_slave_1_read
+	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_0_byteenable  : std_logic_vector(3 downto 0);  -- mm_interconnect_0:AES_0_interface_0_avalon_slave_0_byteenable -> AES_0:interface_0_avalon_slave_1_byteenable
+	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_0_write       : std_logic;                     -- mm_interconnect_0:AES_0_interface_0_avalon_slave_0_write -> AES_0:interface_0_avalon_slave_1_write
+	signal mm_interconnect_0_aes_0_interface_0_avalon_slave_0_writedata   : std_logic_vector(31 downto 0); -- mm_interconnect_0:AES_0_interface_0_avalon_slave_0_writedata -> AES_0:interface_0_avalon_slave_1_writedata
 	signal rst_controller_reset_out_reset                                 : std_logic;                     -- rst_controller:reset_out -> [AES_0:rst_t, mm_interconnect_0:AES_0_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_0:master_0_clk_reset_reset_bridge_in_reset_reset]
 	signal reset_n_reset_n_ports_inv                                      : std_logic;                     -- reset_n_reset_n:inv -> [master_0:clk_reset_reset, rst_controller:reset_in0]
 
@@ -170,15 +170,15 @@ begin
 			INTERFACE_ADDR_WIDTH => 5
 		)
 		port map (
-			interface_0_avalon_slave_1_read        => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_read,        -- interface_0_avalon_slave_1.read
-			interface_0_avalon_slave_1_write       => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_write,       --                           .write
-			interface_0_avalon_slave_1_waitrequest => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_waitrequest, --                           .waitrequest
-			interface_0_avalon_slave_1_address     => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_address,     --                           .address
-			interface_0_avalon_slave_1_byteenable  => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_byteenable,  --                           .byteenable
-			interface_0_avalon_slave_1_readdata    => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_readdata,    --                           .readdata
-			interface_0_avalon_slave_1_writedata   => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_writedata,   --                           .writedata
 			clk_clk                                => clk_clk,                                                        --                 clock_sink.clk
-			rst_t                                  => rst_controller_reset_out_reset                                  --                 reset_sink.reset
+			rst_t                                  => rst_controller_reset_out_reset,                                 --                 reset_sink.reset
+			interface_0_avalon_slave_1_read        => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_read,        -- interface_0_avalon_slave_0.read
+			interface_0_avalon_slave_1_write       => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_write,       --                           .write
+			interface_0_avalon_slave_1_waitrequest => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_waitrequest, --                           .waitrequest
+			interface_0_avalon_slave_1_address     => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_address,     --                           .address
+			interface_0_avalon_slave_1_byteenable  => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_byteenable,  --                           .byteenable
+			interface_0_avalon_slave_1_readdata    => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_readdata,    --                           .readdata
+			interface_0_avalon_slave_1_writedata   => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_writedata    --                           .writedata
 		);
 
 	master_0 : component JTAG_AES_master_0
@@ -214,13 +214,13 @@ begin
 			master_0_master_readdatavalid                  => master_0_master_readdatavalid,                                  --                                         .readdatavalid
 			master_0_master_write                          => master_0_master_write,                                          --                                         .write
 			master_0_master_writedata                      => master_0_master_writedata,                                      --                                         .writedata
-			AES_0_interface_0_avalon_slave_1_address       => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_address,     --         AES_0_interface_0_avalon_slave_1.address
-			AES_0_interface_0_avalon_slave_1_write         => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_write,       --                                         .write
-			AES_0_interface_0_avalon_slave_1_read          => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_read,        --                                         .read
-			AES_0_interface_0_avalon_slave_1_readdata      => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_readdata,    --                                         .readdata
-			AES_0_interface_0_avalon_slave_1_writedata     => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_writedata,   --                                         .writedata
-			AES_0_interface_0_avalon_slave_1_byteenable    => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_byteenable,  --                                         .byteenable
-			AES_0_interface_0_avalon_slave_1_waitrequest   => mm_interconnect_0_aes_0_interface_0_avalon_slave_1_waitrequest  --                                         .waitrequest
+			AES_0_interface_0_avalon_slave_0_address       => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_address,     --         AES_0_interface_0_avalon_slave_0.address
+			AES_0_interface_0_avalon_slave_0_write         => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_write,       --                                         .write
+			AES_0_interface_0_avalon_slave_0_read          => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_read,        --                                         .read
+			AES_0_interface_0_avalon_slave_0_readdata      => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_readdata,    --                                         .readdata
+			AES_0_interface_0_avalon_slave_0_writedata     => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_writedata,   --                                         .writedata
+			AES_0_interface_0_avalon_slave_0_byteenable    => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_byteenable,  --                                         .byteenable
+			AES_0_interface_0_avalon_slave_0_waitrequest   => mm_interconnect_0_aes_0_interface_0_avalon_slave_0_waitrequest  --                                         .waitrequest
 		);
 
 	rst_controller : component altera_reset_controller

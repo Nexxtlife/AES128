@@ -294,6 +294,27 @@ begin
 			wait for clk_period;
 			interface_0_avalon_slave_1_read_tb <= '0';
 			--------------------------------------------------------------
+			
+			
+			
+			
+			--DECIPHER
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			wait;
 		--end if;
 	end process sim_proc;

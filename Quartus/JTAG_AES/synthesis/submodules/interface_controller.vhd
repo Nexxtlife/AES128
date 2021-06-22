@@ -54,6 +54,12 @@ signal plaintext_t : std_logic_vector(127 downto 0);
 signal ciphertext_t :  std_logic_vector(127 downto 0);
 signal done_t :  std_logic;
 
+signal dec_key_t :  std_logic_vector(127 downto 0);
+signal dec_plaintext_t : std_logic_vector(127 downto 0);
+signal dec_ciphertext_t :  std_logic_vector(127 downto 0);
+signal dec_done_t :  std_logic;
+
+
 --plaintext length
 subtype text_length_T is std_logic_vector (7 downto 0);
 signal working_address: std_logic_vector (7 downto 0) := (others=> '0');
@@ -92,6 +98,15 @@ aes_enc_inst : entity work.aes_enc
 		plaintext => plaintext_t,
 		ciphertext => ciphertext_t,
 		done => done_t	
+		);
+aes_dec_inst : entity work.aes_dec
+		port map(
+		clk => clk_clk,
+		rst => rst_aes,
+		dec_key => dec_key_t,
+		plaintext => dec_plaintext_t,
+		ciphertext => dec_ciphertext_t,
+		done => dec_done_t	
 		);
 
 -- read_csr: process (clk_clk, rst_t)
@@ -248,6 +263,28 @@ csr_proc: process(clk_clk)
 						csr_reg(10) <= ciphertext_t(95 downto 64);
 						csr_reg(11) <= ciphertext_t(63 downto 32);
 						csr_reg(12) <= ciphertext_t(31 downto 0);	
+						encrypt_state <= stopping;
+					end if;				
+				when stopping =>
+					encrypt_state <= idle;
+			end case;
+		end if;
+		if start_flag = '1' and encrypt_decrypt = '0' then		
+			case encrypt_state is			
+				when idle =>
+						dec_ciphertext_t <= csr_reg(5) & csr_reg(6) & csr_reg(7) & csr_reg(8);
+						dec_key_t <= csr_reg(1) & csr_reg(2) & csr_reg(3) & csr_reg(4);
+						rst_aes <= '0';
+						encrypt_state <= running;
+				when running =>
+					rst_aes <= '1';	
+					if dec_done_t = '1' then
+						rst_aes <= '0';
+						control_reg <= x"00000000";
+						csr_reg(9) <= dec_plaintext_t(127 downto 96);
+						csr_reg(10) <= dec_plaintext_t(95 downto 64);
+						csr_reg(11) <= dec_plaintext_t(63 downto 32);
+						csr_reg(12) <= dec_plaintext_t(31 downto 0);	
 						encrypt_state <= stopping;
 					end if;				
 				when stopping =>

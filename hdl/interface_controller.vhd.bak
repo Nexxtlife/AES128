@@ -54,12 +54,6 @@ signal plaintext_t : std_logic_vector(127 downto 0);
 signal ciphertext_t :  std_logic_vector(127 downto 0);
 signal done_t :  std_logic;
 
-signal dec_key_t :  std_logic_vector(127 downto 0);
-signal dec_plaintext_t : std_logic_vector(127 downto 0);
-signal dec_ciphertext_t :  std_logic_vector(127 downto 0);
-signal dec_done_t :  std_logic;
-
-
 --plaintext length
 subtype text_length_T is std_logic_vector (7 downto 0);
 signal working_address: std_logic_vector (7 downto 0) := (others=> '0');

@@ -2,7 +2,7 @@ set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_TOOL_NAME 
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_TOOL_VERSION "18.0"
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "JTAG_AES" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../JTAG_AES.sopcinfo"]
-set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name SLD_INFO "QSYS_NAME JTAG_AES HAS_SOPCINFO 1 GENERATION_ID 1621326930"
+set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name SLD_INFO "QSYS_NAME JTAG_AES HAS_SOPCINFO 1 GENERATION_ID 1624345664"
 set_global_assignment -library "JTAG_AES" -name MISC_FILE [file join $::quartus(qip_path) "../JTAG_AES.cmp"]
 set_global_assignment -library "JTAG_AES" -name SLD_FILE [file join $::quartus(qip_path) "JTAG_AES.debuginfo"]
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_TARGETED_DEVICE_FAMILY "MAX 10"
@@ -15,7 +15,7 @@ set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTYyMTMyNjkzMA==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTYyNDM0NTY2NA==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::TUFYIDEw::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::MTBNNTBEQUY0ODRDN0c=::QXV0byBERVZJQ0U="
 set_global_assignment -entity "JTAG_AES" -library "JTAG_AES" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::Nw==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
@@ -346,17 +346,25 @@ set_global_assignment -library "JTAG_AES" -name SYSTEMVERILOG_FILE [file join $:
 set_global_assignment -library "JTAG_AES" -name SDC_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_jtag_interface.sdc"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/interface_controller.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/add_round_key.vhd"]
-set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/aes_enc.vhd"]
-set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/byte_sub.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/aes_dec.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/column_calc.vhd"]
-set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/controller.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/dec_column_calc.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/dec_controller.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/dec_key_sch_round_function.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/dec_mix_column.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/dec_s_box.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/dec_shift_rwos.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/dec_sub_byte.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/gf_mult.vhd"]
-set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/interface.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/inverter.vhd"]
-set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/key_sch_round_function.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/key_schedule.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/mix_column.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/reg.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/aes_enc.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/byte_sub.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/controller.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/interface.vhd"]
+set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/key_sch_round_function.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/s_box.vhd"]
 set_global_assignment -library "JTAG_AES" -name VHDL_FILE [file join $::quartus(qip_path) "submodules/shft_row.vhd"]
 

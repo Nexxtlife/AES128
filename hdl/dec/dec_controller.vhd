@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity controller is
+entity dec_controller is
 	port (
 		clk : in std_logic;
 		rst : in std_logic;
@@ -10,9 +10,9 @@ entity controller is
 		is_first_round : out std_logic;
 		done : out std_logic
 	);
-end controller;
+end dec_controller;
 
-architecture behavioral of controller is	
+architecture behavioral of dec_controller is	
 	constant rcon_table : std_logic_vector(87 downto 0) := x"0001020408102040801b36";
 	signal round_constant : std_logic_vector(7 downto 0);
 begin

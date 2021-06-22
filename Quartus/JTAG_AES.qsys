@@ -17,19 +17,6 @@
          type = "int";
       }
    }
-   element AES_0.interface_0_avalon_slave_1
-   {
-      datum _lockedAddress
-      {
-         value = "0";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "0";
-         type = "String";
-      }
-   }
    element clk_0
    {
       datum _sortIndex
@@ -98,7 +85,7 @@
    kind="avalon"
    version="18.0"
    start="master_0.master"
-   end="AES_0.interface_0_avalon_slave_1">
+   end="AES_0.interface_0_avalon_slave_0">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
